@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Pipboy Simulator</title>
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link style="text/css" href="css/index.css" rel="stylesheet">
+	<script src="js/jquery-3.3.1.min.js"></script>
+</head>
+
+
+<body>
+	<div id="container">
+		<div id="top">
+			<nav>
+				<a id="stat" onclick="changeNav('stat')">-STAT-</a>
+				<a id="inv" onclick="changeNav('inv')">INV</a>
+				<a id="log" onclick="changeNav('log')">LOG</a>
+				<a id="map" onclick="changeNav('map')">MAP</a>
+				<a id="radio" onclick="changeNav('radio')">RADIO</a>
+			</nav>
+		</div>
+		<div id="side">
+			<!--<h1 id="dateLabel"></h1>-->
+
+		</div>
+		<div id="main">
+			<div id="main_stat">
+				<img src="images/status.png" alt="Status">
+			</div>
+			<div id="main_inv">
+			</div>
+			<div id="main_log">
+			</div>
+			<div id="main_map">
+				<p id="xLabel">X: 0</p>
+				<p id="yLabel">Y: 0</p>
+				<p id="zLabel">Z: 0</p>
+				<button onclick="changeX(1);">X+</button>
+				<button onclick="changeX(-1);">X-</button>
+				<button onclick="changeY(1);">Y+</button>
+				<button onclick="changeY(-1);">Y-</button>
+				<button onclick="changeZ(1);">Z+</button>
+				<button onclick="changeZ(-1);">Z-</button>
+			</div>
+			<div id="main_radio">
+			</div>
+		<div>
+	</div>
+	<script src="js/index.js"></script>
+</body>
+</html>
