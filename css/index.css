@@ -94,9 +94,12 @@ a{
 a:hover{
 	text-shadow: -1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray;
 }
-/*#stat{
-	padding: 11px;
-}*/
+#navigation{
+	line-height: 3;
+	border-right: 2px #00ff00 solid;
+	padding-right: 10px;
+}
+
 
 
 
@@ -107,7 +110,6 @@ a:hover{
 #top{
 	grid-area: top;
 	text-align: center;
-	border-bottom: 2px #00ff00 solid;
 }
 #side{
 	grid-area: side;
@@ -120,7 +122,7 @@ a:hover{
 	grid-template-columns: 1fr 5fr;
 	grid-template-rows: auto auto;
 	grid-template-areas:
-	'top top'
-	'main main'
+	'side main'
+	'side main'
 }
 /*}

@@ -23,14 +23,7 @@ function changeZ(value){
 	zLabel.innerHTML = "Z: "+z;
 }
 function changeNav(nav){
-	var navElement = document.getElementById(navigation)
-	navElement.innerHTML = navigation.toUpperCase();
-	navElement.style.padding = "4%";
-
 	navigation = nav;
-	navElement = document.getElementById(navigation)
-	navElement.innerHTML = "-"+navigation.toUpperCase()+"-";
-	navElement.style.padding = "2.68%";
 }
 function updateClock(){
 	var d = new Date();
