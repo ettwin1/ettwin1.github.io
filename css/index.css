@@ -69,7 +69,7 @@ p{
 img{
 	display: block;
 	margin: auto;
-	max-width: 100%;
+	max-width: 90%;
 	width: auto;
 }
 button{
@@ -119,7 +119,7 @@ a:hover{
 }
 #container{
 	display: grid;
-	grid-template-columns: 1fr 5fr;
+	grid-template-columns: 1fr 3fr;
 	grid-template-rows: auto auto;
 	grid-template-areas:
 	'side main'
