@@ -1,3 +1,7 @@
+/*Sounds*/
+var snd_click = document.getElementById("snd_click");
+var snd_click2 = document.getElementById("snd_click2");
+
 /*Menu options include: stat, inv, log, map, radio*/
 var prevNavigation = "";
 var navigation = "stat";
@@ -13,17 +17,21 @@ var zLabel = document.getElementById("zLabel");
 function changeX(value){
 	x += value;
 	xLabel.innerHTML = "X: "+x;
+	snd_click2.play();
 }
 function changeY(value){
 	y += value;
 	yLabel.innerHTML = "Y: "+y;
+	snd_click2.play();
 }
 function changeZ(value){
 	z += value;
 	zLabel.innerHTML = "Z: "+z;
+	snd_click2.play();
 }
 function changeNav(nav){
 	navigation = nav;
+	snd_click.play();
 }
 function updateClock(){
 	var d = new Date();
