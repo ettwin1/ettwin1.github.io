@@ -71,27 +71,36 @@ img{
 	margin: auto;
 	/*max-width: 100%*/
 }
-button{
-	border: none;
+.button1{
 	color: #00ff00;
 	background-color: black;
-	padding: 20px;
+	padding: 5px;
+	width: 100%;
 	font-size: 16px;
-}
-button:hover{
 	border: 2px solid;
 	border-color: #00ff00;
-	border-radius: 5px;
-	padding: 18px;
+	border-radius: 3px;
+	font-family: 'Roboto', sans-serif;
+}
+.button2{
+	color: #00ff00;
+	background-color: black;
+	padding: 5px;
+	font-size: 16px;
+	border: 2px solid;
+	border-color: #00ff00;
+	border-radius: 3px;
+	font-family: 'Roboto', sans-serif;
+}
+button:hover{
+	background-color: #00ff00;
+	color: black;
 }
 a{
 	font-family: 'Roboto', sans-serif;
 	font-weight: bold;
 	padding: 4%;
 	margin: auto;
-}
-a:hover{
-	text-shadow: -1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray;
 }
 #navigation{
 	line-height: 3;
