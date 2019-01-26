@@ -15,24 +15,6 @@ var yLabel = document.getElementById("yLabel");
 var zLabel = document.getElementById("zLabel");
 
 
-/*Radio*/
-var songs = [
-	document.getElementById("newVegas0"),
-	document.getElementById("newVegas1"),
-	document.getElementById("newVegas2"),
-	document.getElementById("newVegas3"),
-	document.getElementById("newVegas4"),
-	document.getElementById("newVegas5"),
-	document.getElementById("newVegas6"),
-	document.getElementById("newVegas7"),
-	document.getElementById("newVegas8"),
-	document.getElementById("newVegas9"),
-];
-var playedSongs = [];
-var rando = 0;
-
-
-
 function changeX(value){
 	x += value;
 	xLabel.innerHTML = "X: "+x;
@@ -62,27 +44,92 @@ function changeNav(nav){
 	}
 	
 }
+
+
+
+
+
+
+/*Radio*/
+var songs = [];
+var playedSongs = [];
+var rando = 0;
+var selectedRadio = ""; //options include: 'newVegas'
+
 function newVegasRadio(){
+	selectedRadio = "newVegas";
 	for (var i=0; i<songs.length; i++){
 		songs[i].currentTime = 0;
 		songs[i].pause();
 	}
+	songs =	[
+	document.getElementById("newVegas0"),
+	document.getElementById("newVegas1"),
+	document.getElementById("newVegas2"),
+	document.getElementById("newVegas3"),
+	document.getElementById("newVegas4"),
+	document.getElementById("newVegas5"),
+	document.getElementById("newVegas6"),
+	document.getElementById("newVegas7"),
+	document.getElementById("newVegas8"),
+	document.getElementById("newVegas9"),
+	
+	document.getElementById("newVegas10"),
+	document.getElementById("newVegas11"),
+	document.getElementById("newVegas12"),
+	document.getElementById("newVegas13"),
+	document.getElementById("newVegas14"),
+	document.getElementById("newVegas15"),
+	document.getElementById("newVegas16"),
+	document.getElementById("newVegas17"),
+	document.getElementById("newVegas18"),
+	document.getElementById("newVegas19"),
+	
+	document.getElementById("newVegas20"),
+	document.getElementById("newVegas21"),
+	document.getElementById("newVegas22"),
+	document.getElementById("newVegas23"),
+	document.getElementById("newVegas24"),
+	document.getElementById("newVegas25"),
+	document.getElementById("newVegas26"),
+	document.getElementById("newVegas27"),
+	document.getElementById("newVegas28"),
+	document.getElementById("newVegas29"),
+	
+	document.getElementById("newVegas30"),
+	document.getElementById("newVegas31"),
+	document.getElementById("newVegas32"),
+	document.getElementById("newVegas33"),
+	document.getElementById("newVegas34"),
+	document.getElementById("newVegas35"),
+	document.getElementById("newVegas36"),
+	document.getElementById("newVegas37"),
+	document.getElementById("newVegas38"),
+	document.getElementById("newVegas39"),
+	
+	document.getElementById("newVegas40"),
+	document.getElementById("newVegas41"),
+	document.getElementById("newVegas42"),
+	document.getElementById("newVegas43"),
+	document.getElementById("newVegas44"),
+	];
 	playedSongs = [];
 	rando = Math.round(Math.random()*songs.length);
 	songs[rando].play();
 	playedSongs[rando] = songs[rando];
 }
-function songEnded(){
-	rando = Math.round(Math.random()*10);
+function nextSong(){
 	var songsLeft = songs.length;
-	for (var i=0; i<songs.length; i++){
-		if (songs[i] != null || songs[i] != ""){
-			playedSongs -= 1;
+	for (var i=0; i<playedSongs.length; i++){
+		if (playedSongs[i] != null || playedSongs[i] != ""){
+			songsLeft -= 1;
 		}
 	}
+	
+	rando = Math.round(Math.random()*songs.length);
 	if (songsLeft != 0){
 		while (songs[rando] == playedSongs[rando]){
-			rando = Math.round(Math.random()*10);
+			rando = Math.round(Math.random()*songs.length);
 		}
 		songs[rando].play();
 		playedSongs[rando] = songs[rando];
@@ -90,16 +137,28 @@ function songEnded(){
 		newVegasRadio();
 	}
 }
-songs[0].onended = function(){songEnded();}
-songs[1].onended = function(){songEnded();}
-songs[2].onended = function(){songEnded();}
-songs[3].onended = function(){songEnded();}
-songs[4].onended = function(){songEnded();}
-songs[5].onended = function(){songEnded();}
-songs[6].onended = function(){songEnded();}
-songs[7].onended = function(){songEnded();}
-songs[8].onended = function(){songEnded();}
-songs[9].onended = function(){songEnded();}
+
+function skipSong(){
+	for (var i=0; i<songs.length; i++){
+		songs[i].currentTime = 0;
+		songs[i].pause();
+	}
+	nextSong();
+}
+function stopRadio(){
+	selectedRadio = "";
+	for (var i=0; i<songs.length; i++){
+		songs[i].currentTime = 0;
+		songs[i].pause();
+	}
+}
+for (var i=0; i<45; i++){
+	document.getElementById("newVegas"+i).onended = function(){nextSong();}
+}
+
+
+
+
 
 function updateClock(){
 	var d = new Date();
@@ -125,39 +184,55 @@ $(document).ready(function(){
 	$("#main_log").hide();
 	$("#main_map").hide();
 	$("#main_radio").hide();
-  $("#stat").click(function(){
-	$("#main_stat").show();
-	$("#main_inv").hide();
-	$("#main_log").hide();
-	$("#main_map").hide();
-	$("#main_radio").hide();
-  });
-  $("#inv").click(function(){
-	$("#main_stat").hide();
-	$("#main_inv").show();
-	$("#main_log").hide();
-	$("#main_map").hide();
-	$("#main_radio").hide();
-  });
-  $("#log").click(function(){
-	$("#main_stat").hide();
-	$("#main_inv").hide();
-	$("#main_log").show();
-	$("#main_map").hide();
-	$("#main_radio").hide();
-  });
-  $("#map").click(function(){
-	$("#main_stat").hide();
-	$("#main_inv").hide();
-	$("#main_log").hide();
-	$("#main_map").show();
-	$("#main_radio").hide();
-  });
-  $("#radio").click(function(){
-	$("#main_stat").hide();
-	$("#main_inv").hide();
-	$("#main_log").hide();
-	$("#main_map").hide();
-	$("#main_radio").show();
-  });
+	$("#newVegasSkip").hide();
+	$("#newVegasStop").hide();
+	$("#stat").click(function(){
+		$("#main_stat").show();
+		$("#main_inv").hide();
+		$("#main_log").hide();
+		$("#main_map").hide();
+		$("#main_radio").hide();
+	});
+	$("#inv").click(function(){
+		$("#main_stat").hide();
+		$("#main_inv").show();
+		$("#main_log").hide();
+		$("#main_map").hide();
+		$("#main_radio").hide();
+	});
+	$("#log").click(function(){
+		$("#main_stat").hide();
+		$("#main_inv").hide();
+		$("#main_log").show();
+		$("#main_map").hide();
+		$("#main_radio").hide();
+	});
+	$("#map").click(function(){
+		$("#main_stat").hide();
+		$("#main_inv").hide();
+		$("#main_log").hide();
+		$("#main_map").show();
+		$("#main_radio").hide();
+	});
+	$("#radio").click(function(){
+		$("#main_stat").hide();
+		$("#main_inv").hide();
+		$("#main_log").hide();
+		$("#main_map").hide();
+		$("#main_radio").show();
+	});
+	
+	$(".button1").click(function(){
+		if (selectedRadio == "newVegas"){
+			$("#newVegasSkip").show();
+			$("#newVegasStop").show();
+		}else{
+			$("#newVegasSkip").hide();
+			$("#newVegasStop").hide();
+		}
+	});
+	$("#newVegasStop").click(function(){
+		$("#newVegasSkip").hide();
+		$("#newVegasStop").hide();
+	});
 });

@@ -1,3 +1,89 @@
+body{
+	color: #00ff00;
+	background-color: black;
+}
+p{
+	font-weight: bold;
+}
+img{
+	display: block;
+	margin: auto;
+	/*max-width: 100%*/
+}
+.button1{
+	color: #00ff00;
+	background-color: black;
+	padding: 5px;
+	width: 75%;
+	font-size: 16px;
+	border: 2px solid;
+	border-color: #00ff00;
+	border-radius: 3px;
+	font-family: 'Roboto', sans-serif;
+	float: left;
+}
+.button2, #newVegasSkip, #newVegasStop{
+	color: #00ff00;
+	background-color: black;
+	padding: 5px;
+	font-size: 16px;
+	border: 2px solid;
+	border-color: #00ff00;
+	border-radius: 3px;
+	font-family: 'Roboto', sans-serif;
+	float: left;
+	margin-left: 5px;
+}
+button:hover, #newVegasSkip:hover, #newVegasStop:hover{
+	background-color: #00ff00;
+	color: black;
+}
+
+a{
+	font-family: 'Roboto', sans-serif;
+	font-weight: bold;
+	padding: 4%;
+	margin: auto;
+}
+#navigation{
+	line-height: 3;
+	border-right: 2px #00ff00 solid;
+	padding-right: 10px;
+}
+
+
+
+
+
+#top, #side, #container{
+	padding: 5px;
+}
+#top{
+	grid-area: top;
+	text-align: center;
+}
+#side{
+	grid-area: side;
+}
+#main{
+	grid-area: main;
+}
+#container{
+	display: grid;
+	grid-template-columns: 1fr 3fr;
+	grid-template-rows: auto auto;
+	grid-template-areas:
+	'side main'
+	'side main'
+}
+
+
+
+
+
+
+/*@media only screen and (min-width: 600px) {*/
+
 /*body{
 	color: #4dff4d;
 	background-color: black;
@@ -52,85 +138,4 @@ a:hover{
 
 
 
-
-
-
-
-
-
-/*@media only screen and (max-width: 600px) {*/
-body{
-	color: #00ff00;
-	background-color: black;
-}
-p{
-	font-weight: bold;
-}
-img{
-	display: block;
-	margin: auto;
-	/*max-width: 100%*/
-}
-.button1{
-	color: #00ff00;
-	background-color: black;
-	padding: 5px;
-	width: 100%;
-	font-size: 16px;
-	border: 2px solid;
-	border-color: #00ff00;
-	border-radius: 3px;
-	font-family: 'Roboto', sans-serif;
-}
-.button2{
-	color: #00ff00;
-	background-color: black;
-	padding: 5px;
-	font-size: 16px;
-	border: 2px solid;
-	border-color: #00ff00;
-	border-radius: 3px;
-	font-family: 'Roboto', sans-serif;
-}
-button:hover{
-	background-color: #00ff00;
-	color: black;
-}
-a{
-	font-family: 'Roboto', sans-serif;
-	font-weight: bold;
-	padding: 4%;
-	margin: auto;
-}
-#navigation{
-	line-height: 3;
-	border-right: 2px #00ff00 solid;
-	padding-right: 10px;
-}
-
-
-
-
-
-#top, #side, #container{
-	padding: 5px;
-}
-#top{
-	grid-area: top;
-	text-align: center;
-}
-#side{
-	grid-area: side;
-}
-#main{
-	grid-area: main;
-}
-#container{
-	display: grid;
-	grid-template-columns: 1fr 3fr;
-	grid-template-rows: auto auto;
-	grid-template-areas:
-	'side main'
-	'side main'
-}
 /*}
