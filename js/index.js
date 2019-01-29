@@ -111,7 +111,59 @@ function newVegasRadio(){
 	document.getElementById("newVegas41"),
 	document.getElementById("newVegas42"),
 	document.getElementById("newVegas43"),
-	document.getElementById("newVegas44"),
+	document.getElementById("newVegas44")
+	];
+	playedSongs = [];
+	rando = Math.round(Math.random()*songs.length);
+	songs[rando].play();
+	playedSongs[rando] = songs[rando];
+}
+function fallout4Radio(){
+	selectedRadio = "fallout4";
+	for (var i=0; i<songs.length; i++){
+		songs[i].currentTime = 0;
+		songs[i].pause();
+	}
+	songs =	[
+	document.getElementById("fallout40"),
+	document.getElementById("fallout41"),
+	document.getElementById("fallout42"),
+	document.getElementById("fallout43"),
+	document.getElementById("fallout44"),
+	document.getElementById("fallout45"),
+	document.getElementById("fallout46"),
+	document.getElementById("fallout47"),
+	document.getElementById("fallout48"),
+	document.getElementById("fallout49"),
+	
+	document.getElementById("fallout410"),
+	document.getElementById("fallout411"),
+	document.getElementById("fallout412"),
+	document.getElementById("fallout413"),
+	document.getElementById("fallout414"),
+	document.getElementById("fallout415"),
+	document.getElementById("fallout416"),
+	document.getElementById("fallout417"),
+	document.getElementById("fallout418"),
+	document.getElementById("fallout419"),
+	
+	document.getElementById("fallout420"),
+	document.getElementById("fallout421"),
+	document.getElementById("fallout422"),
+	document.getElementById("fallout423"),
+	document.getElementById("fallout424"),
+	document.getElementById("fallout425"),
+	document.getElementById("fallout426"),
+	document.getElementById("fallout427"),
+	document.getElementById("fallout428"),
+	document.getElementById("fallout429"),
+	
+	document.getElementById("fallout430"),
+	document.getElementById("fallout431"),
+	document.getElementById("fallout432"),
+	document.getElementById("fallout433"),
+	document.getElementById("fallout434"),
+	document.getElementById("fallout435")
 	];
 	playedSongs = [];
 	rando = Math.round(Math.random()*songs.length);
@@ -155,6 +207,9 @@ function stopRadio(){
 for (var i=0; i<45; i++){
 	document.getElementById("newVegas"+i).onended = function(){nextSong();}
 }
+for (var i=0; i<36; i++){
+	document.getElementById("fallout4"+i).onended = function(){nextSong();}
+}
 
 
 
@@ -186,6 +241,8 @@ $(document).ready(function(){
 	$("#main_radio").hide();
 	$("#newVegasSkip").hide();
 	$("#newVegasStop").hide();
+	$("#fallout4Skip").hide();
+	$("#fallout4Stop").hide();
 	$("#stat").click(function(){
 		$("#main_stat").show();
 		$("#main_inv").hide();
@@ -226,13 +283,25 @@ $(document).ready(function(){
 		if (selectedRadio == "newVegas"){
 			$("#newVegasSkip").show();
 			$("#newVegasStop").show();
-		}else{
+			$("#fallout4Skip").hide();
+			$("#fallout4Stop").hide();
+		}else if (selectedRadio == "fallout4"){
 			$("#newVegasSkip").hide();
 			$("#newVegasStop").hide();
+			$("#fallout4Skip").show();
+			$("#fallout4Stop").show();
 		}
 	});
 	$("#newVegasStop").click(function(){
 		$("#newVegasSkip").hide();
 		$("#newVegasStop").hide();
+		$("#fallout4Skip").hide();
+		$("#fallout4Stop").hide();
+	});
+	$("#fallout4Stop").click(function(){
+		$("#newVegasSkip").hide();
+		$("#newVegasStop").hide();
+		$("#fallout4Skip").hide();
+		$("#fallout4Stop").hide();
 	});
 });

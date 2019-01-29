@@ -14,15 +14,16 @@ img{
 	color: #00ff00;
 	background-color: black;
 	padding: 5px;
-	width: 50%;
+	width: 60%;
 	font-size: 16px;
 	border: 2px solid;
 	border-color: #00ff00;
 	border-radius: 3px;
 	font-family: 'Roboto', sans-serif;
 	float: left;
+	margin-bottom: 5px;
 }
-.button2, #newVegasSkip, #newVegasStop{
+.button2, #newVegasSkip, #newVegasStop, #fallout4Skip, #fallout4Stop{
 	color: #00ff00;
 	background-color: black;
 	padding: 5px;
@@ -34,7 +35,7 @@ img{
 	float: left;
 	margin-left: 5px;
 }
-button:hover, #newVegasSkip:hover, #newVegasStop:hover{
+button:hover, #newVegasSkip:hover, #newVegasStop:hover, #fallout4Skip:hover, #fallout4Stop:hover{
 	background-color: #00ff00;
 	color: black;
 }
