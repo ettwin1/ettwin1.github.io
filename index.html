@@ -42,25 +42,37 @@
 			<div id="main_log">
 			</div>
 			<div id="main_map">
-				<p id="xLabel">X: 0</p>
-				<p id="yLabel">Y: 0</p>
-				<p id="zLabel">Z: 0</p>
-				<button onclick="changeX(1);">X+</button>
-				<button onclick="changeX(-1);">X-</button>
-				<button onclick="changeY(1);">Y+</button>
-				<button onclick="changeY(-1);">Y-</button>
-				<button onclick="changeZ(1);">Z+</button>
-				<button onclick="changeZ(-1);">Z-</button>
+				<table style="text-align:center;">
+					<tr>
+						<td><p id="xLabel">X: 0</p></td>
+						<td><p id="yLabel">Y: 0</p></td>
+						<td><p id="zLabel">Z: 0</p></td>
+					</tr>
+					<tr>
+						<td><button class="button2" type="button" onclick="changeX(1);">X+</button></td>
+						<td><button class="button2" type="button" onclick="changeY(1);">Y+</button></td>
+						<td><button class="button2" type="button" onclick="changeZ(1);">Z+</button></td>
+					</tr>
+					<tr>
+						<td><button class="button2" type="button" onclick="changeX(-1);">X-</button></td>
+						<td><button class="button2" type="button" onclick="changeY(-1);">Y-</button></td>
+						<td><button class="button2" type="button" onclick="changeZ(-1);">Z-</button></td>
+					</tr>
+					<tr>
+						<td colspan="3"><button class="button3" type="button" onclick="">Travel</button></td><!--<button style="display:block;margin:auto" class="button1" type="button" onclick="">Travel</button>-->
+					</tr>
+				</table>
 			</div>
+			
 			<div id="main_radio">
 				
-				<button class="button1" onclick="newVegasRadio()">New Vegas Radio</button>
-				<button id="newVegasSkip" onclick="skipSong()">Skip</button>
-				<button id="newVegasStop" onclick="stopRadio()">Stop</button>
+				<button type="button" class="button1" onclick="newVegasRadio()">New Vegas Radio</button>
+				<button type="button" id="newVegasSkip" onclick="skipSong()">Skip</button>
+				<button type="button" id="newVegasStop" onclick="stopRadio()">Stop</button>
 				
-				<button class="button1" onclick="fallout4Radio()">Fallout 4 Radio</button>
-				<button id="fallout4Skip" onclick="skipSong()">Skip</button>
-				<button id="fallout4Stop" onclick="stopRadio()">Stop</button>
+				<button type="button" class="button1" onclick="fallout4Radio()">Fallout 4 Radio</button>
+				<button type="button" id="fallout4Skip" onclick="skipSong()">Skip</button>
+				<button type="button" id="fallout4Stop" onclick="stopRadio()">Stop</button>
 				
 				<div id="loading_songs">
 						<!-- Fallout: New Vegas -->
@@ -156,8 +168,6 @@
 						<audio  id="fallout434"><source src="music/Fallout4/Way_Back_Home.mp3" type="audio/mpeg"></audio>
 						<audio  id="fallout435"><source src="music/Fallout4/Whole_Lotta_Shakin_Goin_On.mp3" type="audio/mpeg"></audio>
 				</div>
-		<div>
-	</div>
 	
 </body>
 <script src="js/index.js"></script>

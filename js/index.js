@@ -189,7 +189,6 @@ function nextSong(){
 		newVegasRadio();
 	}
 }
-
 function skipSong(){
 	for (var i=0; i<songs.length; i++){
 		songs[i].currentTime = 0;
