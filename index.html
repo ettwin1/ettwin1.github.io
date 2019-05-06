@@ -40,6 +40,7 @@
 			<div id="main_inv">
 			</div>
 			<div id="main_log">
+				<iframe id="frame" src="" style="height:auto;width:80%;"></iframe>
 			</div>
 			<div id="main_map">
 				<table style="text-align:center;">
@@ -59,7 +60,7 @@
 						<td><button class="button2" type="button" onclick="changeZ(-1);">Z-</button></td>
 					</tr>
 					<tr>
-						<td colspan="3"><button class="button3" type="button" onclick="">Travel</button></td><!--<button style="display:block;margin:auto" class="button1" type="button" onclick="">Travel</button>-->
+						<td colspan="3"><button class="button3" type="button" onclick="travel()">Travel</button></td>
 					</tr>
 				</table>
 			</div>
@@ -67,108 +68,15 @@
 			<div id="main_radio">
 				
 				<button type="button" class="button1" onclick="newVegasRadio()">New Vegas Radio</button>
-				<button type="button" id="newVegasSkip" onclick="skipSong()">Skip</button>
+				<button type="button" id="newVegasSkip" onclick="nextSong()">Skip</button>
 				<button type="button" id="newVegasStop" onclick="stopRadio()">Stop</button>
 				
 				<button type="button" class="button1" onclick="fallout4Radio()">Fallout 4 Radio</button>
 				<button type="button" id="fallout4Skip" onclick="skipSong()">Skip</button>
 				<button type="button" id="fallout4Stop" onclick="stopRadio()">Stop</button>
 				
-				<div id="loading_songs">
-						<!-- Fallout: New Vegas -->
-						<audio  id="newVegas0"><source src="music/NewVegas/Aint_that_a_kick_in_the_head.mp3" type="audio/mpeg"> Your browser does not support the audio element.</audio>
-						<audio  id="newVegas1"><source src="music/NewVegas/American_Swing.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas2"><source src="music/NewVegas/Big_Iron.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas3"><source src="music/NewVegas/Blues_for_you.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas4"><source src="music/NewVegas/Cobwebs_and_Rainbows.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas5"><source src="music/NewVegas/Concerto_For_2_VI_Str_In_D_Minor.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas6"><source src="music/NewVegas/Concerto_Gross _In_B_Minor_Allegro_1.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas7"><source src="music/NewVegas/Concerto_In_B_Minor_Allegro_2.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas8"><source src="music/NewVegas/Flower_Duet.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas9"><source src="music/NewVegas/Four_Seasons_4_The_Winter.mp3" type="audio/mpeg"></audio>
-						
-						<audio  id="newVegas10"><source src="music/NewVegas/Goin_Under.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas11"><source src="music/NewVegas/Hallo_Mister_X.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas12"><source src="music/NewVegas/Happy_Times.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas13"><source src="music/NewVegas/Heartaches_by_the_Numbers.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas14"><source src="music/NewVegas/Home_On_The_Wastes.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas15"><source src="music/NewVegas/Im_Moving_Out.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas16"><source src="music/NewVegas/Im_So_Blue.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas17"><source src="music/NewVegas/In_The_Shadow_Of_The_Valley.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas18"><source src="music/NewVegas/Its_A_Sin.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas19"><source src="music/NewVegas/Its_A_Sin_To_Tell_A_Lie.mp3" type="audio/mpeg"></audio>
-						
-						<audio  id="newVegas20"><source src="music/NewVegas/Jazz_Blues.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas21"><source src="music/NewVegas/Jazz_Club_Blues.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas22"><source src="music/NewVegas/Jingle_Jangle_Jingle.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas23"><source src="music/NewVegas/Joe_Cool.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas24"><source src="music/NewVegas/Johnny_Guitar.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas25"><source src="music/NewVegas/Lets_Ride_Into_The_Sunset_Together.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas26"><source src="music/NewVegas/Lone_Star.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas27"><source src="music/NewVegas/Love_Me_As_Though_No_Tomorrow.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas28"><source src="music/NewVegas/Mad_About_The_Boy.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas29"><source src="music/NewVegas/New_Vegas_Valley.mp3" type="audio/mpeg"></audio>
-						
-						<audio  id="newVegas30"><source src="music/NewVegas/Piano_Corcert_No_21_Elvira_Madigan.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas31"><source src="music/NewVegas/Ride_Of_The_Valkyries.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas32"><source src="music/NewVegas/Roundhouse_Rock.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas33"><source src="music/NewVegas/Sit_And_Dream.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas34"><source src="music/NewVegas/Sleepy_Town_Blues.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas35"><source src="music/NewVegas/Slow_Bounce.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas36"><source src="music/NewVegas/Slow_Sax.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas37"><source src="music/NewVegas/Something_Gotta_Give.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas38"><source src="music/NewVegas/Spring_Song.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas39"><source src="music/NewVegas/Stars_Of_The_Midnight_Ranger.mp3" type="audio/mpeg"></audio>
-						
-						<audio  id="newVegas40"><source src="music/NewVegas/Strahlende_Tropete.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas41"><source src="music/NewVegas/Streets_Of_New_Reno.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas42"><source src="music/NewVegas/Von_Spanien_Nach_S_Damerika.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas43"><source src="music/NewVegas/Where_Have_You_Been_All_My_Life.mp3" type="audio/mpeg"></audio>
-						<audio  id="newVegas44"><source src="music/NewVegas/Why_Dont_You_Do_Right.mp3" type="audio/mpeg"></audio>
-						
-						
-						<!-- Fallout 4 -->
-						<audio  id="fallout40"><source src="music/Fallout4/A_Wonderful_Guy.mp3" type="audio/mpeg"></audio>
-						<audio  id="fallout41"><source src="music/Fallout4/Ac-Cent-Tchu-Ate_the_Positive.mp3" type="audio/mpeg"></audio>
-						<audio  id="fallout42"><source src="music/Fallout4/Anything_Goes.mp3" type="audio/mpeg"></audio>
-						<audio  id="fallout43"><source src="music/Fallout4/Atom Bomb Baby.mp3" type="audio/mpeg"></audio>
-						<audio  id="fallout44"><source src="music/Fallout4/Butcher_Pete_part1.mp3" type="audio/mpeg"></audio>
-						<audio  id="fallout45"><source src="music/Fallout4/Butcher_Pete_part2.mp3" type="audio/mpeg"></audio>
-						<audio  id="fallout46"><source src="music/Fallout4/Civilization.mp3" type="audio/mpeg"></audio>
-						<audio  id="fallout47"><source src="music/Fallout4/Crawl_Out_Through_the_Fallout.mp3" type="audio/mpeg"></audio>
-						<audio  id="fallout48"><source src="music/Fallout4/Crazy_He_Calls_Me.mp3" type="audio/mpeg"></audio>
-						<audio  id="fallout49"><source src="music/Fallout4/Dear_Hearts_And_Gentle_People.mp3" type="audio/mpeg"></audio>
-						
-						<audio  id="fallout410"><source src="music/Fallout4/Easy_Living.mp3" type="audio/mpeg"></audio>
-						<audio  id="fallout411"><source src="music/Fallout4/Good_Rockin_Tonight.mp3" type="audio/mpeg"></audio>
-						<audio  id="fallout412"><source src="music/Fallout4/Grandma_Plays_the_Numbers.mp3" type="audio/mpeg"></audio>
-						<audio  id="fallout413"><source src="music/Fallout4/Happy_Times.mp3" type="audio/mpeg"></audio>
-						<audio  id="fallout414"><source src="music/Fallout4/Hes_A_Demon,_Hes_A_Devil,_Hes_A_Doll.mp3" type="audio/mpeg"></audio>
-						<audio  id="fallout415"><source src="music/Fallout4/I_Dont_Want_to_Set_the_World_on_Fire.mp3" type="audio/mpeg"></audio>
-						<audio  id="fallout416"><source src="music/Fallout4/Into_Each_Life_Some_Rain_Must_Fall.mp3" type="audio/mpeg"></audio>
-						<audio  id="fallout417"><source src="music/Fallout4/Its_a_Man.mp3" type="audio/mpeg"></audio>
-						<audio  id="fallout418"><source src="music/Fallout4/Its_All_Over_But_the_Crying.mp3" type="audio/mpeg"></audio>
-						<audio  id="fallout419"><source src="music/Fallout4/Keep_a_Knockin.mp3" type="audio/mpeg"></audio>
-						
-						<audio  id="fallout420"><source src="music/Fallout4/Maybe.mp3" type="audio/mpeg"></audio>
-						<audio  id="fallout421"><source src="music/Fallout4/Mighty,_Mighty_Man.mp3" type="audio/mpeg"></audio>
-						<audio  id="fallout422"><source src="music/Fallout4/One_More_Tomorrow.mp3" type="audio/mpeg"></audio>
-						<audio  id="fallout423"><source src="music/Fallout4/Orange_Colored_Sky.mp3" type="audio/mpeg"></audio>
-						<audio  id="fallout424"><source src="music/Fallout4/Personality.mp3" type="audio/mpeg"></audio>
-						<audio  id="fallout425"><source src="music/Fallout4/Pistol_Packin_Mama.mp3" type="audio/mpeg"></audio>
-						<audio  id="fallout426"><source src="music/Fallout4/Right_Behind_You_Baby.mp3" type="audio/mpeg"></audio>
-						<audio  id="fallout427"><source src="music/Fallout4/Rocket_69.mp3" type="audio/mpeg"></audio>
-						<audio  id="fallout428"><source src="music/Fallout4/Sixty_Minute_Man.mp3" type="audio/mpeg"></audio>
-						<audio  id="fallout429"><source src="music/Fallout4/The_End_of_the_World.mp3" type="audio/mpeg"></audio>
-						
-						<audio  id="fallout430"><source src="music/Fallout4/The_Wanderer.mp3" type="audio/mpeg"></audio>
-						<audio  id="fallout431"><source src="music/Fallout4/Undecided.mp3" type="audio/mpeg"></audio>
-						<audio  id="fallout432"><source src="music/Fallout4/Uranium_Fever.mp3" type="audio/mpeg"></audio>
-						<audio  id="fallout433"><source src="music/Fallout4/Uranium_Rock.mp3" type="audio/mpeg"></audio>
-						<audio  id="fallout434"><source src="music/Fallout4/Way_Back_Home.mp3" type="audio/mpeg"></audio>
-						<audio  id="fallout435"><source src="music/Fallout4/Whole_Lotta_Shakin_Goin_On.mp3" type="audio/mpeg"></audio>
-				</div>
-	
+				<audio id="radioAudio"><source id="radioSource" type="audio/mpeg"></audio>
 </body>
 <script src="js/index.js"></script>
+<script src="js/game.js"></script>
 </html>

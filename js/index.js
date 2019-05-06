@@ -1,3 +1,4 @@
+'use strict'
 /*Sounds*/
 var snd_click = document.getElementById("snd_click");
 var snd_click2 = document.getElementById("snd_click2");
@@ -13,6 +14,8 @@ var z = 0;
 var xLabel = document.getElementById("xLabel");
 var yLabel = document.getElementById("yLabel");
 var zLabel = document.getElementById("zLabel");
+
+
 
 
 function changeX(value){
@@ -37,179 +40,96 @@ function changeNav(nav){
 	var navs = ['stat', 'inv', 'log', 'map', 'radio'];
 	for (var i=0; i<navs.length; i++){
 		if (navs[i] == navigation){
-				document.getElementById(navs[i]).style.textShadow = '-1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray';
+			document.getElementById(navs[i]).style.textShadow = '-1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray';
+			$("#main_"+navs[i]).show();
 		}else{
-				document.getElementById(navs[i]).style.textShadow = 'none';
+			document.getElementById(navs[i]).style.textShadow = 'none';
+			$("#main_"+navs[i]).hide();
 		}
 	}
 	
 }
-
 
 
 
 
 
 /*Radio*/
-var songs = [];
-var playedSongs = [];
-var rando = 0;
-var selectedRadio = ""; //options include: 'newVegas'
+var songNames = []; //array of song names (the playlist)
+var playedSongs = []; //array of already played songs
+var rando = 0; //The random index of which song to play
+var selectedRadio = ""; //the playlist selected, options include: "newVegas", "fallout4"
+var source = document.getElementById("radioSource"); //the <source> tag
+var audio = document.getElementById("radioAudio"); //the <audio> tag
 
-function newVegasRadio(){
+function playSong(index){ //plays a song at a certain index, and adds it to the playedSongs array
+	if (selectedRadio == "newVegas") {source.src = "music/NewVegas/"+songNames[index]+".mp3";}
+	else if (selectedRadio == "fallout4") {source.src = "music/fallout4/"+songNames[index]+".mp3";}
+	audio.load();
+	audio.play();
+	playedSongs[index] = songNames[index];
+}
+
+function randomize(){ //randomizes the rando variable
+	rando = Math.round(Math.random()*songNames.length);
+}
+
+function newVegasRadio(){ //called when button is clicked, initializes New Vegas playlist and plays a song
 	selectedRadio = "newVegas";
-	for (var i=0; i<songs.length; i++){
-		songs[i].currentTime = 0;
-		songs[i].pause();
-	}
-	songs =	[
-	document.getElementById("newVegas0"),
-	document.getElementById("newVegas1"),
-	document.getElementById("newVegas2"),
-	document.getElementById("newVegas3"),
-	document.getElementById("newVegas4"),
-	document.getElementById("newVegas5"),
-	document.getElementById("newVegas6"),
-	document.getElementById("newVegas7"),
-	document.getElementById("newVegas8"),
-	document.getElementById("newVegas9"),
+
+	songNames = ["Aint_that_a_kick_in_the_head", "American_Swing", "Big_Iron", "Blues_for_you", "Cobwebs_and_Rainbows", "Concerto_For_2_VI_Str_In_D_Minor", 
+	"Concerto_Gross_In_B_Minor_Allegro_1", "Concerto_In_B_Minor_Allegro_2", "Flower_Duet", "Four_Seasons_4_The_Winter", "Goin_Under", "Hallo_Mister_X", 
+	"Happy_Times", "Heartaches_by_the_Numbers", "Home_On_The_Wastes", "Im_Moving_Out", "Im_So_Blue", "In_The_Shadow_Of_The_Valley", "Its_A_Sin", 
+	"Its_A_Sin_To_Tell_A_Lie", "Jazz_Blues", "Jazz_Club_Blues", "Jingle_Jangle_Jingle", "Joe_Cool", "Johnny_Guitar", "Lets_Ride_Into_The_Sunset_Together", 
+	"Lone_Star", "Love_Me_As_Though_No_Tomorrow", "Mad_About_The_Boy", "New_Vegas_Valley", "Piano_Corcert_No_21_Elvira_Madigan", "Ride_Of_The_Valkyries",
+	"Roundhouse_Rock", "Sit_And_Dream", "Sleepy_Town_Blues", "Slow_Bounce", "Slow_Sax", "Something_Gotta_Give", "Spring_Song", "Stars_Of_The_Midnight_Ranger",
+	"Strahlende_Tropete", "Streets_Of_New_Reno", "Von_Spanien_Nach_S_Damerika", "Where_Have_You_Been_All_My_Life", "Why_Dont_You_Do_Right"];
 	
-	document.getElementById("newVegas10"),
-	document.getElementById("newVegas11"),
-	document.getElementById("newVegas12"),
-	document.getElementById("newVegas13"),
-	document.getElementById("newVegas14"),
-	document.getElementById("newVegas15"),
-	document.getElementById("newVegas16"),
-	document.getElementById("newVegas17"),
-	document.getElementById("newVegas18"),
-	document.getElementById("newVegas19"),
-	
-	document.getElementById("newVegas20"),
-	document.getElementById("newVegas21"),
-	document.getElementById("newVegas22"),
-	document.getElementById("newVegas23"),
-	document.getElementById("newVegas24"),
-	document.getElementById("newVegas25"),
-	document.getElementById("newVegas26"),
-	document.getElementById("newVegas27"),
-	document.getElementById("newVegas28"),
-	document.getElementById("newVegas29"),
-	
-	document.getElementById("newVegas30"),
-	document.getElementById("newVegas31"),
-	document.getElementById("newVegas32"),
-	document.getElementById("newVegas33"),
-	document.getElementById("newVegas34"),
-	document.getElementById("newVegas35"),
-	document.getElementById("newVegas36"),
-	document.getElementById("newVegas37"),
-	document.getElementById("newVegas38"),
-	document.getElementById("newVegas39"),
-	
-	document.getElementById("newVegas40"),
-	document.getElementById("newVegas41"),
-	document.getElementById("newVegas42"),
-	document.getElementById("newVegas43"),
-	document.getElementById("newVegas44")
-	];
 	playedSongs = [];
-	rando = Math.round(Math.random()*songs.length);
-	songs[rando].play();
-	playedSongs[rando] = songs[rando];
+	randomize();
+	playSong(rando);
 }
-function fallout4Radio(){
+
+function fallout4Radio(){ //called when button is clicked, initializes Fallout 4 playlist and plays a song
 	selectedRadio = "fallout4";
-	for (var i=0; i<songs.length; i++){
-		songs[i].currentTime = 0;
-		songs[i].pause();
-	}
-	songs =	[
-	document.getElementById("fallout40"),
-	document.getElementById("fallout41"),
-	document.getElementById("fallout42"),
-	document.getElementById("fallout43"),
-	document.getElementById("fallout44"),
-	document.getElementById("fallout45"),
-	document.getElementById("fallout46"),
-	document.getElementById("fallout47"),
-	document.getElementById("fallout48"),
-	document.getElementById("fallout49"),
+	songNames = ["A_Wonderful_Guy", "Ac-Cent-Tchu-Ate_the_Positive", "Anything_Goes", "Atom Bomb Baby", "Butcher_Pete_part1", "Butcher_Pete_part2", 
+	"Civilization", "Crawl_Out_Through_the_Fallout", "Crazy_He_Calls_Me", "Dear_Hearts_And_Gentle_People", "Easy_Living", "Good_Rockin_Tonight", 
+	"Grandma_Plays_the_Numbers", "Happy_Times", "Hes_A_Demon,_Hes_A_Devil,_Hes_A_Doll", "I_Dont_Want_to_Set_the_World_on_Fire", 
+	"Into_Each_Life_Some_Rain_Must_Fall", "Its_a_Man", "Its_All_Over_But_the_Crying", "Keep_a_Knockin", "Maybe", "Mighty,_Mighty_Man", 
+	"One_More_Tomorrow", "Orange_Colored_Sky", "Personality", "Pistol_Packin_Mama", "Right_Behind_You_Baby", "Rocket_69", "Sixty_Minute_Man", 
+	"The_End_of_the_World", "The_Wanderer", "Undecided", "Uranium_Fever", "Uranium_Rock", "Way_Back_Home", "Whole_Lotta_Shakin_Goin_On"];
 	
-	document.getElementById("fallout410"),
-	document.getElementById("fallout411"),
-	document.getElementById("fallout412"),
-	document.getElementById("fallout413"),
-	document.getElementById("fallout414"),
-	document.getElementById("fallout415"),
-	document.getElementById("fallout416"),
-	document.getElementById("fallout417"),
-	document.getElementById("fallout418"),
-	document.getElementById("fallout419"),
-	
-	document.getElementById("fallout420"),
-	document.getElementById("fallout421"),
-	document.getElementById("fallout422"),
-	document.getElementById("fallout423"),
-	document.getElementById("fallout424"),
-	document.getElementById("fallout425"),
-	document.getElementById("fallout426"),
-	document.getElementById("fallout427"),
-	document.getElementById("fallout428"),
-	document.getElementById("fallout429"),
-	
-	document.getElementById("fallout430"),
-	document.getElementById("fallout431"),
-	document.getElementById("fallout432"),
-	document.getElementById("fallout433"),
-	document.getElementById("fallout434"),
-	document.getElementById("fallout435")
-	];
 	playedSongs = [];
-	rando = Math.round(Math.random()*songs.length);
-	songs[rando].play();
-	playedSongs[rando] = songs[rando];
+	randomize();
+	playSong(rando);
 }
-function nextSong(){
-	var songsLeft = songs.length;
-	for (var i=0; i<playedSongs.length; i++){
+
+function nextSong(){ //Plays a random song from the playlist that hasn't been played before
+	var songsLeft = songNames.length;
+	for (var i=0; i<playedSongs.length; i++){ //determines amount of songs left in playlist
 		if (playedSongs[i] != null || playedSongs[i] != ""){
 			songsLeft -= 1;
 		}
 	}
-	
-	rando = Math.round(Math.random()*songs.length);
-	if (songsLeft != 0){
-		while (songs[rando] == playedSongs[rando]){
-			rando = Math.round(Math.random()*songs.length);
+	if (songsLeft > 0){ //if there are songs left, play a random song
+		randomize();
+		while (songNames[rando] == playedSongs[rando]){
+			randomize();
 		}
-		songs[rando].play();
-		playedSongs[rando] = songs[rando];
-	}else{
-		newVegasRadio();
+		playSong(rando);
+	}else{ //if there are no songs left, loop the playlist
+		if (selectedRadio=="newVegas"){newVegasRadio();}
+		else if (selectedRadio=="fallout4"){fallout4Radio();}
 	}
-}
-function skipSong(){
-	for (var i=0; i<songs.length; i++){
-		songs[i].currentTime = 0;
-		songs[i].pause();
-	}
-	nextSong();
-}
-function stopRadio(){
-	selectedRadio = "";
-	for (var i=0; i<songs.length; i++){
-		songs[i].currentTime = 0;
-		songs[i].pause();
-	}
-}
-for (var i=0; i<45; i++){
-	document.getElementById("newVegas"+i).onended = function(){nextSong();}
-}
-for (var i=0; i<36; i++){
-	document.getElementById("fallout4"+i).onended = function(){nextSong();}
 }
 
+function stopRadio(){ //stops playing the music
+	selectedRadio = "";
+	audio.currentTime = 0;
+	audio.pause();
+}
+
+audio.onended = function(){nextSong();} //when the current song ends, play the next song
 
 
 
@@ -242,41 +162,6 @@ $(document).ready(function(){
 	$("#newVegasStop").hide();
 	$("#fallout4Skip").hide();
 	$("#fallout4Stop").hide();
-	$("#stat").click(function(){
-		$("#main_stat").show();
-		$("#main_inv").hide();
-		$("#main_log").hide();
-		$("#main_map").hide();
-		$("#main_radio").hide();
-	});
-	$("#inv").click(function(){
-		$("#main_stat").hide();
-		$("#main_inv").show();
-		$("#main_log").hide();
-		$("#main_map").hide();
-		$("#main_radio").hide();
-	});
-	$("#log").click(function(){
-		$("#main_stat").hide();
-		$("#main_inv").hide();
-		$("#main_log").show();
-		$("#main_map").hide();
-		$("#main_radio").hide();
-	});
-	$("#map").click(function(){
-		$("#main_stat").hide();
-		$("#main_inv").hide();
-		$("#main_log").hide();
-		$("#main_map").show();
-		$("#main_radio").hide();
-	});
-	$("#radio").click(function(){
-		$("#main_stat").hide();
-		$("#main_inv").hide();
-		$("#main_log").hide();
-		$("#main_map").hide();
-		$("#main_radio").show();
-	});
 	
 	$(".button1").click(function(){
 		if (selectedRadio == "newVegas"){

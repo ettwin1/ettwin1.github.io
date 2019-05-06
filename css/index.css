@@ -2,14 +2,23 @@ body{
 	color: #00ff00;
 	background-color: black;
 }
-#xLabel, #yLabel, #zLabel{
+p{
 	font-size: 16px;
 	font-family: 'Roboto', sans-serif;
+}
+a{
+	color: #00ff00;
 }
 img{
 	display: block;
 	margin: auto;
 	/*max-width: 100%*/
+}
+iframe{
+	width: 80%;
+	height: auto;
+	border: none;
+	margin-left: 10px;
 }
 button{
 	color: #00ff00;
@@ -50,7 +59,7 @@ button:hover, #newVegasSkip:hover, #newVegasStop:hover, #fallout4Skip:hover, #fa
 	color: black;
 }
 
-a{
+#navigation a{
 	font-family: 'Roboto', sans-serif;
 	font-weight: bold;
 	padding: 4%;
