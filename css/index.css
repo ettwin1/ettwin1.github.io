@@ -14,12 +14,6 @@ img{
 	margin: auto;
 	/*max-width: 100%*/
 }
-iframe{
-	width: 80%;
-	height: auto;
-	border: none;
-	margin-left: 10px;
-}
 button{
 	color: #00ff00;
 	border-color: #00ff00;
@@ -59,6 +53,10 @@ button:hover, #newVegasSkip:hover, #newVegasStop:hover, #fallout4Skip:hover, #fa
 	color: black;
 }
 
+#main_log{
+	padding: 5px;
+}
+
 #navigation a{
 	font-family: 'Roboto', sans-serif;
 	font-weight: bold;
@@ -77,13 +75,8 @@ td{
 
 
 
-
-#top, #side, #container{
+#side,#main,#container{
 	padding: 5px;
-}
-#top{
-	grid-area: top;
-	text-align: center;
 }
 #side{
 	grid-area: side;
@@ -93,10 +86,9 @@ td{
 }
 #container{
 	display: grid;
-	grid-template-columns: 100px auto;
-	grid-template-rows: auto auto;
+	grid-template-columns: 1fr 5fr;
+	grid-template-rows: auto;
 	grid-template-areas:
-	'side main'
 	'side main'
 }
 
