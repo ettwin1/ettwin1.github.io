@@ -4,7 +4,6 @@ var snd_click = document.getElementById("snd_click");
 var snd_click2 = document.getElementById("snd_click2");
 
 /*Menu options include: stat, inv, log, map, radio*/
-var prevNavigation = "";
 var navigation = "stat";
 document.getElementById("stat").style.textShadow = '-1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray';
 var x = 0;
@@ -16,8 +15,31 @@ var yLabel = document.getElementById("yLabel");
 var zLabel = document.getElementById("zLabel");
 
 
+//Inventory
+var inv_list = document.getElementById("inv_list");
+function loadInventory(){
+	inv_list.innerHTML = "";
+	for (var i=0; i<objectIsInInventory.length; i++){
+		if (objectIsInInventory[i] == true){
+			inv_list.innerHTML += "<li><a id='"+object[i].name+"' href='#' onclick='showObjectPopup("+i+")'>"+object[i].name+"</a></li>";
+		}
+	}
+}
+function showObjectPopup(objectIndex){
+	if (!document.getElementById("popup")){
+		var popupElement = document.createElement("div");
+		popupElement.id = "popup";
+		popupElement.innerHTML += "<h4 style='margin:3px'>"+object[objectIndex].name+"</h4>";
+		popupElement.innerHTML += object[objectIndex].popupText;
+		popupElement.innerHTML += "<p style='margin:3px'>[<a href='#' onclick='showObjectPopup()'>X</a>]</p>";
+		inv_list.appendChild(popupElement);
+	}else{
+		inv_list.removeChild(document.getElementById("popup"));
+	}
+}
 
 
+//Navigation
 function changeX(value){
 	x += value;
 	xLabel.innerHTML = "X: "+x;
@@ -47,7 +69,8 @@ function changeNav(nav){
 			$("#main_"+navs[i]).hide();
 		}
 	}
-	
+	//Displaying Inventory
+	if (nav == 'inv'){loadInventory();}
 }
 
 
