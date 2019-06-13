@@ -13,7 +13,7 @@ mapLocation[0][0][1] = {
     atAlleyway : false,
 
     defaultText : "<p>You walk into an abandoned city. You see a <a href='#'onclick='mapLocation[0][0][1].marketplace()'>marketplace</a>, a <a href='#'onclick='mapLocation[0][0][1].tower()'>tower</a>, and an <a href='#'onclick='mapLocation[0][0][1].alleyway()'>alleyway</a>.</p>",
-    marketplaceText : "<p></p>"+
+    marketplaceText : "<p>The marketplace is abandoned with hardly anything useful left. <a href='#' onclick='mapLocation[0][0][1].marketplaceSearch()'>[Search]</a> "+
                     "<a href='#' onclick='mapLocation[0][0][1].default()'>[Back to city]</a></p>",
     towerText : "<p>The tower appears to be a wizard tower. Someone dressed in a wizard robe looks out and says, \"Oi there! I need a banana for one of my potions! Please get me one and I'll reward thee greatly!\" "+
                 "<a href='#' onclick='mapLocation[0][0][1].default()'>[Back to city]</a></p>",
@@ -33,6 +33,14 @@ mapLocation[0][0][1] = {
         mapLocation[0][0][1].atTower = false;
         mapLocation[0][0][1].atMarket = true;
         mapLocation[0][0][1].atAlleyway = false;
+    },
+    marketplaceSearch : function(){
+        if (objectIsInInventory[0] == true || objectIsUsed[0] == true){
+            logText.innerHTML += "<p>You don't find anything.</p>";
+        }else{
+            logText.innerHTML += "<p>You find a banana hidden behind a shelf in a shop. (Banana added to your inventory)</p>";
+            objectIsInInventory[0] = true;
+        }
     },
     tower : function(){
         logText.innerHTML = mapLocation[0][0][1].towerText;

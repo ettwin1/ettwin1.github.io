@@ -15,9 +15,20 @@ var yLabel = document.getElementById("yLabel");
 var zLabel = document.getElementById("zLabel");
 
 
+//Stat
+/*
+	equipment[0] = head = index of object being equipped (-1 for none)
+	equipment[1] = left hand
+	equipment[2] = right hand
+	equipment[3] = body
+	equipment[4] = feet
+*/
+var equipment = [-1,-1,-1,-1,-1];
+
+
 //Inventory
 var inv_list = document.getElementById("inv_list");
-function loadInventory(){
+function loadInventory(){ //when called, it places all the links of objects in the inventory
 	inv_list.innerHTML = "";
 	for (var i=0; i<objectIsInInventory.length; i++){
 		if (objectIsInInventory[i] == true){
@@ -25,11 +36,12 @@ function loadInventory(){
 		}
 	}
 }
-function showObjectPopup(objectIndex){
+function showObjectPopup(objectIndex){ //when called, it creates the popup menu for the specified object
 	if (!document.getElementById("popup")){
 		var popupElement = document.createElement("div");
 		popupElement.id = "popup";
 		popupElement.innerHTML += "<h4 style='margin:3px'>"+object[objectIndex].name+"</h4>";
+		popupElement.innerHTML += (object[objectIndex].equipmentSlot!="") ? ((equipment[1]==1 || equipment[2]==1)?"<p style='margin:3px'><a href='#' onclick='unequipObject("+objectIndex+")'>Unequip</a></p>" : "<p style='margin:3px'><a href='#' onclick='equipObject("+objectIndex+")'>Equip</a></p>") : "";
 		popupElement.innerHTML += object[objectIndex].popupText;
 		popupElement.innerHTML += "<p style='margin:3px'>[<a href='#' onclick='showObjectPopup()'>X</a>]</p>";
 		inv_list.appendChild(popupElement);

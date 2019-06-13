@@ -10,11 +10,57 @@ p{
 a{
 	color: #00ff00;
 }
+
+
+/*Stat*/
 img{
-	display: block;
-	margin: auto;
-	/*max-width: 100%*/
+	/*display: block;
+	margin: auto;*/
+	max-width: 100%;
+	height: auto;
 }
+#main_stat{
+	position: relative;
+}
+#headText, #leftText, #rightText, #bodyText, #feetText{
+	position: absolute;
+}
+#headText p, #leftText p, #rightText p, #bodyText p, #feetText p{
+	font-size: 14px;
+}
+#headText{
+	top: 3%;
+	left: 100px;
+}
+#leftText{
+	top: 20%;
+	left: 25px;
+}
+#rightText{
+	top: 20%;
+	left: 170px;
+}
+#bodyText{
+	top: 37%;
+	left: 100px;
+}
+#feetText{
+	top: 60%;
+	left: 170px;
+}
+
+/*Inv*/
+#inv_list{
+	position: relative;
+}
+#popup{
+	position: absolute;
+	border: 2px solid;
+	left: 150px;
+	top: 0px;
+}
+
+
 button{
 	color: #00ff00;
 	border-color: #00ff00;
@@ -58,15 +104,6 @@ button:hover, #newVegasSkip:hover, #newVegasStop:hover, #fallout4Skip:hover, #fa
 	padding: 5px;
 }
 
-#inv_list{
-	position: relative;
-}
-#popup{
-	position: absolute;
-	border: 2px solid;
-	left: 150px;
-	top: 0px;
-}
 
 
 #navigation a{
@@ -105,7 +142,20 @@ td{
 }
 
 
+/* Extra small devices (phones, 600px and down) 
+@media only screen and (max-width: 600px) {...} 
 
+/* Small devices (portrait tablets and large phones, 600px and up) 
+@media only screen and (min-width: 600px) {...} 
+
+/* Medium devices (landscape tablets, 768px and up) 
+@media only screen and (min-width: 768px) {...} 
+
+/* Large devices (laptops/desktops, 992px and up) 
+@media only screen and (min-width: 992px) {...} 
+
+/* Extra large devices (large laptops and desktops, 1200px and up) 
+@media only screen and (min-width: 1200px) {...}*/
 
 
 
