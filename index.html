@@ -37,6 +37,7 @@
 				<div id="rightText"><p>*unequipped*</p></div>
 				<div id="bodyText"><p>*unequipped*</p></div>
 				<div id="feetText"><p>*unequipped*</p></div>
+				<div id="combatPowerText"><p>Combat Power : 0</p></div>
 			</div>
 			<div id="main_inv">
 				<ul id="inv_list">
@@ -49,18 +50,18 @@
 			<div id="main_map">
 				<table style="text-align:center;">
 					<tr>
-						<td><p id="xLabel">X: 0</p></td>
+						<td><p id="xLabel">X: 2</p></td>
 						<td><p id="yLabel">Y: 0</p></td>
-						<td><p id="zLabel">Z: 0</p></td>
+						<td><p id="zLabel">Z: 2</p></td>
 					</tr>
 					<tr>
 						<td><button class="button2" type="button" onclick="changeX(1);">X+</button></td>
-						<td><button class="button2" type="button" onclick="changeY(1);">Y+</button></td>
+						<td><button class="button2" type="button" onclick="changeY(1);" disabled="true" hidden="true">Y+</button></td>
 						<td><button class="button2" type="button" onclick="changeZ(1);">Z+</button></td>
 					</tr>
 					<tr>
 						<td><button class="button2" type="button" onclick="changeX(-1);">X-</button></td>
-						<td><button class="button2" type="button" onclick="changeY(-1);">Y-</button></td>
+						<td><button class="button2" type="button" onclick="changeY(-1);" disabled="true" hidden="true">Y-</button></td>
 						<td><button class="button2" type="button" onclick="changeZ(-1);">Z-</button></td>
 					</tr>
 					<tr>

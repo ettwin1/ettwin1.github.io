@@ -6,13 +6,15 @@ var snd_click2 = document.getElementById("snd_click2");
 /*Menu options include: stat, inv, log, map, radio*/
 var navigation = "stat";
 document.getElementById("stat").style.textShadow = '-1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray';
-var x = 0;
+var x = 2;
 var y = 0;
-var z = 0;
+var z = 2;
 
 var xLabel = document.getElementById("xLabel");
 var yLabel = document.getElementById("yLabel");
 var zLabel = document.getElementById("zLabel");
+
+var combatPower = 0; //how powerful the player is at combat
 
 
 //Stat
@@ -40,10 +42,10 @@ function showObjectPopup(objectIndex){ //when called, it creates the popup menu 
 	if (!document.getElementById("popup")){
 		var popupElement = document.createElement("div");
 		popupElement.id = "popup";
-		popupElement.innerHTML += "<h4 style='margin:3px'>"+object[objectIndex].name+"</h4>";
-		popupElement.innerHTML += (object[objectIndex].equipmentSlot!="") ? ((equipment[1]==1 || equipment[2]==1)?"<p style='margin:3px'><a href='#' onclick='unequipObject("+objectIndex+")'>Unequip</a></p>" : "<p style='margin:3px'><a href='#' onclick='equipObject("+objectIndex+")'>Equip</a></p>") : "";
+		popupElement.innerHTML += "<h4 style='margin:4px'>"+object[objectIndex].name+"</h4>";
+		popupElement.innerHTML += (object[objectIndex].equipmentSlot!="") ? ((equipment.lastIndexOf(objectIndex) != -1)?"<p style='margin:4px'><a href='#' onclick='unequipObject("+objectIndex+")'>Unequip</a></p>" : "<p style='margin:4px'><a href='#' onclick='equipObject("+objectIndex+")'>Equip</a></p>") : "";
 		popupElement.innerHTML += object[objectIndex].popupText;
-		popupElement.innerHTML += "<p style='margin:3px'>[<a href='#' onclick='showObjectPopup()'>X</a>]</p>";
+		popupElement.innerHTML += "<p style='margin:4px'>[<a href='#' onclick='showObjectPopup()'>X</a>]</p>";
 		inv_list.appendChild(popupElement);
 	}else{
 		inv_list.removeChild(document.getElementById("popup"));
@@ -53,9 +55,11 @@ function showObjectPopup(objectIndex){ //when called, it creates the popup menu 
 
 //Navigation
 function changeX(value){
-	x += value;
-	xLabel.innerHTML = "X: "+x;
-	snd_click2.play();
+	if ((x+value) < 5 && (x+value) > -1){
+		x += value;
+		xLabel.innerHTML = "X: "+x;
+		snd_click2.play();
+	}
 }
 function changeY(value){
 	y += value;
@@ -63,9 +67,11 @@ function changeY(value){
 	snd_click2.play();
 }
 function changeZ(value){
-	z += value;
-	zLabel.innerHTML = "Z: "+z;
-	snd_click2.play();
+	if ((z+value) < 5 && (z+value) > -1){
+		z += value;
+		zLabel.innerHTML = "Z: "+z;
+		snd_click2.play();
+	}
 }
 function changeNav(nav){
 	navigation = nav;

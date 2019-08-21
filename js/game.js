@@ -1,13 +1,14 @@
 //These are coordinates currently at, not coordinates being displayed in map
-var X = 0;
+var X = 2;
 var Y = 0;
-var Z = 0;
+var Z = 2;
 
 //Creating inventory array that has the same number of indexes as the object array, and returns true or false to whether the object is in the inventory
 var objectIsInInventory = [];
 for (var i=0; i<object.length; i++){
 	objectIsInInventory[i] = false;
 }
+objectIsInInventory[0] = true;
 objectIsInInventory[1] = true;
 //Creating a similar array as the inventory one, but determines if an objects has been used or not
 var objectIsUsed = [];
@@ -16,25 +17,35 @@ for (var i=0; i<object.length; i++){
 }
 
 
+
 var logText = document.getElementById("log_text");
-logText.innerHTML=mapLocation[0][0][0].defaultText;
+logText.innerHTML="<p>You wake up in an open grassy field. You see a wacky machine in front of you, which you don't remember anything about, except that you need a 128 GB flashdrive, 35 pounds of gold, and a radiation-proof suit in order to fix it.</p>";
 
 function travel(){
-	if (mapLocation[X][Y][Z].defaultText){
+	if (mapLocation[x][y][z].defaultText != ""){ //************* temporary if statement *******
 		X = x;
 		Y = y;
 		Z = z;
-		logText.innerHTML=mapLocation[X][Y][Z].defaultText;
+		if (x==4 && y==0 && z==2){
+			var rando = Math.floor(Math.random()*10);
+			if (rando < 4){
+				logText.innerHTML = mapLocation[X][Y][Z].defaultText3;
+				mapLocation[X][Y][Z].gofer = "small";
+			}else if (rando >= 4 && rando < 7){
+				logText.innerHTML = mapLocation[X][Y][Z].defaultText2;
+				mapLocation[X][Y][Z].gofer = "medium";
+			}else{
+				logText.innerHTML = mapLocation[X][Y][Z].defaultText1;
+				mapLocation[X][Y][Z].gofer = "large";
+			}
+		}else{
+			logText.innerHTML=mapLocation[X][Y][Z].defaultText;
+		}
 		changeNav('log');
 	}else{
-		alert("Error traveling to location: (X:"+X+", Y:"+Y+", Z:"+Z+")");
+		alert("Error traveling to location: (X:"+x+", Y:"+y+", Z:"+z+")");
 	}
 }
-
-/*
-function dontHaveObject(){
-	logText.innerHTML += "<p>You don't have the required object here</p>";
-}*/
 
 //Object Functions
 
@@ -48,50 +59,55 @@ function equipObject(objectIndex){
 		if (equipment[0] == -1){
 			equipment[0] = objectIndex;
 			logText.innerHTML += "<p>Equipped "+object[objectIndex].name+".</p>";
-			document.getElementById("headText").innerHTML = "<p>"+object[objectIndex].name+"</p>";
+			document.getElementById("headText").innerHTML = "<p>"+object[objectIndex].name+" +"+object[objectIndex].combatBonus+"</p>";
 		}else{
 			logText.innerHTML += "<p>Equipped "+object[objectIndex].name+" and unequipped "+object[equipment[0]].name+".</p>";
 			equipment[0] = objectIndex;
-			document.getElementById("headText").innerHTML = "<p>"+object[objectIndex].name+"</p>";
+			document.getElementById("headText").innerHTML = "<p>"+object[objectIndex].name+" +"+object[objectIndex].combatBonus+"</p>";
 		}
 	}else if (object[objectIndex].equipmentSlot == 'hand'){
 		if (equipment[1] == -1){
 			equipment[1] = objectIndex;
 			logText.innerHTML += "<p>Equipped "+object[objectIndex].name+" in right hand.</p>";
-			document.getElementById("leftText").innerHTML = "<p>"+object[objectIndex].name+"</p>";
+			document.getElementById("leftText").innerHTML = "<p>"+object[objectIndex].name+" +"+object[objectIndex].combatBonus+"</p>";
 		}else if (equipment[2] == -1){
 			equipment[2] = objectIndex;
 			logText.innerHTML += "<p>Equipped "+object[objectIndex].name+" in left hand.</p>";
-			document.getElementById("rightText").innerHTML = "<p>"+object[objectIndex].name+"</p>";
+			document.getElementById("rightText").innerHTML = "<p>"+object[objectIndex].name+" +"+object[objectIndex].combatBonus+"</p>";
 		}else{
 			logText.innerHTML += "<p>Equipped "+object[objectIndex].name+" and unequipped "+object[equipment[2]].name+".</p>";
 			equipment[2] = objectIndex;
-			document.getElementById("rightText").innerHTML = "<p>"+object[objectIndex].name+"</p>";
+			document.getElementById("rightText").innerHTML = "<p>"+object[objectIndex].name+" +"+object[objectIndex].combatBonus+"</p>";
 		}
 	}else if (object[objectIndex].equipmentSlot == 'body'){
 		if (equipment[3] == -1){
 			equipment[3] = objectIndex;
 			logText.innerHTML += "<p>Equipped "+object[objectIndex].name+".</p>";
-			document.getElementById("bodyText").innerHTML = "<p>"+object[objectIndex].name+"</p>";
+			document.getElementById("bodyText").innerHTML = "<p>"+object[objectIndex].name+" +"+object[objectIndex].combatBonus+"</p>";
 		}else{
 			logText.innerHTML += "<p>Equipped "+object[objectIndex].name+" and unequipped "+object[equipment[3]].name+".</p>";
 			equipment[3] = objectIndex;
-			document.getElementById("bodyText").innerHTML = "<p>"+object[objectIndex].name+"</p>";
+			document.getElementById("bodyText").innerHTML = "<p>"+object[objectIndex].name+" +"+object[objectIndex].combatBonus+"</p>";
 		}
 	}else if (object[objectIndex].equipmentSlot == 'feet'){
 		if (equipment[4] == -1){
 			equipment[4] = objectIndex;
 			logText.innerHTML += "<p>Equipped "+object[objectIndex].name+".</p>";
-			document.getElementById("feetText").innerHTML = "<p>"+object[objectIndex].name+"</p>";
+			document.getElementById("feetText").innerHTML = "<p>"+object[objectIndex].name+" +"+object[objectIndex].combatBonus+"</p>";
 		}else{
 			logText.innerHTML += "<p>Equipped "+object[objectIndex].name+" and unequipped "+object[equipment[4]].name+".</p>";
 			equipment[4] = objectIndex;
-			document.getElementById("feetText").innerHTML = "<p>"+object[objectIndex].name+"</p>";
+			document.getElementById("feetText").innerHTML = "<p>"+object[objectIndex].name+" +"+object[objectIndex].combatBonus+"</p>";
 		}
 	}else{
 		alert("Object "+object[objectIndex].name+" somehow called the equipObject() function when it shouldn't have");
 	}
 	changeNav('log');
+
+	if (object[objectIndex].equipmentSlot != ""){ // Adding combat bonus of the object to the combat power
+		combatPower += object[objectIndex].combatBonus;
+		document.getElementById("combatPowerText").innerHTML = "<p>Combat Power: "+combatPower+"</p>"; //refreshing combat power html text
+	}
 }
 
 function unequipObject(objectIndex){
@@ -112,4 +128,9 @@ function unequipObject(objectIndex){
 		alert("Somehow, object "+object[objectIndex].name+" was able to call unequipObject() when the object wasn't equipped");
 	}
 	changeNav('log');
+
+	if (object[objectIndex].equipmentSlot != ""){ // Subtracting combat bonus of the object to the combat power
+		combatPower -= object[objectIndex].combatBonus;
+		document.getElementById("combatPowerText").innerHTML = "<p>Combat Power: "+combatPower+"</p>"; //refreshing combat power html text
+	}
 }
