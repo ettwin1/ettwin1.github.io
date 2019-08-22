@@ -17,35 +17,32 @@ for (var i=0; i<object.length; i++){
 }
 
 
-
+//Travelling and Log functions
 var logText = document.getElementById("log_text");
 logText.innerHTML="<p>You wake up in an open grassy field. You see a wacky machine in front of you, which you don't remember anything about, except that you need a 128 GB flashdrive, 35 pounds of gold, and a radiation-proof suit in order to fix it.</p>";
 
 function travel(){
-	if (mapLocation[x][y][z].defaultText != ""){ //************* temporary if statement *******
-		X = x;
-		Y = y;
-		Z = z;
-		if (x==4 && y==0 && z==2){
-			var rando = Math.floor(Math.random()*10);
-			if (rando < 4){
-				logText.innerHTML = mapLocation[X][Y][Z].defaultText3;
-				mapLocation[X][Y][Z].gofer = "small";
-			}else if (rando >= 4 && rando < 7){
-				logText.innerHTML = mapLocation[X][Y][Z].defaultText2;
-				mapLocation[X][Y][Z].gofer = "medium";
-			}else{
-				logText.innerHTML = mapLocation[X][Y][Z].defaultText1;
-				mapLocation[X][Y][Z].gofer = "large";
-			}
+	X = x;
+	Y = y;
+	Z = z;
+	if (x==4 && y==0 && z==2){
+		var rando = Math.floor(Math.random()*10);
+		if (rando < 4){
+			logText.innerHTML = mapLocation[X][Y][Z].defaultText3;
+			mapLocation[X][Y][Z].gofer = "small";
+		}else if (rando >= 4 && rando < 7){
+			logText.innerHTML = mapLocation[X][Y][Z].defaultText2;
+			mapLocation[X][Y][Z].gofer = "medium";
 		}else{
-			logText.innerHTML=mapLocation[X][Y][Z].defaultText;
+			logText.innerHTML = mapLocation[X][Y][Z].defaultText1;
+			mapLocation[X][Y][Z].gofer = "large";
 		}
-		changeNav('log');
 	}else{
-		alert("Error traveling to location: (X:"+x+", Y:"+y+", Z:"+z+")");
+		logText.innerHTML=mapLocation[X][Y][Z].defaultText;
 	}
+	changeNav('log');
 }
+
 
 //Object Functions
 
@@ -132,5 +129,51 @@ function unequipObject(objectIndex){
 	if (object[objectIndex].equipmentSlot != ""){ // Subtracting combat bonus of the object to the combat power
 		combatPower -= object[objectIndex].combatBonus;
 		document.getElementById("combatPowerText").innerHTML = "<p>Combat Power: "+combatPower+"</p>"; //refreshing combat power html text
+	}
+}
+
+
+
+//Location functions
+
+function gossip(location){ //adds random dialogue based on your location
+	var rando = Math.floor(Math.random()*10); //returns 0-9
+	if (location == "armor"){
+		switch (rando){
+			case 0 : logText.innerHTML += "<p>I need to add some rumors in the gossip function in game.js</p>";
+			default : logText.innerHTML += "<p>I need to add some rumors in the gossip function in game.js</p>";
+		}
+	}else if (location == "restaurant"){
+		switch (rando){
+			case 0 : logText.innerHTML += "<p>I need to add some rumors in the gossip function in game.js</p>";
+			default : logText.innerHTML += "<p>I need to add some rumors in the gossip function in game.js</p>";
+		}
+	}
+}
+
+function removeRandomObject(){ //returns a random object id that can be removed, or -1 if there's none
+	var removableObjects = [];
+	for (var i=0; i<objectIsInInventory.length; i++){
+		if (objectIsInInventory[i] == true){
+			if (object[i].necessary == false){
+				removableObjects.push(i);
+			}
+		}
+	}
+	if (removableObjects[0] == null){
+		return(-1);
+	}else{
+		var rando = Math.floor(Math.random()*removableObjects.length);
+		return(removableObjects[rando]);
+	}
+}
+
+function describe(place){
+	if (place == "library"){
+		logText.innerHTML += "<p>The library is covered in vines and smells of rotting books.</p>";
+	}else if (place == "sewage"){
+		logText.innerHTML += "<p>Down the metal sewage grate you see some climbing gear. Unfortunately you can't reach it. Perhaps you could get it if you found a way into the sewers...</p>";
+	}else if (place == "supermutant"){
+		logText.innerHTML += "<p>The Super Mutant looks like a human, except much taller, much stronger, and has yellowish-greenish skin.</p>";
 	}
 }

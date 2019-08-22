@@ -6,6 +6,7 @@ object[0] = {
     name : "Bottle Caps: 0",
     equipmentSlot : "",
     amount : 0,
+    necessary : true,
 
     popupText : "<p style='margin:4px'><a href='#' onclick='displayDescription(0)'>Examine</a></p>",
     description : "<p>Bottle caps are used as currency.</p>",
@@ -15,6 +16,7 @@ object[1] = {
     name : "Wrench",
     equipmentSlot : "hand",                                                                                             
     combatBonus : 1,
+    necessary : true,
 
     popupText : "<p style='margin:4px'><a href='#' onclick='object[1].useObject(X,Y,Z)'>Use</a></p>"+
     "<p style='margin:4px'><a href='#' onclick='displayDescription(1)'>Examine</a></p>",
@@ -38,6 +40,7 @@ object[1] = {
 object[2] = {
     name : "Banana",
     equipmentSlot : "",
+    necessary : true,
 
     popupText : "<p style='margin:4px'><a href='#' onclick='object[2].useObject(X,Y,Z)'>Use</a></p>"+
                 "<p style='margin:4px'><a href='#' onclick='displayDescription(2)'>Examine</a></p>",
@@ -59,22 +62,26 @@ object[2] = {
 object[3] = {
     name : "V.A.T.S.",
     equipmentSlot : "",
+    necessary : true,
 
     popupText : "<p style='margin:4px'><a href='#' onclick='object[3].useObject(X,Y,Z)'>Use</a></p>"+
                 "<p style='margin:4px'><a href='#' onclick='displayDescription(3)'>Examine</a></p>",
     description : "<p>The Vault-Tec Assisted Targeting System is used to determine if an enemy can be defeated given your current combat power. Use it when you have the option to attack someone.</p>",
-    willWinText : "<p>With "+combatPower+" combat power, you have a 100% chance of defeating this target.</p>",
-    willLoseText : "<p>With "+combatPower+" combat power, you have a 0% chance of defeating this target.</p>",
-    maybeWinText : "<p>With "+combatPower+" combat power, you have a 50% chance of defeating this target.</p>",
     
     useObject : function(x,y,z){
-        if (y == 0 && x == 4 && z == 2){
+        if (x == 4 && y == 0 && z == 2){ //Thieving Gofers
             if (mapLocation[4][0][2].gofer == "small"){
                 this.calculateOdds(2);
             }else if (mapLocation[4][0][2].gofer == "medium"){
                 this.calculateOdds(4);
             }else if (mapLocation[4][0][2].gofer == "large"){
                 this.calculateOdds(8);
+            }else{
+                logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
+            }
+        }else if (x == 0 && y == 0 & z == 2){ //Super Mutant
+            if (mapLocation[0][0][2].canAttack == true){
+                this.calculateOdds(10);
             }else{
                 logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
             }
@@ -86,11 +93,11 @@ object[3] = {
 
     calculateOdds : function(enemyCombatPower){
         if (combatPower > enemyCombatPower){
-            logText.innerHTML += this.willWinText;
+            logText.innerHTML += "<p>With "+combatPower+" combat power, you have a 100% chance of defeating this target.</p>";
         }else if (combatPower == enemyCombatPower){
-            logText.innerHTML += this.maybeWinText;
+            logText.innerHTML += "<p>With "+combatPower+" combat power, you have a 50% chance of defeating this target.</p>";
         }else if (combatPower < enemyCombatPower){
-            logText.innerHTML += this.willLoseText;
+            logText.innerHTML += "<p>With "+combatPower+" combat power, you have a 0% chance of defeating this target.</p>";
         }
     }
 }
@@ -98,6 +105,7 @@ object[3] = {
 object[4] = {
     name : "Book",
     equipmentSlot : "",
+    necessary : true,
 
     popupText : "<p style='margin:4px'><a href='#' onclick='object[4].useObject(X,Y,Z)'>Use</a></p>"+
                 "<p style='margin:4px'><a href='#' onclick='displayDescription(4)'>Examine</a></p>",
@@ -119,6 +127,7 @@ object[4] = {
 object[5] = {
     name : "Fancy Clothes",
     equipmentSlot : "",
+    necessary : true,
 
     popupText : "<p style='margin:4px'><a href='#' onclick='object[4].useObject(X,Y,Z)'>Use</a></p>"+
                 "<p style='margin:4px'><a href='#' onclick='displayDescription(4)'>Examine</a></p>",
@@ -141,6 +150,7 @@ object[6] = {
     name : "Knight Helmet",
     equipmentSlot : "head",                                                                                             
     combatBonus : 2,
+    necessary : false,
 
     popupText : "<p style='margin:4px'><a href='#' onclick='displayDescription(6)'>Examine</a></p>",
     description : "<p>It's one of those classic knight helmets. It's a little rusty and heavy, but still strong. Gives a +2 bonus to Combat Power when equipped.</p>",
@@ -150,6 +160,7 @@ object[7] = {
     name : "Knight Chestplate",
     equipmentSlot : "body",                                                                                             
     combatBonus : 2,
+    necessary : false,
 
     popupText : "<p style='margin:4px'><a href='#' onclick='displayDescription(7)'>Examine</a></p>",
     description : "<p>It's a metal chestplate. It's a little rusty and heavy, but still strong. Gives a +2 bonus to Combat Power when equipped.</p>",
@@ -159,6 +170,7 @@ object[8] = {
     name : "Knight Boots",
     equipmentSlot : "feet",                                                                                             
     combatBonus : 2,
+    necessary : false,
 
     popupText : "<p style='margin:4px'><a href='#' onclick='displayDescription(8)'>Examine</a></p>",
     description : "<p>They're boots made out of metal. It's a little rusty and heavy, but still strong. Gives a +2 bonus to Combat Power when equipped.</p>",
@@ -168,6 +180,7 @@ object[9] = {
     name : "Leather Helmet",
     equipmentSlot : "head",                                                                                             
     combatBonus : 1,
+    necessary : false,
 
     popupText : "<p style='margin:4px'><a href='#' onclick='displayDescription(9)'>Examine</a></p>",
     description : "<p>It's a weirdly shaped helmet made of leather. Reminds me of a shower cap. Gives a +1 bonus to Combat Power when equipped.</p>",
@@ -177,6 +190,7 @@ object[10] = {
     name : "Leather Chestplate",
     equipmentSlot : "body",                                                                                             
     combatBonus : 1,
+    necessary : false,
 
     popupText : "<p style='margin:4px'><a href='#' onclick='displayDescription(10)'>Examine</a></p>",
     description :  "<p>It's a leather chestplate. Gives a +1 bonus to Combat Power when equipped.</p>",
@@ -186,6 +200,7 @@ object[11] = {
     name : "Leather Boots",
     equipmentSlot : "feet",                                                                                             
     combatBonus : 1,
+    necessary : false,
 
     popupText : "<p style='margin:4px'><a href='#' onclick='displayDescription(11)'>Examine</a></p>",
     description : "<p>They're leather boots. They're nice and snug. Gives a +1 bonus to Combat Power when equipped.</p>",
@@ -195,6 +210,7 @@ object[12] = {
     name : "Broken Sword",
     equipmentSlot : "hand",                                                                                             
     combatBonus : 2,
+    necessary : false,
 
     popupText : "<p style='margin:4px'><a href='#' onclick='displayDescription(12)'>Examine</a></p>",
     description : "<p>A cool Medieval sword, if you ignore the fact that half the blade is broken off. Gives a +2 bonus to Combat Power when equipped.</p>",
@@ -202,7 +218,8 @@ object[12] = {
 
 object[13] = {
     name : "Brahmin Steak",
-    equipmentSlot : "",                                                                                             
+    equipmentSlot : "",
+    necessary : false,                                                                                        
 
     popupText : "<p style='margin:4px'><a href='#' onclick='object[13].eatObject()'>Eat</a></p>"+
     "<p style='margin:4px'><a href='#' onclick='object[13].useObject(X,Y,Z)'>Use</a></p>"+
@@ -229,7 +246,8 @@ object[13] = {
 
 object[14] = {
     name : "Irradiated Potato",
-    equipmentSlot : "",                                                                                             
+    equipmentSlot : "",
+    necessary : false,                                                                                     
 
     popupText : "<p style='margin:4px'><a href='#' onclick='object[14].eatObject()'>Eat</a></p>"+
     "<p style='margin:4px'><a href='#' onclick='object[14].useObject(X,Y,Z)'>Use</a></p>"+
@@ -256,7 +274,8 @@ object[14] = {
 
 object[15] = {
     name : "Sweet Roll",
-    equipmentSlot : "",                                                                                             
+    equipmentSlot : "",
+    necessary : true,                                                                                       
 
     popupText : "<p style='margin:4px'><a href='#' onclick='object[15].eatObject()'>Eat</a></p>"+
     "<p style='margin:4px'><a href='#' onclick='object[15].useObject(X,Y,Z)'>Use</a></p>"+
@@ -279,4 +298,34 @@ object[15] = {
         objectIsInInventory[15] = false;
         changeNav('log');
     }
+}
+
+object[16] = {
+    name : "Power Helmet",
+    equipmentSlot : "head",                                                                                             
+    combatBonus : 4,
+    necessary : true,
+
+    popupText : "<p style='margin:4px'><a href='#' onclick='displayDescription(16)'>Examine</a></p>",
+    description : "<p>It's T-51 power armor. Feels natural wearing it for some reason. Gives a +4 bonus to Combat Power when equipped.</p>",
+}
+
+object[17] = {
+    name : "Power Body",
+    equipmentSlot : "body",                                                                                             
+    combatBonus : 4,
+    necessary : true,
+
+    popupText : "<p style='margin:4px'><a href='#' onclick='displayDescription(17)'>Examine</a></p>",
+    description : "<p>It's T-51 power armor. Feels natural wearing it for some reason. Gives a +4 bonus to Combat Power when equipped.</p>",
+}
+
+object[18] = {
+    name : "Power Boots",
+    equipmentSlot : "feet",                                                                                             
+    combatBonus : 4,
+    necessary : true,
+
+    popupText : "<p style='margin:4px'><a href='#' onclick='displayDescription(18)'>Examine</a></p>",
+    description : "<p>It's T-51 power armor. Feels natural wearing it for some reason. Gives a +4 bonus to Combat Power when equipped.</p>",
 }

@@ -46,7 +46,7 @@ mapLocation[0][0][1] = {
         if (objectIsInInventory[2] == true || objectIsUsed[2] == true){
             logText.innerHTML += "<p>You don't find anything.</p>";
         }else{
-            logText.innerHTML += "<p>You find a banana hidden behind a shelf in a shop. (Banana added to your inventory)</p>";
+            logText.innerHTML += "<p>You find a banana hidden behind a shelf in a shop. (Banana added to inventory)</p>";
             objectIsInInventory[2] = true;
         }
     },
@@ -177,33 +177,26 @@ mapLocation[3][0][4] = {
 
 //Abandoned Library
 mapLocation[0][0][0] = {
-    defaultText : "<p>You see an abandoned <a href='#' onclick='mapLocation[0][0][0].describe(`library`)'>library</a>. <a href='#' onclick='mapLocation[0][0][0].search()'>[Search]</a></p>",
+    defaultText : "<p>You see an abandoned <a href='#' onclick='describe(`library`)'>library</a>. <a href='#' onclick='mapLocation[0][0][0].search()'>[Search]</a></p>",
 
     search : function(){
         if (objectIsInInventory[4] == true || objectIsUsed[4] == true){
-            logText.innerHTML += "<p>You don't find anything except a <a href='#' onclick='mapLocation[0][0][0].describe(`sewage`)'>sewage grate</a> outside the library you hadn't noticed before.</p>";
+            logText.innerHTML += "<p>You don't find anything except a <a href='#' onclick='describe(`sewage`)'>sewage grate</a> outside the library you hadn't noticed before.</p>";
         }else{
-            logText.innerHTML += "<p>You manage to find a well-preserved book that wasn't destroyed like the others. (Book added to your inventory)</p>";
+            logText.innerHTML += "<p>You manage to find a well-preserved book that wasn't destroyed like the others. (Book added to inventory)</p>";
             objectIsInInventory[4] = true;
         }
     },
-    describe : function(place){
-        if (place == "library"){
-            logText.innerHTML += "<p>The library is covered in vines and smells of rotting books.</p>";
-        }else if (place == "sewage"){
-            logText.innerHTML += "<p>Down the metal sewage grate you see some climbing gear. Unfortunately you can't reach it. Perhaps you could get it if you found a way in the sewers...</p>";
-        }
-    }
 };
 
 //Armor Shop
 mapLocation[3][0][0] = {
     defaultText : "<p>You see a small wooden bulding with sign that says Wasteland's Finest Armor and Clothes Shop. <a href='#' onclick='mapLocation[3][0][0].enter()'>[Enter]</a></p>",
-    enterText : "<p>\"Howdy there pardner,\" says the shopkeeper, \"How can I help you this fine day?\" <a href='#' onclick='mapLocation[3][0][0].lookAtWares()'>[Look At Wares]</a> [Gossip]</p>",
+    enterText : "<p>\"Howdy there pardner,\" says the shopkeeper, \"How can I help you this fine day?\" <a href='#' onclick='mapLocation[3][0][0].lookAtWares()'>[Look At Wares]</a> <a href='#' onclick='gossip(`armor`)'>[Gossip]</a></p>",
     fancyClothesText : "<p>\"Oh yeah, those clothes are nice, but way too big for anyone to wear. Heck, I reckon a super mutant could wear 'em. They're 5 caps. <a href='#' onclick='mapLocation[3][0][0].buy(5,5)'>[Buy]</a> \"</p>",
     knightArmorText : "<p>\"I found those in some old ruins. They're a bit rusty, and quite a deal heavy, but I'm sure they got a lot of fight left in 'em. They're 30 caps. <a href='#' onclick='mapLocation[3][0][0].buy([6,7,8],30)'>[Buy]</a> \"</p>",
     leatherArmorText : "<p>\"I made those with my own hands. Brahmin hide of course. You can buy them for 15 caps. <a href='#' onclick='mapLocation[3][0][0].buy([9,10,11],15)'>[Buy]</a> \"</p>",
-    buyText : "<p>\"Thank you pardner,\" says the shopkeeper as he tips his hat. \"Anything else?\" <a href='#' onclick='mapLocation[3][0][0].lookAtWares()'>[Look At Wares]</a> [Gossip]</p>",
+    buyText : "<p>\"Thank you pardner,\" says the shopkeeper as he tips his hat. \"Anything else?\" <a href='#' onclick='mapLocation[3][0][0].lookAtWares()'>[Look At Wares]</a> <a href='#' onclick='gossip(`armor`)'>[Gossip]</a></p>",
 
     enter : function(){
         logText.innerHTML = this.enterText;
@@ -230,11 +223,11 @@ mapLocation[3][0][0] = {
                     logText.innerHTML += (i != objectIndex.length-1) ? (object[objectIndex[i]].name+", ") : ("and "+object[objectIndex[i]].name+". (");
                 }
                 for (var i=0; i<objectIndex.length; i++){
-                    logText.innerHTML += (i != objectIndex.length-1) ? (object[objectIndex[i]].name+", ") : ("and "+object[objectIndex[i]].name+" added to your inventory)</p>");
+                    logText.innerHTML += (i != objectIndex.length-1) ? (object[objectIndex[i]].name+", ") : ("and "+object[objectIndex[i]].name+" added to inventory)</p>");
                     objectIsInInventory[objectIndex[i]] = true;
                 }
             }else{
-                logText.innerHTML = "<p>You bought "+object[objectIndex].name+". (Fancy Clothes added to your inventory)</p>";
+                logText.innerHTML = "<p>You bought "+object[objectIndex].name+". (Fancy Clothes added to inventory)</p>";
                 objectIsInInventory[objectIndex] = true;
             }
             object[0].amount -= price;
@@ -249,7 +242,7 @@ mapLocation[3][0][0] = {
 //Random Location
 mapLocation[0][0][4] = {
     defaultText : "<p>You find a sword stabbed into a rock. <a href='#' onclick='mapLocation[0][0][4].takeSword()'>[Take Sword]</a></p>",
-    takeSwordText : "<p>You pull the sword, and you realized it was actually a broken sword that was stuck on the rock. (Broken Sword added to your Inventory)</p>",
+    takeSwordText : "<p>You pull the sword, and you realized it was actually a broken sword that was stuck on the rock. (Broken Sword added to inventory)</p>",
 
     takeSword : function(){
         logText.innerHTML += this.takeSwordText;
@@ -261,13 +254,13 @@ mapLocation[0][0][4] = {
 //The Lonely Restaurant
 mapLocation[2][0][0] = {
     defaultText : "<p>You see a building off the road called the Lonely Restaurant. <a href='#' onclick='mapLocation[2][0][0].enter()'>[Enter]</a></p>",
-    enterText : "<p>\"Welcome to the Lonely Restaurant!\" says the waitress, \"What would you like today?\" <a href='#' onclick='mapLocation[2][0][0].lookAtMenu()'>[Look At Menu]</a> [Gossip]</p>",
+    enterText : "<p>\"Welcome to the Lonely Restaurant!\" says the waitress, \"What would you like today?\" <a href='#' onclick='mapLocation[2][0][0].lookAtMenu()'>[Look At Menu]</a> <a href='#' onclick='gossip(`restaurant`)'>[Gossip]</a></p>",
     lookAtMenuText : "<p>Menu: <a href='#' onclick='mapLocation[2][0][0].view(13)'>Brahmin Steak</a>  <a href='#' onclick='mapLocation[2][0][0].view(14)'>Irradiated Potato</a>  <a href='#' onclick='mapLocation[2][0][0].view(15)'>Sweet Roll</a></p>",
     alreadyHaveFoodText : "<p>\"Hey! You can't order the same food again without eating it first! That'd be a waste!\"</p>",
     brahminSteakText : "<p>\"Brahmin steak is my favorite! Second only to sweet rolls, of course. They cost 3 caps.\" <a href='#' onclick='mapLocation[2][0][0].buy(13,3)'>[Buy]</a></p>",
     potatoText : "<p>\"We grow those potatoes on the farm over there. We try to eat them sparingly. They're 1 cap a piece.\" <a href='#' onclick='mapLocation[2][0][0].buy(14,1)'>[Buy]</a></p>",
     sweetRollText : "<p>\"Sweet rolls are the BEST! They taste delicious and aren't even irradiated. They cost 5 caps.\" <a href='#' onclick='mapLocation[2][0][0].buy(15,1)'>[Buy]</a></p>",
-    buyText : "<p>\"Thank you for eating at the Lonely Restaurant! Is there anything else I can do for you?\"  <a href='#' onclick='mapLocation[2][0][0].lookAtMenu()'>[Look At Menu]</a> [Gossip]</p>",
+    buyText : "<p>\"Thank you for eating at the Lonely Restaurant! Is there anything else I can do for you?\"  <a href='#' onclick='mapLocation[2][0][0].lookAtMenu()'>[Look At Menu]</a> <a href='#' onclick='gossip(`restaurant`)'>[Gossip]</a></p>",
 
     enter : function(){
         logText.innerHTML = this.enterText;
@@ -290,7 +283,7 @@ mapLocation[2][0][0] = {
     },
     buy(objectIndex, price){ //objectIndex can be an integer or an array of integers to buy a group of objects
         if (object[0].amount >= price){
-            logText.innerHTML = "<p>You bought the "+object[objectIndex].name+". ("+object[objectIndex].name+" added to your inventory)</p>";
+            logText.innerHTML = "<p>You bought the "+object[objectIndex].name+". ("+object[objectIndex].name+" added to inventory)</p>";
             objectIsInInventory[objectIndex] = true;
             object[0].amount -= price;
             object[0].name = "Bottle Caps: "+object[0].amount;
@@ -300,3 +293,96 @@ mapLocation[2][0][0] = {
         }
     }
 }
+
+//Super Mutant Base
+mapLocation[0][0][2] = {
+    defaultText : "<p>You see a fortress at the top of a hill. It seems dangerous. <a href='#' onclick='mapLocation[0][0][2].runUp()'>[Run up]</a> <a href='#' onclick='mapLocation[0][0][2].walkUp()'>[Walk up]</a> <a href='#' onclick='mapLocation[0][0][2].sneakUp()'>[Sneak up]</a></p>",
+    walkUpText : "<p>You walk up to the top of the hill and a <a href='#' onclick='describe(`supermutant`)'>Super Mutant</a> stands there and says, \"What's it you want, human?\" <a href='#' onclick='mapLocation[0][0][2].attack()'>[\"I want you to die\" (Attack)]</a> <a href='#' onclick='mapLocation[0][0][2].help()'>[\"I want to help you\"]</a></p>",
+    sneakUpText : "<p>You sneak up to the top of the hill and see a <a href='#' onclick='describe(`supermutant`)'>Super Mutant</a> going in and out of the fortress. <a href='#' onclick='mapLocation[0][0][2].attack()'>[Attack]</a> <a href='#' onclick='mapLocation[0][0][2].help()'>[Talk]</a></p>",
+    winText : "<p>You killed the Super Mutant and took his Power Armor nearby. (Power Helmet, Power Body, and Power Boots added to inventory)</p>",
+    winText2 : "<p>\"As you killed the Super Mutant, his last words were \"Why.. I thought you were my friend...\" You took his Power Armor nearby (Power Helmet, Power Body, and Power Boots added to inventory)</p>",
+    helpText : "<p>\"Help me? No human has asked me that before, except when I was a human. I wish the humans would treat me better again.\" <a href='#' onclick='mapLocation[0][0][2].help2()'>[\"Maybe you can start by not shooting at them\"]</a></p>",
+    helpText2 : "<p>\"Yeah, I suppose I just assume they want my stuff. Maybe if I act more like a human, they'll be more friendly to me. Alright, if you want to help, get me the best human clothes, the best human food, and the best human book.\" <a href='#' onclick='mapLocation[0][0][2].help3()'>[\"I'll see to it\"]</a></p>",
+    helpText3 : "<p>\"Oh, and as a reward, you can have the Power Armor I found. It's not like it fits me anyway. Goodbye human friend! \"</p>", 
+
+    isFriends : false,
+    canAttack : false,
+    hasClothes : false,
+    hasFood : false,
+    hasBook : false,
+
+    runUp : function(){
+        var objIndex = removeRandomObject();
+        if (objIndex == -1){
+            logText.innerHTML = "<p>You run up the hill and a turret starts firing at you. You get back down before you or any of your stuff gets damaged.</p>";
+        }else{
+            logText.innerHTML = "<p>You run up the hill and a turret starts firing at you. You get back down, but not before the "+object[objIndex].name+" was hit and destroyed. ("+object[objIndex].name+" removed from Inventory)</p>";
+            objectIsInInventory[objIndex] = false;
+        }
+    },
+    walkUp : function(){
+        logText.innerHTML = this.walkUpText;
+        this.canAttack = true;
+    },
+    sneakUp : function(){
+        logText.innerHTML = this.sneakUpText;
+        this.canAttack = true;
+    },
+    help : function(){
+        logText.innerHTML = this.helpText;
+        this.canAttack = false;
+    },
+    help2 : function(){
+        logText.innerHTML += this.helpText2;
+        this.isFriends = true;
+        this.defaultText =  "<p>You meet the Super Mutant at the top of the hill, and he says \"Hello human friend! Do you have the best human clothes, food, and book? Remember, I'll give you Power Armor as a reward.\" <a href='#' onclick='mapLocation[0][0][2].attack()'>[Attack]</a></p>";
+        this.canAttack = true;
+    },
+    help3 : function(){
+        logText.innerHTML += this.helpText3;
+    },
+    attack : function(){
+        if (combatPower > 10){
+            this.win();
+        }else if (combatPower == 10){
+            var rando = Math.floor(Math.random()*2);
+            (rando == 1) ? this.win() : this.lose()
+        }else if (combatPower < 10){
+            this.lose();
+        }
+    },
+    win : function(){
+        if (this.isFriends == true){
+            logText.innerHTML = this.winText2;
+        }else{
+            logText.innerHTML = this.winText;
+        }
+        objectIsInInventory[16] = true;
+        objectIsInInventory[17] = true;
+        objectIsInInventory[18] = true;
+        this.canAttack = false;
+        this.defaultText = "<p>You see a fortress at the top of a hill. The fortress once belonged to the Super Mutant you killed.</p>";
+    },
+    lose : function(){
+        if (this.isFriends == true){
+            var objIndex = removeRandomObject();
+            if (objIndex == -1){
+                logText.innerHTML = "<p>\"What's this human? I thought we were friends. I'll forgive you if you give me this.\" He takes all of your bottle caps.</p>";
+                object[0].amount = 0;
+                object[0].name = "Bottle Caps: "+object[0].amount;
+            }else{
+                logText.innerHTML = "<p>\"What's this human? I thought we were friends. I'll forgive you if you give me this.\" He takes the "+object[objIndex].name+". ("+object[objIndex].name+" removed from Inventory)</p>";
+                objectIsInInventory[objIndex] = false;
+            }
+        }else{
+            var objIndex = removeRandomObject();
+            if (objIndex == -1){
+                logText.innerHTML = "<p>The Super Mutant pushed you down the hill, but you survived. Barely.</p>";
+            }else{
+                logText.innerHTML = "<p>The Super Mutant took the "+object[objIndex].name+" from you as he pushed you down the hill. ("+object[objIndex].name+" removed from Inventory)</p>";
+                objectIsInInventory[objIndex] = false;
+            }
+        }
+    }
+
+};
