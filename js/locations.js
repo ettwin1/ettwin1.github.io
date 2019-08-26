@@ -10,7 +10,7 @@ var mapLocation = [
 
 //Starting Location
 mapLocation[2][0][2] = {
-    defaultText : "<p>You see a wacky machine in front of you, which you don't remember anything about, except that you need a 128 GB flashdrive, 35 pounds of gold, and a radiation-proof suit in order to fix it.</p>"
+    defaultText : "<p>You see a wacky machine in front of you, which you don't remember anything about, except that you need a 128 GB storage module, 35 pounds of gold, and a radiation-proof suit in order to fix it.</p>"
 };
 
 //Abandoned city
@@ -298,15 +298,15 @@ mapLocation[2][0][0] = {
 mapLocation[0][0][2] = {
     defaultText : "<p>You see a fortress at the top of a hill. It seems dangerous. <a href='#' onclick='mapLocation[0][0][2].runUp()'>[Run up]</a> <a href='#' onclick='mapLocation[0][0][2].walkUp()'>[Walk up]</a> <a href='#' onclick='mapLocation[0][0][2].sneakUp()'>[Sneak up]</a></p>",
     walkUpText : "<p>You walk up to the top of the hill and a <a href='#' onclick='describe(`supermutant`)'>Super Mutant</a> stands there and says, \"What's it you want, human?\" <a href='#' onclick='mapLocation[0][0][2].attack()'>[\"I want you to die\" (Attack)]</a> <a href='#' onclick='mapLocation[0][0][2].help()'>[\"I want to help you\"]</a></p>",
-    sneakUpText : "<p>You sneak up to the top of the hill and see a <a href='#' onclick='describe(`supermutant`)'>Super Mutant</a> going in and out of the fortress. <a href='#' onclick='mapLocation[0][0][2].attack()'>[Attack]</a> <a href='#' onclick='mapLocation[0][0][2].help()'>[Talk]</a></p>",
+    sneakUpText : "<p>You sneak up to the top of the hill and see a <a href='#' onclick='describe(`supermutant`)'>Super Mutant</a> going in and out of the fortress. <a href='#' onclick='mapLocation[0][0][2].attack()'>[Attack]</a> <a href='#' onclick='mapLocation[0][0][2].help()'>[\"Hey there, need help?\" (Talk)]</a></p>",
     winText : "<p>You killed the Super Mutant and took his Power Armor nearby. (Power Helmet, Power Body, and Power Boots added to inventory)</p>",
     winText2 : "<p>\"As you killed the Super Mutant, his last words were \"Why.. I thought you were my friend...\" You took his Power Armor nearby (Power Helmet, Power Body, and Power Boots added to inventory)</p>",
     helpText : "<p>\"Help me? No human has asked me that before, except when I was a human. I wish the humans would treat me better again.\" <a href='#' onclick='mapLocation[0][0][2].help2()'>[\"Maybe you can start by not shooting at them\"]</a></p>",
     helpText2 : "<p>\"Yeah, I suppose I just assume they want my stuff. Maybe if I act more like a human, they'll be more friendly to me. Alright, if you want to help, get me the best human clothes, the best human food, and the best human book.\" <a href='#' onclick='mapLocation[0][0][2].help3()'>[\"I'll see to it\"]</a></p>",
-    helpText3 : "<p>\"Oh, and as a reward, you can have the Power Armor I found. It's not like it fits me anyway. Goodbye human friend! \"</p>", 
+    helpText3 : "<p>\"Oh, and as a reward, you can have the Power Armor I found. It's not like it fits me anyway. Good luck human friend! \"</p>", 
 
     isFriends : false,
-    canAttack : false,
+    canAttack : false, //for V.A.T.S., is true when player has option to attack
     hasClothes : false,
     hasFood : false,
     hasBook : false,
@@ -342,13 +342,15 @@ mapLocation[0][0][2] = {
         logText.innerHTML += this.helpText3;
     },
     attack : function(){
-        if (combatPower > 10){
-            this.win();
-        }else if (combatPower == 10){
-            var rando = Math.floor(Math.random()*2);
-            (rando == 1) ? this.win() : this.lose()
-        }else if (combatPower < 10){
-            this.lose();
+        if (this.canAttack == false){
+            if (combatPower > 10){
+                this.win();
+            }else if (combatPower == 10){
+                var rando = Math.floor(Math.random()*2);
+                (rando == 1) ? this.win() : this.lose()
+            }else if (combatPower < 10){
+                this.lose();
+            }
         }
     },
     win : function(){
@@ -383,6 +385,46 @@ mapLocation[0][0][2] = {
                 objectIsInInventory[objIndex] = false;
             }
         }
+    },
+    getObject : function(){
+        if (this.hasClothes && this.hasFood && this.hasBook){
+            this.canAttack = false;
+            logText.innerHTML += "<p>\"I finally have them all! Thank you human friend. With these, maybe I can make some more human friends. Here's your power armor I promised. (Power Helmet, Power Body, and Power Boots added to inventory)\"</p>";
+            objectIsInInventory[16] = true;
+            objectIsInInventory[17] = true;
+            objectIsInInventory[18] = true;
+            this.defaultText = "<p>You meet the Super Mutant at the top of the hill, and he says \"Thank you again for getting those items for me. I'm sure the other humans won't be as afraid of me now.\"</p>";
+        }else if (this.hasClothes && this.hasFood && !this.hasBook){
+            this.defaultText = "<p>You meet the Super Mutant at the top of the hill, and he says \"Hello human friend! I have the best clothes and food, but do you have the best human book? Remember, I'll give you Power Armor as a reward.\" <a href='#' onclick='mapLocation[0][0][2].attack()'>[Attack]</a></p>";
+        }else if (this.hasClothes && !this.hasFood && this.hasBook){
+            this.defaultText = "<p>You meet the Super Mutant at the top of the hill, and he says \"Hello human friend! I have the best clothes and book, but do you have the best human food? Remember, I'll give you Power Armor as a reward.\" <a href='#' onclick='mapLocation[0][0][2].attack()'>[Attack]</a></p>";
+        }else if (!this.hasClothes && this.hasFood && this.hasBook){
+            this.defaultText = "<p>You meet the Super Mutant at the top of the hill, and he says \"Hello human friend! I have the best food and book, but do you have the best human clothes? Remember, I'll give you Power Armor as a reward.\" <a href='#' onclick='mapLocation[0][0][2].attack()'>[Attack]</a></p>";
+        }else if (!this.hasClothes && !this.hasFood && this.hasBook){
+            this.defaultText = "<p>You meet the Super Mutant at the top of the hill, and he says \"Hello human friend! I have the best book, but do you have the best human clothes and food? Remember, I'll give you Power Armor as a reward.\" <a href='#' onclick='mapLocation[0][0][2].attack()'>[Attack]</a></p>";
+        }else if (this.hasClothes && !this.hasFood && !this.hasBook){
+            this.defaultText = "<p>You meet the Super Mutant at the top of the hill, and he says \"Hello human friend! I have the best clothes, but do you have the best human food and book? Remember, I'll give you Power Armor as a reward.\" <a href='#' onclick='mapLocation[0][0][2].attack()'>[Attack]</a></p>";
+        }else if (!this.hasClothes && this.hasFood && !this.hasBook){
+            this.defaultText = "<p>You meet the Super Mutant at the top of the hill, and he says \"Hello human friend! I have the best food, but do you have the best human clothes and book? Remember, I'll give you Power Armor as a reward.\" <a href='#' onclick='mapLocation[0][0][2].attack()'>[Attack]</a></p>";
+        }else if (!this.hasClothes && !this.hasFood && !this.hasBook){
+            this.defaultText = "<p>You meet the Super Mutant at the top of the hill, and he says \"Hello human friend! Do you have the best human clothes, food, and book? Remember, I'll give you Power Armor as a reward.\" <a href='#' onclick='mapLocation[0][0][2].attack()'>[Attack]</a></p>";
+        }
     }
 
+};
+
+//Abandoned gun store
+mapLocation[1][0][0] = {
+    defaultText  : "<p>You find an abandoned gun shop. <a href='#' onclick='mapLocation[1][0][0].search()'>[Search]</a></p>",
+    searchText : "<p>You don't find any guns, but you do find some spare parts and a lockpick. (Spare Parts and Lockpick added to Inventory)</p>",
+
+    search : function(){
+        if (objectIsInInventory[19] || objectIsUsed[19] || objectIsInInventory[20] || objectIsUsed[20]){
+            logText.innerHTML += "<p>You don't find anything else useful here.</p>";
+        }else{
+            logText.innerHTML += this.searchText;
+            objectIsInInventory[19] = true;
+            objectIsInInventory[20] = true;
+        }
+    }
 };

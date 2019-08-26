@@ -19,7 +19,7 @@ for (var i=0; i<object.length; i++){
 
 //Travelling and Log functions
 var logText = document.getElementById("log_text");
-logText.innerHTML="<p>You wake up in an open grassy field. You see a wacky machine in front of you, which you don't remember anything about, except that you need a 128 GB flashdrive, 35 pounds of gold, and a radiation-proof suit in order to fix it.</p>";
+logText.innerHTML="<p>You wake up in an open grassy field. You see a wacky machine in front of you, which you don't remember anything about, except that you need a 128 GB storage module, 35 pounds of gold, and a radiation-proof suit in order to fix it.</p>";
 
 function travel(){
 	X = x;
@@ -137,17 +137,19 @@ function unequipObject(objectIndex){
 //Location functions
 
 function gossip(location){ //adds random dialogue based on your location
-	var rando = Math.floor(Math.random()*10); //returns 0-9
+	
 	if (location == "armor"){
-		switch (rando){
-			case 0 : logText.innerHTML += "<p>I need to add some rumors in the gossip function in game.js</p>";
-			default : logText.innerHTML += "<p>I need to add some rumors in the gossip function in game.js</p>";
-		}
+		var gossipList = [
+			"<p>\"If you're lookin' for some caps, I heard there's some gofers that like to steal money. Maybe you can steal it back from them. They live northeast of here.\"</p>"
+		];
+		var rando = Math.floor(Math.random()*gossipList.length); //returns random index from gossipList
+		logText.innerHTML += gossipList[rando];	
 	}else if (location == "restaurant"){
-		switch (rando){
-			case 0 : logText.innerHTML += "<p>I need to add some rumors in the gossip function in game.js</p>";
-			default : logText.innerHTML += "<p>I need to add some rumors in the gossip function in game.js</p>";
-		}
+		var gossipList = [
+			"<p>\"Okay, so there are these pesky gofers that steal caps from people! Maybe you can help by killing them them for us. They live northeast of here.\"</p>"
+		];
+		var rando = Math.floor(Math.random()*gossipList.length); //returns random index from gossipList
+		logText.innerHTML += gossipList[rando];	
 	}
 }
 

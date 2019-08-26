@@ -20,10 +20,10 @@ object[1] = {
 
     popupText : "<p style='margin:4px'><a href='#' onclick='object[1].useObject(X,Y,Z)'>Use</a></p>"+
     "<p style='margin:4px'><a href='#' onclick='displayDescription(1)'>Examine</a></p>",
-    description : "<p>It's a small rusted wrench. If I remember correctly, I don't need to use this for that wacky machine anymore. Gives a +1 bonus to Combat Power when equipped.</p>",
+    description : "<p>It's a small rusted wrench. You think you were using it for that wacky machine, but you don't need it anymore. Gives a +1 bonus to Combat Power when equipped.</p>",
 
     useObject : function(x,y,z){
-        if (y == 0 && x == 3 && z == 4){
+        if (Y == 0 && X == 3 && Z == 4){
             logText.innerHTML += "<p>\"Oh, thank you sir! In thanks, I give you this. It's a Vault-Tec Assisted Targeting System, or V.A.T.S. for short. Anyway, got to go. Goodbye!\" (V.A.T.S. added to your inventory)</p>";
             objectIsInInventory[1] = false;
             objectIsUsed[1] = true;
@@ -47,7 +47,7 @@ object[2] = {
     description : "<p>The banana is yellow, ripe, and looks like a smile.</p>",
     
     useObject : function(x,y,z){
-        if (y == 0 && x == 0 && z == 1 && mapLocation[0][0][1].atTower == true){
+        if (Y == 0 && X == 0 && Z == 1 && mapLocation[0][0][1].atTower == true){
             logText.innerHTML += "\"Oh thank you kind sir!\" says the wizard, \"Now for your reward... NOTHING! MUAHAHAHAHA\" ";
             objectIsInInventory[2] = false;
             objectIsUsed[2] = true;
@@ -69,7 +69,7 @@ object[3] = {
     description : "<p>The Vault-Tec Assisted Targeting System is used to determine if an enemy can be defeated given your current combat power. Use it when you have the option to attack someone.</p>",
     
     useObject : function(x,y,z){
-        if (x == 4 && y == 0 && z == 2){ //Thieving Gofers
+        if (X == 4 && Y == 0 && Z == 2){ //Thieving Gofers
             if (mapLocation[4][0][2].gofer == "small"){
                 this.calculateOdds(2);
             }else if (mapLocation[4][0][2].gofer == "medium"){
@@ -79,7 +79,7 @@ object[3] = {
             }else{
                 logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
             }
-        }else if (x == 0 && y == 0 & z == 2){ //Super Mutant
+        }else if (X == 0 && Y == 0 & Z == 2){ //Super Mutant
             if (mapLocation[0][0][2].canAttack == true){
                 this.calculateOdds(10);
             }else{
@@ -112,14 +112,15 @@ object[4] = {
     description : "<p>Seems to be an adventure book about a safari explorer discovering a place called Atlantis.</p>",
     
     useObject : function(x,y,z){
-        /*if (y == 0 && x == 0 && z == 1 && mapLocation[0][0][1].atTower == true){
-            logText.innerHTML += "\"Oh thank you kind sir!\" says the wizard, \"Now for your reward... NOTHING! MUAHAHAHAHA\" ";
-            objectIsInInventory[2] = false;
-            objectIsUsed[2] = true;
-            mapLocation[0][0][1].towerText = "<p>\"What are you doing here?\" says the wizard looking out the window, \"I cheated you already. That's it. There's nothing else for you here! <a href='#' onclick='mapLocation[0][0][1].default()'>[Back to city]</a></p>";
-        }else{*/
+        if (Y == 0 && X == 0 && Z == 2 && mapLocation[0][0][2].isFriends == true && mapLocation[0][0][2].hasBook == false){
+            logText.innerHTML += "<p>\"It looks like a good book. I haven't read anything in a century, but I can manage it. Thank you human friend.\"</p>";
+            objectIsInInventory[4] = false;
+            objectIsUsed[4] = true;
+            mapLocation[0][0][2].hasBook = true;
+            mapLocation[0][0][2].getObject();
+        }else{
             logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
-        //}
+        }
         changeNav('log');
     }
 };
@@ -129,19 +130,20 @@ object[5] = {
     equipmentSlot : "",
     necessary : true,
 
-    popupText : "<p style='margin:4px'><a href='#' onclick='object[4].useObject(X,Y,Z)'>Use</a></p>"+
-                "<p style='margin:4px'><a href='#' onclick='displayDescription(4)'>Examine</a></p>",
-    description : "<p>Seems to be an adventure book about a safari explorer discovering a place called Atlantis.</p>",
+    popupText : "<p style='margin:4px'><a href='#' onclick='object[5].useObject(X,Y,Z)'>Use</a></p>"+
+                "<p style='margin:4px'><a href='#' onclick='displayDescription(5)'>Examine</a></p>",
+    description : "<p>These clothes have fancy frills and a cravat. However, there so big you'd have to be at least 8 feet tall to look remotely good in them.</p>",
     
     useObject : function(x,y,z){
-        /*if (y == 0 && x == 0 && z == 1 && mapLocation[0][0][1].atTower == true){
-            logText.innerHTML += "\"Oh thank you kind sir!\" says the wizard, \"Now for your reward... NOTHING! MUAHAHAHAHA\" ";
-            objectIsInInventory[2] = false;
-            objectIsUsed[2] = true;
-            mapLocation[0][0][1].towerText = "<p>\"What are you doing here?\" says the wizard looking out the window, \"I cheated you already. That's it. There's nothing else for you here! <a href='#' onclick='mapLocation[0][0][1].default()'>[Back to city]</a></p>";
-        }else{*/
+        if (Y == 0 && X == 0 && Z == 2 && mapLocation[0][0][2].isFriends == true && mapLocation[0][0][2].hasClothes == false){
+            logText.innerHTML += "<p>\"Now THESE clothes are the best. Very fancy, and they fit! Thank you human friend.\"</p>";
+            objectIsInInventory[5] = false;
+            objectIsUsed[5] = true;
+            mapLocation[0][0][2].hasClothes = true;
+            mapLocation[0][0][2].getObject();
+        }else{
             logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
-        //}
+        }
         changeNav('log');
     }
 };
@@ -183,7 +185,7 @@ object[9] = {
     necessary : false,
 
     popupText : "<p style='margin:4px'><a href='#' onclick='displayDescription(9)'>Examine</a></p>",
-    description : "<p>It's a weirdly shaped helmet made of leather. Reminds me of a shower cap. Gives a +1 bonus to Combat Power when equipped.</p>",
+    description : "<p>It's a weirdly shaped helmet made of leather. Reminds you of a shower cap. Gives a +1 bonus to Combat Power when equipped.</p>",
 };
 
 object[10] = {
@@ -213,7 +215,7 @@ object[12] = {
     necessary : false,
 
     popupText : "<p style='margin:4px'><a href='#' onclick='displayDescription(12)'>Examine</a></p>",
-    description : "<p>A cool Medieval sword, if you ignore the fact that half the blade is broken off. Gives a +2 bonus to Combat Power when equipped.</p>",
+    description : "<p>A cool Medieval sword if you ignore the fact that half the blade is broken off. Gives a +2 bonus to Combat Power when equipped.</p>",
 }
 
 object[13] = {
@@ -227,14 +229,11 @@ object[13] = {
     description : "<p>Cooked steak from the Lonely Restaurant. It's made from Brahmin meat.</p>",
 
     useObject : function(x,y,z){
-        /*if (y == 0 && x == 0 && z == 1 && mapLocation[0][0][1].atTower == true){
-            logText.innerHTML += "\"Oh thank you kind sir!\" says the wizard, \"Now for your reward... NOTHING! MUAHAHAHAHA\" ";
-            objectIsInInventory[2] = false;
-            objectIsUsed[2] = true;
-            mapLocation[0][0][1].towerText = "<p>\"What are you doing here?\" says the wizard looking out the window, \"I cheated you already. That's it. There's nothing else for you here! <a href='#' onclick='mapLocation[0][0][1].default()'>[Back to city]</a></p>";
-        }else{*/
+        if (Y == 0 && X == 0 && Z == 2 && mapLocation[0][0][2].isFriends == true && mapLocation[0][0][2].hasFood == false){
+            logText.innerHTML += "<p>\"This can't be the best human food. I eat this everyday. If I want to be more like a human, I have to eat HUMAN food, and the best they have.\"</p>";
+        }else{
             logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
-        //}
+        }
         changeNav('log');
     },
     eatObject : function(){
@@ -255,18 +254,15 @@ object[14] = {
     description : "<p>It's a potato that was grown in irradiated land. It's shaped a bit like a boomerang.</p>",
 
     useObject : function(x,y,z){
-        /*if (y == 0 && x == 0 && z == 1 && mapLocation[0][0][1].atTower == true){
-            logText.innerHTML += "\"Oh thank you kind sir!\" says the wizard, \"Now for your reward... NOTHING! MUAHAHAHAHA\" ";
-            objectIsInInventory[2] = false;
-            objectIsUsed[2] = true;
-            mapLocation[0][0][1].towerText = "<p>\"What are you doing here?\" says the wizard looking out the window, \"I cheated you already. That's it. There's nothing else for you here! <a href='#' onclick='mapLocation[0][0][1].default()'>[Back to city]</a></p>";
-        }else{*/
+        if (Y == 0 && X == 0 && Z == 2 && mapLocation[0][0][2].isFriends == true && mapLocation[0][0][2].hasFood == false){
+            logText.innerHTML += "<p>\"Human, you call this the best human food?\" He throws it on the ground. \"get this irradiated piece of junk out of my sight!\"</p>";
+        }else{
             logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
-        //}
+        }
         changeNav('log');
     },
     eatObject : function(){
-        logText.innerHTML += "<p>It tasted okay, but I felt it needed a bit more potato with that radiation.</p>";
+        logText.innerHTML += "<p>It tasted okay, but you felt it needed a bit more potato with that radiation.</p>";
         objectIsInInventory[14] = false;
         changeNav('log');
     }
@@ -283,18 +279,19 @@ object[15] = {
     description : "<p>It's a roll iced with frosting. It was highly recommended by the waitress at the Lonely Restaurant.</p>",
 
     useObject : function(x,y,z){
-        /*if (y == 0 && x == 0 && z == 1 && mapLocation[0][0][1].atTower == true){
-            logText.innerHTML += "\"Oh thank you kind sir!\" says the wizard, \"Now for your reward... NOTHING! MUAHAHAHAHA\" ";
-            objectIsInInventory[2] = false;
-            objectIsUsed[2] = true;
-            mapLocation[0][0][1].towerText = "<p>\"What are you doing here?\" says the wizard looking out the window, \"I cheated you already. That's it. There's nothing else for you here! <a href='#' onclick='mapLocation[0][0][1].default()'>[Back to city]</a></p>";
-        }else{*/
+        if (Y == 0 && X == 0 && Z == 2 && mapLocation[0][0][2].isFriends == true && mapLocation[0][0][2].hasFood == false){
+            logText.innerHTML += "\"<p>This is the best food I've tasted in years! You call these sweet rolls? I'm eating these whenever I can. Thank you human friend.\"</p>";
+            objectIsInInventory[15] = false;
+            objectIsUsed[15] = true;
+            mapLocation[0][0][2].hasFood = true;
+            mapLocation[0][0][2].getObject();
+        }else{
             logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
-        //}
+        }
         changeNav('log');
     },
     eatObject : function(){
-        logText.innerHTML += "<p>It tasted delicious and satisfying. Probably the best food I've ever had.</p>";
+        logText.innerHTML += "<p>It tasted delicious and satisfying. Probably the best food you've ever had.</p>";
         objectIsInInventory[15] = false;
         changeNav('log');
     }
@@ -329,3 +326,49 @@ object[18] = {
     popupText : "<p style='margin:4px'><a href='#' onclick='displayDescription(18)'>Examine</a></p>",
     description : "<p>It's T-51 power armor. Feels natural wearing it for some reason. Gives a +4 bonus to Combat Power when equipped.</p>",
 }
+
+object[19] = {
+    name : "Spare Parts",
+    equipmentSlot : "",
+    necessary : true,
+
+    popupText : "<p style='margin:4px'><a href='#' onclick='object[19].useObject(X,Y,Z)'>Use</a></p>"+
+                "<p style='margin:4px'><a href='#' onclick='displayDescription(19)'>Examine</a></p>",
+    description : "<p>They're spare parts for a gun. You have no idea how to use these pieces. It seems gun engineering is not your area of expertise.</p>",
+    
+    useObject : function(x,y,z){
+        /*if (Y == 0 && X == 0 && Z == 2 && mapLocation[0][0][2].isFriends == true && mapLocation[0][0][2].hasClothes == false){
+            logText.innerHTML += "<p>\"Now THESE clothes are the best. Very fancy, and they fit! Thank you human friend.\"</p>";
+            objectIsInInventory[5] = false;
+            objectIsUsed[5] = true;
+            mapLocation[0][0][2].hasClothes = true;
+            mapLocation[0][0][2].getObject();
+        }else{*/
+            logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
+        //}
+        changeNav('log');
+    }
+};
+
+object[20] = {
+    name : "Lockpick",
+    equipmentSlot : "",
+    necessary : true,
+
+    popupText : "<p style='margin:4px'><a href='#' onclick='object[20].useObject(X,Y,Z)'>Use</a></p>"+
+                "<p style='margin:4px'><a href='#' onclick='displayDescription(20)'>Examine</a></p>",
+    description : "<p>A lockpick, useful for any thief wanting to open something locked.</p>",
+    
+    useObject : function(x,y,z){
+        /*if (Y == 0 && X == 0 && Z == 2 && mapLocation[0][0][2].isFriends == true && mapLocation[0][0][2].hasClothes == false){
+            logText.innerHTML += "<p>\"Now THESE clothes are the best. Very fancy, and they fit! Thank you human friend.\"</p>";
+            objectIsInInventory[5] = false;
+            objectIsUsed[5] = true;
+            mapLocation[0][0][2].hasClothes = true;
+            mapLocation[0][0][2].getObject();
+        }else{*/
+            logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
+        //}
+        changeNav('log');
+    }
+};
