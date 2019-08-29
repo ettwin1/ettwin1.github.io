@@ -28,6 +28,7 @@ object[1] = {
             objectIsInInventory[1] = false;
             objectIsUsed[1] = true;
             objectIsInInventory[3] = true;
+            snd_collect.play();
             mapLocation[3][0][4].defaultText = "<p>The caravan that was here is gone now. There's no one in sight.</p>";
         }else{
             logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
@@ -328,13 +329,36 @@ object[18] = {
 }
 
 object[19] = {
-    name : "Spare Parts",
+    name : "Broken Pistol",
     equipmentSlot : "",
     necessary : true,
 
     popupText : "<p style='margin:4px'><a href='#' onclick='object[19].useObject(X,Y,Z)'>Use</a></p>"+
                 "<p style='margin:4px'><a href='#' onclick='displayDescription(19)'>Examine</a></p>",
-    description : "<p>They're spare parts for a gun. You have no idea how to use these pieces. It seems gun engineering is not your area of expertise.</p>",
+    description : "<p>It's a small gun that doesn't work. It seems gun engineering is not your area of expertise.</p>",
+    
+    useObject : function(x,y,z){
+        if (Y == 0 && X == 4 && Z == 4){
+            logText.innerHTML += "<p>\"You want me to fix this pistol for you? I can do that no problem. That'll be 20 caps.\" <a href='#' onclick='mapLocation[4][0][4].fix()'>[\"Deal.\"]</a></p>";
+            objectIsInInventory[5] = false;
+            objectIsUsed[5] = true;
+            mapLocation[0][0][2].hasClothes = true;
+            mapLocation[0][0][2].getObject();
+        }else{
+            logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
+        }
+        changeNav('log');
+    }
+};
+
+object[20] = {
+    name : "Lockpick",
+    equipmentSlot : "",
+    necessary : true,
+
+    popupText : "<p style='margin:4px'><a href='#' onclick='object[20].useObject(X,Y,Z)'>Use</a></p>"+
+                "<p style='margin:4px'><a href='#' onclick='displayDescription(20)'>Examine</a></p>",
+    description : "<p>A lockpick, useful for any thief wanting to open something locked.</p>",
     
     useObject : function(x,y,z){
         /*if (Y == 0 && X == 0 && Z == 2 && mapLocation[0][0][2].isFriends == true && mapLocation[0][0][2].hasClothes == false){
@@ -350,14 +374,15 @@ object[19] = {
     }
 };
 
-object[20] = {
-    name : "Lockpick",
-    equipmentSlot : "",
+object[21] = {
+    name : "Pistol",
+    equipmentSlot : "hand",
+    combatBonus : 3,
     necessary : true,
 
-    popupText : "<p style='margin:4px'><a href='#' onclick='object[20].useObject(X,Y,Z)'>Use</a></p>"+
-                "<p style='margin:4px'><a href='#' onclick='displayDescription(20)'>Examine</a></p>",
-    description : "<p>A lockpick, useful for any thief wanting to open something locked.</p>",
+    popupText : "<p style='margin:4px'><a href='#' onclick='object[21].useObject(X,Y,Z)'>Use</a></p>"+
+                "<p style='margin:4px'><a href='#' onclick='displayDescription(21)'>Examine</a></p>",
+    description : "<p>A recently fixed pistol. Works like a charm. Gives a +3 bonus to Combat Power when equipped.</p>",
     
     useObject : function(x,y,z){
         /*if (Y == 0 && X == 0 && Z == 2 && mapLocation[0][0][2].isFriends == true && mapLocation[0][0][2].hasClothes == false){

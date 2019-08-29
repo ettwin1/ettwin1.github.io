@@ -51,6 +51,16 @@ function displayDescription(objectIndex){
 	changeNav('log');
 }
 
+function recalcuateCombatPower(){ //Goes through everything equipped and adds combat power
+	combatPower = 0;
+	for (var i=0; i<5; i++){
+		if (equipment[i] != -1){
+			combatPower += object[equipment[i]].combatBonus;
+		}
+	}
+	document.getElementById("combatPowerText").innerHTML = "<p>Combat Power: "+combatPower+"</p>"; //refreshing combat power html text
+}
+
 function equipObject(objectIndex){
 	if (object[objectIndex].equipmentSlot == 'head'){
 		if (equipment[0] == -1){
@@ -71,10 +81,20 @@ function equipObject(objectIndex){
 			equipment[2] = objectIndex;
 			logText.innerHTML += "<p>Equipped "+object[objectIndex].name+" in left hand.</p>";
 			document.getElementById("rightText").innerHTML = "<p>"+object[objectIndex].name+" +"+object[objectIndex].combatBonus+"</p>";
-		}else{
-			logText.innerHTML += "<p>Equipped "+object[objectIndex].name+" and unequipped "+object[equipment[2]].name+".</p>";
-			equipment[2] = objectIndex;
-			document.getElementById("rightText").innerHTML = "<p>"+object[objectIndex].name+" +"+object[objectIndex].combatBonus+"</p>";
+		}else{ //If both hands are equipped, replace the worse weapon
+			if (object[equipment[1]].combatBonus > object[equipment[2]].combatBonus){
+				logText.innerHTML += "<p>Equipped "+object[objectIndex].name+" and unequipped "+object[equipment[2]].name+".</p>";
+				equipment[2] = objectIndex;
+				document.getElementById("rightText").innerHTML = "<p>"+object[objectIndex].name+" +"+object[objectIndex].combatBonus+"</p>";
+			}else if (object[equipment[1]].combatBonus < object[equipment[2]].combatBonus){
+				logText.innerHTML += "<p>Equipped "+object[objectIndex].name+" and unequipped "+object[equipment[1]].name+".</p>";
+				equipment[1] = objectIndex;
+				document.getElementById("leftText").innerHTML = "<p>"+object[objectIndex].name+" +"+object[objectIndex].combatBonus+"</p>";
+			}else{
+				logText.innerHTML += "<p>Equipped "+object[objectIndex].name+" and unequipped "+object[equipment[2]].name+".</p>";
+				equipment[2] = objectIndex;
+				document.getElementById("rightText").innerHTML = "<p>"+object[objectIndex].name+" +"+object[objectIndex].combatBonus+"</p>";
+			}
 		}
 	}else if (object[objectIndex].equipmentSlot == 'body'){
 		if (equipment[3] == -1){
@@ -100,11 +120,7 @@ function equipObject(objectIndex){
 		alert("Object "+object[objectIndex].name+" somehow called the equipObject() function when it shouldn't have");
 	}
 	changeNav('log');
-
-	if (object[objectIndex].equipmentSlot != ""){ // Adding combat bonus of the object to the combat power
-		combatPower += object[objectIndex].combatBonus;
-		document.getElementById("combatPowerText").innerHTML = "<p>Combat Power: "+combatPower+"</p>"; //refreshing combat power html text
-	}
+	recalcuateCombatPower();
 }
 
 function unequipObject(objectIndex){
@@ -125,11 +141,7 @@ function unequipObject(objectIndex){
 		alert("Somehow, object "+object[objectIndex].name+" was able to call unequipObject() when the object wasn't equipped");
 	}
 	changeNav('log');
-
-	if (object[objectIndex].equipmentSlot != ""){ // Subtracting combat bonus of the object to the combat power
-		combatPower -= object[objectIndex].combatBonus;
-		document.getElementById("combatPowerText").innerHTML = "<p>Combat Power: "+combatPower+"</p>"; //refreshing combat power html text
-	}
+	recalcuateCombatPower();
 }
 
 
@@ -146,7 +158,7 @@ function gossip(location){ //adds random dialogue based on your location
 		logText.innerHTML += gossipList[rando];	
 	}else if (location == "restaurant"){
 		var gossipList = [
-			"<p>\"Okay, so there are these pesky gofers that steal caps from people! Maybe you can help by killing them them for us. They live northeast of here.\"</p>"
+			"<p>\"Okay, so there are these pesky gofers that steal caps from people! Maybe you can help by killing them for us. They live northeast of here.\"</p>"
 		];
 		var rando = Math.floor(Math.random()*gossipList.length); //returns random index from gossipList
 		logText.innerHTML += gossipList[rando];	

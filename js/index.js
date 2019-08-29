@@ -2,6 +2,7 @@
 /*Sounds*/
 var snd_click = document.getElementById("snd_click");
 var snd_click2 = document.getElementById("snd_click2");
+var snd_collect = document.getElementById("snd_collect");
 
 /*Menu options include: stat, inv, log, map, radio*/
 var navigation = "stat";

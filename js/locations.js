@@ -47,6 +47,7 @@ mapLocation[0][0][1] = {
             logText.innerHTML += "<p>You don't find anything.</p>";
         }else{
             logText.innerHTML += "<p>You find a banana hidden behind a shelf in a shop. (Banana added to inventory)</p>";
+            snd_collect.play();
             objectIsInInventory[2] = true;
         }
     },
@@ -185,6 +186,7 @@ mapLocation[0][0][0] = {
         }else{
             logText.innerHTML += "<p>You manage to find a well-preserved book that wasn't destroyed like the others. (Book added to inventory)</p>";
             objectIsInInventory[4] = true;
+            snd_collect.play();
         }
     },
 };
@@ -233,6 +235,7 @@ mapLocation[3][0][0] = {
             object[0].amount -= price;
             object[0].name = "Bottle Caps: "+object[0].amount;
             logText.innerHTML += this.buyText;
+            snd_collect.play();
         }else{
             logText.innerHTML += "<p>You don't have enough bottle caps to buy that item.</p>";
         }
@@ -248,6 +251,7 @@ mapLocation[0][0][4] = {
         logText.innerHTML += this.takeSwordText;
         this.defaultText = "<p>You see a rock without a sword on it. Nothing else here.</p>";
         objectIsInInventory[12] = true;
+        snd_collect.play();
     }
 }
 
@@ -288,6 +292,7 @@ mapLocation[2][0][0] = {
             object[0].amount -= price;
             object[0].name = "Bottle Caps: "+object[0].amount;
             logText.innerHTML += this.buyText;
+            snd_collect.play();
         }else{
             logText.innerHTML += "<p>You don't have enough bottle caps to buy that item.</p>";
         }
@@ -362,6 +367,7 @@ mapLocation[0][0][2] = {
         objectIsInInventory[16] = true;
         objectIsInInventory[17] = true;
         objectIsInInventory[18] = true;
+        snd_collect.play();
         this.canAttack = false;
         this.defaultText = "<p>You see a fortress at the top of a hill. The fortress once belonged to the Super Mutant you killed.</p>";
     },
@@ -393,6 +399,7 @@ mapLocation[0][0][2] = {
             objectIsInInventory[16] = true;
             objectIsInInventory[17] = true;
             objectIsInInventory[18] = true;
+            snd_collect.play();
             this.defaultText = "<p>You meet the Super Mutant at the top of the hill, and he says \"Thank you again for getting those items for me. I'm sure the other humans won't be as afraid of me now.\"</p>";
         }else if (this.hasClothes && this.hasFood && !this.hasBook){
             this.defaultText = "<p>You meet the Super Mutant at the top of the hill, and he says \"Hello human friend! I have the best clothes and food, but do you have the best human book? Remember, I'll give you Power Armor as a reward.\" <a href='#' onclick='mapLocation[0][0][2].attack()'>[Attack]</a></p>";
@@ -416,7 +423,7 @@ mapLocation[0][0][2] = {
 //Abandoned gun store
 mapLocation[1][0][0] = {
     defaultText  : "<p>You find an abandoned gun shop. <a href='#' onclick='mapLocation[1][0][0].search()'>[Search]</a></p>",
-    searchText : "<p>You don't find any guns, but you do find some spare parts and a lockpick. (Spare Parts and Lockpick added to Inventory)</p>",
+    searchText : "<p>You don't find any guns, but you do find a broken pistol and a lockpick. (Broken Pistol and Lockpick added to Inventory)</p>",
 
     search : function(){
         if (objectIsInInventory[19] || objectIsUsed[19] || objectIsInInventory[20] || objectIsUsed[20]){
@@ -425,6 +432,38 @@ mapLocation[1][0][0] = {
             logText.innerHTML += this.searchText;
             objectIsInInventory[19] = true;
             objectIsInInventory[20] = true;
+            snd_collect.play();
+        }
+    }
+};
+
+//Raggedy Shack
+mapLocation[4][0][4] = {
+    defaultText : "<p>You see an old man living in a raggedy shack. \"Hello there,\" he says, \"Welcome to my humble abode.\" <a href='#' onclick='mapLocation[4][0][4].search()'>[Search]</a> <a href='#' onclick='mapLocation[4][0][4].talk()'>[Talk]</a></p>",
+    searchText : "<p>You don't find anything useful, just some mechanic equipment you don't need. \"Hey! You can't search my place like it's some abandoned site!\"</p>",
+    talkText : "<p>\"I was a weapon mechanic for the Brotherhood of Steel. I got kicked out, and they'd kill me if I got to close. So now I live here.\" <a href='#' onclick='mapLocation[4][0][4].mechanic()'>[\"Weapon Mechanic?\"]</a></p>",
+    mechanicText : "<p>\"That's right. I can fix any broken weapons you have for just 20 caps. Just try to keep it quiet though, I don't want to attract the attention of the Brotherhood of Steel.\"</p>",
+
+    search : function(){
+        logText.innerHTML += this.searchText;
+    },
+    talk : function(){
+        logText.innerHTML += this.talkText;
+    },
+    mechanic : function(){
+        logText.innerHTML += this.mechanicText;
+    },
+    fix : function(){
+        if (object[0].amount < 20){
+            logText.innerHTML += "<p>You don't have enough caps to fix that item.</p>";
+        }else{
+            logText.innerHTML += "<p>\"Thank you for the business. Now make sure to keep this quiet, I don't want to attract any unwanted attention here.\" (Pistol added to inventory)</p>";
+            objectIsInInventory[19] = false;
+            objectIsUsed[19] = true;
+            objectIsInInventory[21] = true;
+            snd_collect.play();
+            object[0].amount -= 20;
+            object[0].name = "Bottle Caps: "+object[0].amount;
         }
     }
 };
