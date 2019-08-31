@@ -37,6 +37,8 @@ function travel(){
 			logText.innerHTML = mapLocation[X][Y][Z].defaultText1;
 			mapLocation[X][Y][Z].gofer = "large";
 		}
+	}else if (x==3 && y==0 & z==3){
+		mapLocation[X][Y][Z].setUp(removeRandomObject());
 	}else{
 		logText.innerHTML=mapLocation[X][Y][Z].defaultText;
 	}
@@ -189,5 +191,7 @@ function describe(place){
 		logText.innerHTML += "<p>Down the metal sewage grate you see some climbing gear. Unfortunately you can't reach it. Perhaps you could get it if you found a way into the sewers...</p>";
 	}else if (place == "supermutant"){
 		logText.innerHTML += "<p>The Super Mutant looks like a human, except much taller, much stronger, and has yellowish-greenish skin.</p>";
+	}else if (place == "safe"){
+		logText.innerHTML += "<p>The iron safe most likely holds something valueable. The lock on it could probably be opened with a lockpick.</p>";
 	}
 }

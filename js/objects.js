@@ -86,6 +86,12 @@ object[3] = {
             }else{
                 logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
             }
+        }else if (X == 3 && Y == 0 & Z == 3){ //Bullet Gang
+            if (mapLocation[3][0][3].canAttack == true){
+                this.calculateOdds(12);
+            }else{
+                logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
+            }
         }else{
             logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
         }
@@ -361,15 +367,15 @@ object[20] = {
     description : "<p>A lockpick, useful for any thief wanting to open something locked.</p>",
     
     useObject : function(x,y,z){
-        /*if (Y == 0 && X == 0 && Z == 2 && mapLocation[0][0][2].isFriends == true && mapLocation[0][0][2].hasClothes == false){
-            logText.innerHTML += "<p>\"Now THESE clothes are the best. Very fancy, and they fit! Thank you human friend.\"</p>";
-            objectIsInInventory[5] = false;
-            objectIsUsed[5] = true;
-            mapLocation[0][0][2].hasClothes = true;
-            mapLocation[0][0][2].getObject();
-        }else{*/
+        if (Y == 0 && X == 1 && Z == 1){
+            logText.innerHTML += "<p>You use the lockpick to open the iron safe in the shop. Inside is a grenade launcher. (Grenade Launcher added to inventory)</p>";
+            objectIsInInventory[20] = false;
+            objectIsUsed[20] = true;
+            objectIsInInventory[22] = true;
+            snd_collect.play();
+        }else{
             logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
-        //}
+        }
         changeNav('log');
     }
 };
@@ -397,3 +403,75 @@ object[21] = {
         changeNav('log');
     }
 };
+
+object[22] = {
+    name : "Grenade Launcher",
+    equipmentSlot : "hand",
+    combatBonus : 4,
+    necessary : true,
+
+    popupText : "<p style='margin:4px'><a href='#' onclick='object[22].useObject(X,Y,Z)'>Use</a></p>"+
+                "<p style='margin:4px'><a href='#' onclick='displayDescription(22)'>Examine</a></p>",
+    description : "<p>This gun shoots grenades. Preserved in an iron safe for centuries. Gives a +4 bonus to Combat Power when equipped.</p>",
+    
+    useObject : function(x,y,z){
+        /*if (Y == 0 && X == 0 && Z == 2 && mapLocation[0][0][2].isFriends == true && mapLocation[0][0][2].hasClothes == false){
+            logText.innerHTML += "<p>\"Now THESE clothes are the best. Very fancy, and they fit! Thank you human friend.\"</p>";
+            objectIsInInventory[5] = false;
+            objectIsUsed[5] = true;
+            mapLocation[0][0][2].hasClothes = true;
+            mapLocation[0][0][2].getObject();
+        }else{*/
+            logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
+        //}
+        changeNav('log');
+    }
+};
+
+object[23] = {
+    name : "Sniper",
+    equipmentSlot : "hand",
+    combatBonus : 4,
+    necessary : true,
+
+    popupText : "<p style='margin:4px'><a href='#' onclick='object[23].useObject(X,Y,Z)'>Use</a></p>"+
+                "<p style='margin:4px'><a href='#' onclick='displayDescription(23)'>Examine</a></p>",
+    description : "<p>This gun is well taken care of. It shoots things very accurately. Gives a +4 bonus to Combat Power when equipped.</p>",
+    
+    useObject : function(x,y,z){
+        /*if (Y == 0 && X == 0 && Z == 2 && mapLocation[0][0][2].isFriends == true && mapLocation[0][0][2].hasClothes == false){
+            logText.innerHTML += "<p>\"Now THESE clothes are the best. Very fancy, and they fit! Thank you human friend.\"</p>";
+            objectIsInInventory[5] = false;
+            objectIsUsed[5] = true;
+            mapLocation[0][0][2].hasClothes = true;
+            mapLocation[0][0][2].getObject();
+        }else{*/
+            logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
+        //}
+        changeNav('log');
+    }
+};
+
+object[24] = {
+    name : "Machine Gun",
+    equipmentSlot : "hand",
+    combatBonus : 4,
+    necessary : true,
+
+    popupText : "<p style='margin:4px'><a href='#' onclick='object[24].useObject(X,Y,Z)'>Use</a></p>"+
+                "<p style='margin:4px'><a href='#' onclick='displayDescription(24)'>Examine</a></p>",
+    description : "<p>This gun is well taken care of. It shoots a lot of bullets very fast. Gives a +4 bonus to Combat Power when equipped.</p>",
+    
+    useObject : function(x,y,z){
+        /*if (Y == 0 && X == 0 && Z == 2 && mapLocation[0][0][2].isFriends == true && mapLocation[0][0][2].hasClothes == false){
+            logText.innerHTML += "<p>\"Now THESE clothes are the best. Very fancy, and they fit! Thank you human friend.\"</p>";
+            objectIsInInventory[5] = false;
+            objectIsUsed[5] = true;
+            mapLocation[0][0][2].hasClothes = true;
+            mapLocation[0][0][2].getObject();
+        }else{*/
+            logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
+        //}
+        changeNav('log');
+    }
+}

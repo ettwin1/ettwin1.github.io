@@ -117,14 +117,17 @@ mapLocation[4][0][2] = {
             logText.innerHTML = this.winLargeGoferText;
             object[0].amount += 20;
             object[0].name = "Bottle Caps: "+object[0].amount;
+            snd_caps.play();
         }else if (size == "medium"){
             logText.innerHTML = this.winMediumGoferText;
             object[0].amount += 10;
             object[0].name = "Bottle Caps: "+object[0].amount;
+            snd_caps.play();
         }else if (size == "small"){
             logText.innerHTML = this.winSmallGoferText;
             object[0].amount += 5;
             object[0].name = "Bottle Caps: "+object[0].amount;
+            snd_caps.play();
         }
         this.gofer = "";
     },
@@ -205,8 +208,8 @@ mapLocation[3][0][0] = {
     },
     lookAtWares : function(){
         logText.innerHTML += "<p>Wares: "+((objectIsInInventory[5] == true || objectIsUsed[5] == true) ? "" : "<a href='#' onclick='mapLocation[3][0][0].view(`fancyClothes`)'>Fancy Clothes</a>  ")+
-                             ((objectIsInInventory[6] == true) ? "" : "<a href='#' onclick='mapLocation[3][0][0].view(`knightArmor`)'>Knight Armor</a>  ")+
-                             ((objectIsInInventory[9] == true) ? "" : "<a href='#' onclick='mapLocation[3][0][0].view(`leatherArmor`)'>Leather Armor</a>")+"</p>";
+                             ((objectIsInInventory[6] == true  || objectIsUsed[6] == true) ? "" : "<a href='#' onclick='mapLocation[3][0][0].view(`knightArmor`)'>Knight Armor</a>  ")+
+                             ((objectIsInInventory[9] == true  || objectIsUsed[9] == true) ? "" : "<a href='#' onclick='mapLocation[3][0][0].view(`leatherArmor`)'>Leather Armor</a>")+"</p>";
     },
     view(object){
         if (object == "fancyClothes"){
@@ -242,7 +245,7 @@ mapLocation[3][0][0] = {
     }
 }
 
-//Random Location
+//Stuck Sword
 mapLocation[0][0][4] = {
     defaultText : "<p>You find a sword stabbed into a rock. <a href='#' onclick='mapLocation[0][0][4].takeSword()'>[Take Sword]</a></p>",
     takeSwordText : "<p>You pull the sword, and you realized it was actually a broken sword that was stuck on the rock. (Broken Sword added to inventory)</p>",
@@ -347,7 +350,7 @@ mapLocation[0][0][2] = {
         logText.innerHTML += this.helpText3;
     },
     attack : function(){
-        if (this.canAttack == false){
+        if (this.canAttack){
             if (combatPower > 10){
                 this.win();
             }else if (combatPower == 10){
@@ -381,6 +384,7 @@ mapLocation[0][0][2] = {
             }else{
                 logText.innerHTML = "<p>\"What's this human? I thought we were friends. I'll forgive you if you give me this.\" He takes the "+object[objIndex].name+". ("+object[objIndex].name+" removed from Inventory)</p>";
                 objectIsInInventory[objIndex] = false;
+                objectIsUsed[objIndex] = true;
             }
         }else{
             var objIndex = removeRandomObject();
@@ -389,6 +393,7 @@ mapLocation[0][0][2] = {
             }else{
                 logText.innerHTML = "<p>The Super Mutant took the "+object[objIndex].name+" from you as he pushed you down the hill. ("+object[objIndex].name+" removed from Inventory)</p>";
                 objectIsInInventory[objIndex] = false;
+                objectIsUsed[objIndex] = true;
             }
         }
     },
@@ -467,3 +472,74 @@ mapLocation[4][0][4] = {
         }
     }
 };
+
+//Abandoned explosive store
+mapLocation[1][0][1] = {
+    defaultText : "<p>You see an abandoned store that once sold explosives. <a href='#' onclick='mapLocation[1][0][1].search()'>[Search]</a></p>",
+    searchText : "<p>Most of the store has already been ransacked except for an unopened <a href='#' onclick='describe(`safe`)'>safe</a>.</p>",
+    searchText2 : "<p>Most of the store has already been ransacked. You don't find anything useful.</p>",
+
+    search : function(){
+        if (objectIsUsed[20]){
+            logText.innerHTML += this.searchText2;
+        }else{
+            logText.innerHTML += this.searchText;
+        }
+    }
+};
+
+//Bullet Gang
+mapLocation[3][0][3] = {
+    canAttack : true,
+    objectsOwned : [23,24], //objects that you'll get if you kill the bullet gang
+    moneyOwned : 100,
+
+    setUp : function(objectIndex){
+        if (this.canAttack){
+            if (objectIndex != -1){
+                logText.innerHTML = "<p>As you travel, a group of armed people stop you and say, \"We're the Bullet Gang. We don't care who you are, we're taking your stuff.\" ("+object[objectIndex].name+" removed from Inventory) <a href='#' onclick='mapLocation[3][0][3].attack()'>[\"Give me my stuff back!\" (Attack)]</a></p>";
+                objectIsInInventory[objectIndex] = false;
+                objectIsUsed[objectIndex] = true;
+                this.objectsOwned.push(objectIndex);
+            }else{
+                logText.innerHTML = "<p>As you travel, a group of armed people stop you and say, \"We're the Bullet Gang. We don't care who you are, we're taking your caps.\" All of your Bottle Caps were taken. <a href='#' onclick='mapLocation[3][0][3].attack()'>[\"Give me my stuff back!\" (Attack)]</a></p>";
+                this.moneyOwned += object[0].amount;
+                object[0].amount = 0;
+                object[0].name = "Bottle Caps: "+object[0].amount; 
+            }
+        }else{
+            logText.innerHTML = "<p>You find what's left of the Bullet Gang, a pile of dead bodies.</p>";
+        }
+    },
+    attack : function(){
+        if (this.canAttack){
+            if (combatPower > 10){
+                this.win();
+            }else if (combatPower == 10){
+                var rando = Math.floor(Math.random()*2);
+                (rando == 1) ? this.win() : this.lose()
+            }else if (combatPower < 10){
+                this.lose();
+            }
+        }
+    },
+    win : function(){
+        logText.innerHTML = "You decimate the Bullet Gang before any of them could get the drop on you. You take their stolen stuff. You find "+this.moneyOwned+" caps (";
+        for (var i=0; i<this.objectsOwned.length; i++){
+            logText.innerHTML += (i!=this.objectsOwned.length-1) ? object[objectsOwned[i]].name+", " : "and "+object[objectsOwned[i]].name;
+        }
+        logText.innerHTML += " added to inventory)</p>";
+        //Adding Caps
+        object[0].amount += moneyOwned;
+        object[0].name = "Bottle Caps: "+object[0].amount;
+        //Adding Objects to inventory
+        for (var i=0; i<this.objectsOwned.length; i++){
+            objectIsInInventory[i] = true;
+        }
+        snd_collect.play();
+        this.canAttack = false;
+    },
+    lose : function(){
+        logText.innerHTML = "<p>You tried to attack, but one of the gang members put a gun to your head. \"I would walk away quietly, if I were you.\"</p>";
+    }
+}

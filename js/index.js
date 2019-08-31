@@ -3,6 +3,7 @@
 var snd_click = document.getElementById("snd_click");
 var snd_click2 = document.getElementById("snd_click2");
 var snd_collect = document.getElementById("snd_collect");
+var snd_caps = document.getElementById("snd_caps");
 
 /*Menu options include: stat, inv, log, map, radio*/
 var navigation = "stat";
