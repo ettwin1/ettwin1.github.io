@@ -1,14 +1,19 @@
+:root{
+	--color_red: 0;
+	--color_green: 255;
+	--color_blue: 0;
+}
 body{
-	color: #00ff00;
+	color: rgb(var(--color_red),var(--color_green),var(--color_blue));
 	background-color: black;
 	font-family: 'Roboto', sans-serif;
-}
+} 
 p{
 	font-size: 16px;
 	font-family: 'Roboto', sans-serif;
 }
 a{
-	color: #00ff00;
+	color: rgb(var(--color_red),var(--color_green),var(--color_blue));
 }
 
 
@@ -18,6 +23,12 @@ a{
 }
 #stat_links a{
 	padding: 10px 10px;
+}
+#settings_color_links a{
+	padding: 10px 10px;
+}
+#redButton{
+	visibility: hidden;
 }
 
 /*Stat > Status*/
@@ -38,7 +49,7 @@ img{
 }
 #headText{
 	top: -5%;
-	left: 170px;
+	left: 160px;
 }
 #leftText{
 	top: 12%;
@@ -64,9 +75,9 @@ img{
 
 /*Stat > Notes*/
 #notesArea{
-	color: #00ff00;
+	color: rgb(var(--color_red),var(--color_green),var(--color_blue));
 	background-color: black;
-	border: 2px solid #00ff00;
+	border: 2px solid rgb(var(--color_red),var(--color_green),var(--color_blue));
 	width: 80%;
 	height: 180px;
 	border-radius: 3px;
@@ -86,8 +97,8 @@ img{
 
 /*Buttons*/
 button{
-	color: #00ff00;
-	border-color: #00ff00;
+	color: rgb(var(--color_red),var(--color_green),var(--color_blue));
+	border-color: rgb(var(--color_red),var(--color_green),var(--color_blue));
 	background-color: black;
 	padding: 5px;
 	border-radius: 3px;
@@ -126,7 +137,7 @@ button{
 	margin-left: 5px;
 }
 button:hover, #newVegasSkip:hover, #newVegasStop:hover, #fallout4Skip:hover, #fallout4Stop:hover{
-	background-color: #00ff00;
+	background-color: rgb(var(--color_red),var(--color_green),var(--color_blue));
 	color: black;
 }
 
@@ -144,13 +155,9 @@ button:hover, #newVegasSkip:hover, #newVegasStop:hover, #fallout4Skip:hover, #fa
 }
 #navigation{
 	line-height: 3;
-	border-right: 2px #00ff00 solid;
+	border-right: 2px rgb(var(--color_red),var(--color_green),var(--color_blue)) solid;
 	padding-right: 10px;
 }
-/*
-td{
-	border: 2px blue solid;
-}*/
 
 
 

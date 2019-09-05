@@ -315,6 +315,7 @@ mapLocation[0][0][2] = {
 
     isFriends : false,
     canAttack : false, //for V.A.T.S., is true when player has option to attack
+    isDead : false,
     hasClothes : false,
     hasFood : false,
     hasBook : false,
@@ -372,6 +373,7 @@ mapLocation[0][0][2] = {
         objectIsInInventory[18] = true;
         snd_collect.play();
         this.canAttack = false;
+        this.isDead = true;
         this.defaultText = "<p>You see a fortress at the top of a hill. The fortress once belonged to the Super Mutant you killed.</p>";
     },
     lose : function(){
@@ -543,3 +545,70 @@ mapLocation[3][0][3] = {
         logText.innerHTML = "<p>You tried to attack, but one of the gang members put a gun to your head. \"I would walk away quietly, if I were you.\"</p>";
     }
 }
+
+//Defender of Pineapple
+mapLocation[4][0][3] = {
+    defaultText : "<p>You see someone aiming a minigun at you from far away at their camp. You get to cover as he's firing it. <a href='#' onclick='mapLocation[4][0][3].attack()'>[Attack]</a> <a href='#' onclick='mapLocation[4][0][3].walk()'>[Walk Forward Peacefully]</a></p>",
+    winText : "<p>Even with a minigun, he is no match for your superior levels of Combat Power. You take his minigun and a pineapple it looks like he was protecting. (Minigun and Rotting Pineapple added to Inventory)</p>",
+    walkText : "<p>You try to walk toward him non-threateningly, but he still shoots his minigun at you. You return to cover. You think it might help if you weren't holding any weapons.</p>",
+    walkText2 : "<p>You walk out not-threateningly with your hands up. The minigun stops firing, and you reach his camp. \"Are you here for my plant?\" he immediately says. <a href='#' onclick='mapLocation[4][0][3].talk()'>[\"No, why would I?\"]</a> <a href='#' onclick='mapLocation[4][0][3].offer()'>[\"I'd rather have your minigun\"]</a></p>",
+    talkText : "<p>\"Everyone's after my special plant! I've gotta protect it from them gofers in the south and them gang members in the west. Don't go near them gang members by the way. They're trouble.\" <a href='#' onclick='mapLocation[4][0][3].talk2()'>[\"What's so special about the plant?\"]</a></p>",
+    talk2Text : "<p>\"Here. Lemme show you, but don't touch it! I found it here in all its glory one day, and I knew I needed to protect it, so I bunkered up here with my minigun.\" <a href='#' onclick='mapLocation[4][0][3].talk3()'>[\"That's just a pineapple\"]</a></p>",
+    talk3Text : "<p>\"No it ain't! It's a gift from the gods above! Now git outta here!\"</p>",
+    offerText : "<p>\"Oh, you want this? I need this to protect my plant. But... if you can get me a machine gun, a sniper, a pistol and a grenade launcher, it's yours!\" <a href='#' onclick='mapLocation[4][0][3].talk2()'>[\"I'll see to it\"]</a></p>",
+
+
+    isFriends : false,
+    canAttack : true,
+    isDead : false,
+
+    attack : function(){
+        if (this.canAttack){
+            if (combatPower > 15){
+                this.win();
+            }else if (combatPower == 15){
+                var rando = Math.floor(Math.random()*2);
+                (rando == 1) ? this.win() : this.lose()
+            }else if (combatPower < 15){
+                this.lose();
+            }
+        }
+    },
+    win : function(){
+        logText.innerHTML = this.winText;
+        objectIsInInventory[25] = true;
+        objectIsInInventory[26] = true;
+        snd_collect.play();
+        this.canAttack = false;
+        this.isDead = true;
+    },
+    lose : function(){
+        var objIndex = removeRandomObject();
+        if (objIndex == -1){
+            logText.innerHTML += "<p>You try to attack, but it's impossible to get a good hit on him with all of the bullets flying around.</p>";
+        }else{
+            logText.innerHTML += "<p>Your "+object[objIndex].name+" gets hit and is destroyed. You return to cover. ("+object[objIndex].name+" removed from Inventory)</p>";
+            objectIsInInventory[objIndex] = false;
+            objectIsUsed[objIndex] = true;
+        }
+    },
+    walk : function(){
+        if (equipment[1] == -1 && equipment[2] == -1){
+            logText.innerHTML = this.walkText2;
+        }else{
+            logText.innerHTML += this.walkText;
+        }
+    },
+    talk : function(){
+        logText.innerHTML += this.talkText;
+    },
+    talk2 : function(){
+        logText.innerHTML += this.talk2Text;
+    },
+    talk3 : function(){
+        logText.innerHTML += this.talk3Text;
+    },
+    offer : function(){
+
+    }
+};

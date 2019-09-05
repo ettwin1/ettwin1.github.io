@@ -3,6 +3,7 @@
 var snd_click = document.getElementById("snd_click");
 var snd_click2 = document.getElementById("snd_click2");
 var snd_click3 = document.getElementById("snd_click3");
+var snd_click4 = document.getElementById("snd_click4");
 var snd_collect = document.getElementById("snd_collect");
 var snd_caps = document.getElementById("snd_caps");
 
@@ -20,7 +21,7 @@ var zLabel = document.getElementById("zLabel");
 var combatPower = 0; //how powerful the player is at combat
 
 
-//Stat
+// **********STAT**********
 /*
 	equipment[0] = head = index of object being equipped (-1 for none)
 	equipment[1] = left hand
@@ -29,28 +30,74 @@ var combatPower = 0; //how powerful the player is at combat
 	equipment[4] = feet
 */
 var equipment = [-1,-1,-1,-1,-1];
-var stat_menu = 'status'; //The current menu that is open
-var stat_menus = ['status','settings','notes']; //List of menu options
+
 $("#status").show();
 $("#settings").hide();
 $("#notes").hide();
-document.getElementById("settingsButton").style.color = 'rgba(0,255,0,0.6)';
-document.getElementById("notesButton").style.color = 'rgba(0,255,0,0.6)';
+document.getElementById("settingsButton").style.color = 'rgba(var(--color_red),var(--color_green),var(--color_blue),0.6)';
+document.getElementById("notesButton").style.color = 'rgba(var(--color_red),var(--color_green),var(--color_blue),0.6)';
 function changeMenu(menuName){
-	stat_menu = menuName;
+	var stat_menus = ['status','settings','notes']; //List of menu options
 	for (var i=0; i<stat_menus.length; i++){
 		if (stat_menus[i] != menuName){
 			$("#"+stat_menus[i]).hide();
-			document.getElementById(stat_menus[i]+"Button").style.color = 'rgba(0,255,0,0.6)';
 		}
 	}
 	$("#"+menuName).show();
-	document.getElementById(menuName+"Button").style.color = "rgba(0,255,0,1)";
+	changeButtonColor(['statusButton','settingsButton','notesButton'],menuName+"Button")
 	snd_click3.play();
 }
 
+var settings = {
+	color : 'green'
+};
+document.getElementById("yellowButton").style.color = "rgba(var(--color_red),var(--color_green),var(--color_blue),0.6)";
+document.getElementById("whiteButton").style.color = "rgba(var(--color_red),var(--color_green),var(--color_blue),0.6)";
+document.getElementById("redButton").style.color = "rgba(var(--color_red),var(--color_green),var(--color_blue),0.6)";
+function changeSetting(setting, value){
+	//Changing the settings
+	settings[setting] = value;
+	if (setting == 'color'){
+		if (value == "green"){
+			document.documentElement.style.setProperty('--color_red',0);
+			document.documentElement.style.setProperty('--color_green',255);
+			document.documentElement.style.setProperty('--color_blue',0);
+			document.getElementById("vaultBoy").src = "images/status_green.png";
+		}else if (value == "yellow"){
+			document.documentElement.style.setProperty('--color_red',255);
+			document.documentElement.style.setProperty('--color_green',255);
+			document.documentElement.style.setProperty('--color_blue',0);
+			document.getElementById("vaultBoy").src = "images/status_yellow.png";
+		}else if (value == "white"){
+			document.documentElement.style.setProperty('--color_red',255);
+			document.documentElement.style.setProperty('--color_green',255);
+			document.documentElement.style.setProperty('--color_blue',255);
+			document.getElementById("vaultBoy").src = "images/status_white.png";
+		}else if (value == "red"){
+			document.documentElement.style.setProperty('--color_red',255);
+			document.documentElement.style.setProperty('--color_green',0);
+			document.documentElement.style.setProperty('--color_blue',0);
+			document.getElementById("vaultBoy").src = "images/status_red.png";
+		}
+	}
+	//Changing button color
+	changeButtonColor(['greenButton','yellowButton','whiteButton','redButton'],value+"Button");
+	snd_click4.play();
+}
+function changeButtonColor(buttonIds,selectedButtonId){
+	for (var i=0; i<buttonIds.length; i++){
+		if (buttonIds[i] != selectedButtonId){
+			document.getElementById(buttonIds[i]).style.color = 'rgba(var(--color_red),var(--color_green),var(--color_blue),0.6)';
+		}
+	}
+	document.getElementById(selectedButtonId).style.color = "rgba(var(--color_red),var(--color_green),var(--color_blue),1)";
+}
 
-//Inventory
+
+
+
+
+// **********Inventory**********
 var inv_list = document.getElementById("inv_list");
 function loadInventory(){ //when called, it places all the links of objects in the inventory
 	inv_list.innerHTML = "";
@@ -75,7 +122,7 @@ function showObjectPopup(objectIndex){ //when called, it creates the popup menu 
 }
 
 
-//Navigation
+// **********Navigation**********
 function changeX(value){
 	if ((x+value) < 5 && (x+value) > -1){
 		x += value;
@@ -117,7 +164,7 @@ function changeNav(nav){
 
 
 
-/*Radio*/
+// **********Radio**********
 var songNames = []; //array of song names (the playlist)
 var playedSongs = []; //array of already played songs
 var rando = 0; //The random index of which song to play

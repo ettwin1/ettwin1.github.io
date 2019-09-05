@@ -475,3 +475,45 @@ object[24] = {
         changeNav('log');
     }
 }
+
+object[25] = {
+    name : "Minigun",
+    equipmentSlot : "hand",
+    combatBonus : 6,
+    necessary : true,
+
+    popupText : "<p style='margin:4px'><a href='#' onclick='object[25].useObject(X,Y,Z)'>Use</a></p>"+
+                "<p style='margin:4px'><a href='#' onclick='displayDescription(25)'>Examine</a></p>",
+    description : "<p>This gun can spit out bullets as fast a rain! And you can even use it in one hand! Gives a +6 bonus to Combat Power when equipped.</p>",
+    
+    useObject : function(x,y,z){
+        /*if (Y == 0 && X == 0 && Z == 2 && mapLocation[0][0][2].isFriends == true && mapLocation[0][0][2].hasClothes == false){
+            logText.innerHTML += "<p>\"Now THESE clothes are the best. Very fancy, and they fit! Thank you human friend.\"</p>";
+            objectIsInInventory[5] = false;
+            objectIsUsed[5] = true;
+            mapLocation[0][0][2].hasClothes = true;
+            mapLocation[0][0][2].getObject();
+        }else{*/
+            logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
+        //}
+        changeNav('log');
+    }
+}
+
+object[26] = {
+    name : "Rotting Pineapple",
+    equipmentSlot : "",
+    necessary : true,
+
+    popupText :  "<p style='margin:4px'><a href='#' onclick='object[26].eatObject()'>Eat</a></p>"+
+                "<p style='margin:4px'><a href='#' onclick='displayDescription(26)'>Examine</a></p>",
+    description : "<p>It's an old, rotting, radioactive Pineapple. You feel compelled to eat it...</p>",
+    
+    eatObject : function(){
+        logText.innerHTML += "<p>Something strange happens. You can't tell if it was from the mold, or something more...</p>";
+        objectIsInInventory[26] = false;
+        changeSetting('color','red');
+        document.getElementById("redButton").style.visibility = 'visible';
+        changeNav('log');
+    }
+}
