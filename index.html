@@ -15,6 +15,7 @@
 	</audio>-->
 	<audio id="snd_click"><source src="sounds/ui_pipboy_mode.wav" type="audio/wav"></audio>
 	<audio id="snd_click2"><source src="sounds/ui_pipboy_tuner.wav" type="audio/wav"></audio>
+		<audio id="snd_click3"><source src="sounds/ui_pipboy_tab.wav" type="audio/wav"></audio>
 	<audio id="snd_collect"><source src="sounds/ui_items_takeall.wav" type="audio/wav"></audio>
 		<audio id="snd_caps"><source src="sounds/ui_items_bottlecaps.wav" type="audio/wav"></audio>
 	<div id="container">
@@ -33,13 +34,22 @@
 		</div>
 		<div id="main">
 			<div id="main_stat">
-				<img src="images/status3.png" alt="Status">
-				<div id="headText"><p>*unequipped*</p></div>
-				<div id="leftText"><p>*unequipped*</p></div>
-				<div id="rightText"><p>*unequipped*</p></div>
-				<div id="bodyText"><p>*unequipped*</p></div>
-				<div id="feetText"><p>*unequipped*</p></div>
-				<div id="combatPowerText"><p>Combat Power : 0</p></div>
+				<p id="stat_links"><a id="statusButton" onclick="changeMenu('status')">Status</a><a id="settingsButton" onclick="changeMenu('settings')">Settings</a><a id="notesButton" onclick="changeMenu('notes')">Notes</a></p>
+				<div id="status">
+					<img src="images/status4.png" alt="Status">
+					<div id="headText"><p>*unequipped*</p></div>
+					<div id="leftText"><p>*unequipped*</p></div>
+					<div id="rightText"><p>*unequipped*</p></div>
+					<div id="bodyText"><p>*unequipped*</p></div>
+					<div id="feetText"><p>*unequipped*</p></div>
+					<div id="combatPowerText"><p>Combat Power : 0</p></div>
+				</div>
+				<div id="settings">
+					<p>No Setting options yet</p>
+				</div>
+				<div id="notes">
+					<textarea id="notesArea"></textarea>
+				</div>
 			</div>
 			<div id="main_inv">
 				<ul id="inv_list">

@@ -2,6 +2,7 @@
 /*Sounds*/
 var snd_click = document.getElementById("snd_click");
 var snd_click2 = document.getElementById("snd_click2");
+var snd_click3 = document.getElementById("snd_click3");
 var snd_collect = document.getElementById("snd_collect");
 var snd_caps = document.getElementById("snd_caps");
 
@@ -28,6 +29,25 @@ var combatPower = 0; //how powerful the player is at combat
 	equipment[4] = feet
 */
 var equipment = [-1,-1,-1,-1,-1];
+var stat_menu = 'status'; //The current menu that is open
+var stat_menus = ['status','settings','notes']; //List of menu options
+$("#status").show();
+$("#settings").hide();
+$("#notes").hide();
+document.getElementById("settingsButton").style.color = 'rgba(0,255,0,0.6)';
+document.getElementById("notesButton").style.color = 'rgba(0,255,0,0.6)';
+function changeMenu(menuName){
+	stat_menu = menuName;
+	for (var i=0; i<stat_menus.length; i++){
+		if (stat_menus[i] != menuName){
+			$("#"+stat_menus[i]).hide();
+			document.getElementById(stat_menus[i]+"Button").style.color = 'rgba(0,255,0,0.6)';
+		}
+	}
+	$("#"+menuName).show();
+	document.getElementById(menuName+"Button").style.color = "rgba(0,255,0,1)";
+	snd_click3.play();
+}
 
 
 //Inventory
