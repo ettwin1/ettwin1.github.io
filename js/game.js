@@ -45,6 +45,30 @@ function travel(){
 	changeNav('log');
 }
 
+//General functions
+function removeObject(objectIndex){ //safely removes an object from inventory
+	objectIsInInventory[objectIndex] = false;
+	objectIsUsed[objectIndex] = true;
+	 //unequip object if it's equipped
+	for (var i=0; i<5; i++){
+		if (equipment[i] == objectIndex){
+			equipment[i] = -1;
+			if (i == 0){
+				document.getElementById("headText").innerHTML = "<p>*unequipped*</p>";
+			}else if (i == 1){
+				document.getElementById("leftText").innerHTML = "<p>*unequipped*</p>";
+			}else if (i == 2){
+				document.getElementById("rightText").innerHTML = "<p>*unequipped*</p>";
+			}else if (i == 3){
+				document.getElementById("bodyText").innerHTML = "<p>*unequipped*</p>";
+			}else if (i == 4){
+				document.getElementById("feetText").innerHTML = "<p>*unequipped*</p>";
+			}
+		}
+	}
+	recalcuateCombatPower();
+}
+
 
 //Object Functions
 

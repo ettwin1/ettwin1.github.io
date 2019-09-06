@@ -326,7 +326,7 @@ mapLocation[0][0][2] = {
             logText.innerHTML = "<p>You run up the hill and a turret starts firing at you. You get back down before you or any of your stuff gets damaged.</p>";
         }else{
             logText.innerHTML = "<p>You run up the hill and a turret starts firing at you. You get back down, but not before the "+object[objIndex].name+" was hit and destroyed. ("+object[objIndex].name+" removed from Inventory)</p>";
-            objectIsInInventory[objIndex] = false;
+            removeObject(objIndex);
         }
     },
     walkUp : function(){
@@ -385,8 +385,7 @@ mapLocation[0][0][2] = {
                 object[0].name = "Bottle Caps: "+object[0].amount;
             }else{
                 logText.innerHTML = "<p>\"What's this human? I thought we were friends. I'll forgive you if you give me this.\" He takes the "+object[objIndex].name+". ("+object[objIndex].name+" removed from Inventory)</p>";
-                objectIsInInventory[objIndex] = false;
-                objectIsUsed[objIndex] = true;
+                removeObject(objIndex);
             }
         }else{
             var objIndex = removeRandomObject();
@@ -394,8 +393,7 @@ mapLocation[0][0][2] = {
                 logText.innerHTML = "<p>The Super Mutant pushed you down the hill, but you survived. Barely.</p>";
             }else{
                 logText.innerHTML = "<p>The Super Mutant took the "+object[objIndex].name+" from you as he pushed you down the hill. ("+object[objIndex].name+" removed from Inventory)</p>";
-                objectIsInInventory[objIndex] = false;
-                objectIsUsed[objIndex] = true;
+                removeObject(objIndex);
             }
         }
     },
@@ -465,8 +463,7 @@ mapLocation[4][0][4] = {
             logText.innerHTML += "<p>You don't have enough caps to fix that item.</p>";
         }else{
             logText.innerHTML += "<p>\"Thank you for the business. Now make sure to keep this quiet, I don't want to attract any unwanted attention here.\" (Pistol added to inventory)</p>";
-            objectIsInInventory[19] = false;
-            objectIsUsed[19] = true;
+            removeObject(19);
             objectIsInInventory[21] = true;
             snd_collect.play();
             object[0].amount -= 20;
@@ -500,8 +497,7 @@ mapLocation[3][0][3] = {
         if (this.canAttack){
             if (objectIndex != -1){
                 logText.innerHTML = "<p>As you travel, a group of armed people stop you and say, \"We're the Bullet Gang. We don't care who you are, we're taking your stuff.\" ("+object[objectIndex].name+" removed from Inventory) <a href='#' onclick='mapLocation[3][0][3].attack()'>[\"Give me my stuff back!\" (Attack)]</a></p>";
-                objectIsInInventory[objectIndex] = false;
-                objectIsUsed[objectIndex] = true;
+                removeObject(objectIndex);
                 this.objectsOwned.push(objectIndex);
             }else{
                 logText.innerHTML = "<p>As you travel, a group of armed people stop you and say, \"We're the Bullet Gang. We don't care who you are, we're taking your caps.\" All of your Bottle Caps were taken. <a href='#' onclick='mapLocation[3][0][3].attack()'>[\"Give me my stuff back!\" (Attack)]</a></p>";
@@ -528,11 +524,11 @@ mapLocation[3][0][3] = {
     win : function(){
         logText.innerHTML = "You decimate the Bullet Gang before any of them could get the drop on you. You take their stolen stuff. You find "+this.moneyOwned+" caps (";
         for (var i=0; i<this.objectsOwned.length; i++){
-            logText.innerHTML += (i!=this.objectsOwned.length-1) ? object[objectsOwned[i]].name+", " : "and "+object[objectsOwned[i]].name;
+            logText.innerHTML += (i!=this.objectsOwned.length-1) ? object[this.objectsOwned[i]].name+", " : "and "+object[this.objectsOwned[i]].name;
         }
         logText.innerHTML += " added to inventory)</p>";
         //Adding Caps
-        object[0].amount += moneyOwned;
+        object[0].amount += this.moneyOwned;
         object[0].name = "Bottle Caps: "+object[0].amount;
         //Adding Objects to inventory
         for (var i=0; i<this.objectsOwned.length; i++){
@@ -549,18 +545,23 @@ mapLocation[3][0][3] = {
 //Defender of Pineapple
 mapLocation[4][0][3] = {
     defaultText : "<p>You see someone aiming a minigun at you from far away at their camp. You get to cover as he's firing it. <a href='#' onclick='mapLocation[4][0][3].attack()'>[Attack]</a> <a href='#' onclick='mapLocation[4][0][3].walk()'>[Walk Forward Peacefully]</a></p>",
+    defaultText2 : "<p>You walk up to the camp without being shot by a minigun. \"What do ya want?\" says the crazy man there. <a href='#' onclick='mapLocation[4][0][3].talk()'>[\"You said something about a plant?\"]</a> <a href='#' onclick='mapLocation[4][0][3].offer()'>[\"Can I have your minigun?\"]</a></p>",
     winText : "<p>Even with a minigun, he is no match for your superior levels of Combat Power. You take his minigun and a pineapple it looks like he was protecting. (Minigun and Rotting Pineapple added to Inventory)</p>",
     walkText : "<p>You try to walk toward him non-threateningly, but he still shoots his minigun at you. You return to cover. You think it might help if you weren't holding any weapons.</p>",
     walkText2 : "<p>You walk out not-threateningly with your hands up. The minigun stops firing, and you reach his camp. \"Are you here for my plant?\" he immediately says. <a href='#' onclick='mapLocation[4][0][3].talk()'>[\"No, why would I?\"]</a> <a href='#' onclick='mapLocation[4][0][3].offer()'>[\"I'd rather have your minigun\"]</a></p>",
     talkText : "<p>\"Everyone's after my special plant! I've gotta protect it from them gofers in the south and them gang members in the west. Don't go near them gang members by the way. They're trouble.\" <a href='#' onclick='mapLocation[4][0][3].talk2()'>[\"What's so special about the plant?\"]</a></p>",
-    talk2Text : "<p>\"Here. Lemme show you, but don't touch it! I found it here in all its glory one day, and I knew I needed to protect it, so I bunkered up here with my minigun.\" <a href='#' onclick='mapLocation[4][0][3].talk3()'>[\"That's just a pineapple\"]</a></p>",
+    talk2Text : "<p>\"Here. Lemme show ya, but don't touch it! I found it here in all its glory one day, and I knew I needed to protect it, so I bunkered up here with my minigun.\" <a href='#' onclick='mapLocation[4][0][3].talk3()'>[\"That's just a pineapple\"]</a></p>",
     talk3Text : "<p>\"No it ain't! It's a gift from the gods above! Now git outta here!\"</p>",
-    offerText : "<p>\"Oh, you want this? I need this to protect my plant. But... if you can get me a machine gun, a sniper, a pistol and a grenade launcher, it's yours!\" <a href='#' onclick='mapLocation[4][0][3].talk2()'>[\"I'll see to it\"]</a></p>",
-
+    offerText : "<p>\"Oh, ya want this? I need this to protect my plant. But... if you can git me a machine gun, a sniper, a pistol and a grenade launcher, it's yours!\"</p>",
 
     isFriends : false,
+    offerMade : false,
     canAttack : true,
     isDead : false,
+    hasPistol : false,
+    hasSniper : false,
+    hasMachinegun : false,
+    hasGrenadelauncher : false,
 
     attack : function(){
         if (this.canAttack){
@@ -588,13 +589,15 @@ mapLocation[4][0][3] = {
             logText.innerHTML += "<p>You try to attack, but it's impossible to get a good hit on him with all of the bullets flying around.</p>";
         }else{
             logText.innerHTML += "<p>Your "+object[objIndex].name+" gets hit and is destroyed. You return to cover. ("+object[objIndex].name+" removed from Inventory)</p>";
-            objectIsInInventory[objIndex] = false;
-            objectIsUsed[objIndex] = true;
+            removeObject(objIndex);
         }
     },
     walk : function(){
         if (equipment[1] == -1 && equipment[2] == -1){
             logText.innerHTML = this.walkText2;
+            this.isFriends = true;
+            this.canAttack = false;
+            this.defaultText = this.defaultText2;
         }else{
             logText.innerHTML += this.walkText;
         }
@@ -609,6 +612,45 @@ mapLocation[4][0][3] = {
         logText.innerHTML += this.talk3Text;
     },
     offer : function(){
+        logText.innerHTML += this.offerText;
+        this.offerMade = true;
+        this.defaultText = "<p>You walk up to the camp without being shot by a minigun. The crazy man there says, \"I'll give ya my minigun. Ya just gotta git me a pistol, a sniper, a machine gun, and a grenade launcher.\"</p>";
+    },
+    receiveObject : function(){
+        var num = this.hasPistol + this.hasSniper + this.hasMachinegun + this.hasGrenadelauncher;
+        var objectIds = []; //This array contains all the object indexes the crazy man needs; the ones he already has in the front and the ones the player needs to find in the back
+        objectIds.push(21);
+        if (this.hasGrenadelauncher){
+            objects.unshift(22);
+        }else{
+            objectIds.push(22);
+        }
+        if (this.hasSniper){
+            objectIds.unshift(23);
+        }else{
+            objectIds.push(23);
+        }
+        if (this.hasMachinegun){
+            objectIds.unshift(24);
+        }else{
+            objectIds.push(24);
+        }
 
+        this.defaultText = "<p>You walk up to the camp without being shot by a minigun. The crazy man there says, \"I'll give you my minigun. ";
+        if (num == 4){
+            logText.innerHTML += "<p>\"Now I've got all the weapons I need to guard the sacred pineapple, or whatever you called it. Here's your minigun.\" (Minigun added to inventory)</p>";
+            objectIsInInventory[25] = true;
+            snd_collect.play();
+            this.defaultText = "<p>You walk up to the camp. The crazy man there says, \"Hey there. Me and my pineapple thank ya for equippin' me with these weapons.\"</p>";
+
+        }else if (num == 3){
+            this.defaultText += "I have the "+object[objectIds[0]].name+", "+object[objectIds[1]].name+", and "+object[objectIds[2]].name+". Ya just gotta git me a "+object[objectIds[3]].name+".\"</p>"
+        }else if (num == 2){
+            this.defaultText += "I have the "+object[objectIds[0]].name+" and "+object[objectIds[1]].name+". Ya just gotta git me a "+object[objectIds[2]].name+" and a "+object[objectIds[3]].name+".\"</p>"
+        }else if (num == 1){
+            this.defaultText += "I have the "+object[objectIds[0]].name+". Ya just gotta git me a "+object[objectIds[1]].name+", a "+object[objectIds[2]].name+", and a "+object[objectIds[3]].name+".\"</p>"
+        }else if (num == 0){
+            this.defaultText = "Ya just gotta git me a pistol, a sniper, a machine gun, and a grenade launcher.\"</p>";
+        }
     }
 };

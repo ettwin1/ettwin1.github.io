@@ -25,8 +25,7 @@ object[1] = {
     useObject : function(x,y,z){
         if (Y == 0 && X == 3 && Z == 4){
             logText.innerHTML += "<p>\"Oh, thank you sir! In thanks, I give you this. It's a Vault-Tec Assisted Targeting System, or V.A.T.S. for short. Anyway, got to go. Goodbye!\" (V.A.T.S. added to your inventory)</p>";
-            objectIsInInventory[1] = false;
-            objectIsUsed[1] = true;
+            removeObject(1);
             objectIsInInventory[3] = true;
             snd_collect.play();
             mapLocation[3][0][4].defaultText = "<p>The caravan that was here is gone now. There's no one in sight.</p>";
@@ -50,8 +49,7 @@ object[2] = {
     useObject : function(x,y,z){
         if (Y == 0 && X == 0 && Z == 1 && mapLocation[0][0][1].atTower == true){
             logText.innerHTML += "\"Oh thank you kind sir!\" says the wizard, \"Now for your reward... NOTHING! MUAHAHAHAHA\" ";
-            objectIsInInventory[2] = false;
-            objectIsUsed[2] = true;
+            removeObject(2);
             mapLocation[0][0][1].towerText = "<p>\"What are you doing here?\" says the wizard looking out the window, \"I cheated you already. That's it. There's nothing else for you here! <a href='#' onclick='mapLocation[0][0][1].default()'>[Back to city]</a></p>";
         }else{
             logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
@@ -88,7 +86,13 @@ object[3] = {
             }
         }else if (X == 3 && Y == 0 & Z == 3){ //Bullet Gang
             if (mapLocation[3][0][3].canAttack == true){
-                this.calculateOdds(12);
+                this.calculateOdds(10);
+            }else{
+                logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
+            }
+        }else if (X == 4 && Y == 0 & Z == 3){ //Defender of Pineapple
+            if (mapLocation[4][0][3].canAttack == true){
+                this.calculateOdds(15);
             }else{
                 logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
             }
@@ -121,8 +125,7 @@ object[4] = {
     useObject : function(x,y,z){
         if (Y == 0 && X == 0 && Z == 2 && mapLocation[0][0][2].isFriends == true && mapLocation[0][0][2].hasBook == false){
             logText.innerHTML += "<p>\"It looks like a good book. I haven't read anything in a century, but I can manage it. Thank you human friend.\"</p>";
-            objectIsInInventory[4] = false;
-            objectIsUsed[4] = true;
+            removeObject(4);
             mapLocation[0][0][2].hasBook = true;
             mapLocation[0][0][2].getObject();
         }else{
@@ -144,8 +147,7 @@ object[5] = {
     useObject : function(x,y,z){
         if (Y == 0 && X == 0 && Z == 2 && mapLocation[0][0][2].isFriends == true && mapLocation[0][0][2].hasClothes == false){
             logText.innerHTML += "<p>\"Now THESE clothes are the best. Very fancy, and they fit! Thank you human friend.\"</p>";
-            objectIsInInventory[5] = false;
-            objectIsUsed[5] = true;
+            removeObject(5);
             mapLocation[0][0][2].hasClothes = true;
             mapLocation[0][0][2].getObject();
         }else{
@@ -287,9 +289,8 @@ object[15] = {
 
     useObject : function(x,y,z){
         if (Y == 0 && X == 0 && Z == 2 && mapLocation[0][0][2].isFriends == true && mapLocation[0][0][2].hasFood == false){
-            logText.innerHTML += "\"<p>This is the best food I've tasted in years! You call these sweet rolls? I'm eating these whenever I can. Thank you human friend.\"</p>";
-            objectIsInInventory[15] = false;
-            objectIsUsed[15] = true;
+            logText.innerHTML += "<p>\"This is the best food I've tasted in years! You call these sweet rolls? I'm eating these whenever I can. Thank you human friend.\"</p>";
+            removeObject(15);
             mapLocation[0][0][2].hasFood = true;
             mapLocation[0][0][2].getObject();
         }else{
@@ -346,10 +347,6 @@ object[19] = {
     useObject : function(x,y,z){
         if (Y == 0 && X == 4 && Z == 4){
             logText.innerHTML += "<p>\"You want me to fix this pistol for you? I can do that no problem. That'll be 20 caps.\" <a href='#' onclick='mapLocation[4][0][4].fix()'>[\"Deal.\"]</a></p>";
-            objectIsInInventory[5] = false;
-            objectIsUsed[5] = true;
-            mapLocation[0][0][2].hasClothes = true;
-            mapLocation[0][0][2].getObject();
         }else{
             logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
         }
@@ -369,8 +366,7 @@ object[20] = {
     useObject : function(x,y,z){
         if (Y == 0 && X == 1 && Z == 1){
             logText.innerHTML += "<p>You use the lockpick to open the iron safe in the shop. Inside is a grenade launcher. (Grenade Launcher added to inventory)</p>";
-            objectIsInInventory[20] = false;
-            objectIsUsed[20] = true;
+            removeObject(20);
             objectIsInInventory[22] = true;
             snd_collect.play();
         }else{
@@ -391,15 +387,14 @@ object[21] = {
     description : "<p>A recently fixed pistol. Works like a charm. Gives a +3 bonus to Combat Power when equipped.</p>",
     
     useObject : function(x,y,z){
-        /*if (Y == 0 && X == 0 && Z == 2 && mapLocation[0][0][2].isFriends == true && mapLocation[0][0][2].hasClothes == false){
-            logText.innerHTML += "<p>\"Now THESE clothes are the best. Very fancy, and they fit! Thank you human friend.\"</p>";
-            objectIsInInventory[5] = false;
-            objectIsUsed[5] = true;
-            mapLocation[0][0][2].hasClothes = true;
-            mapLocation[0][0][2].getObject();
-        }else{*/
+        if (Y == 0 && X == 4 && Z == 3 && mapLocation[4][0][3].offerMade == true && mapLocation[4][0][3].hasPistol == false){
+            logText.innerHTML += "<p>\"Oh, nice pistol, nice pistol alright. I'll take it!\"</p>";
+            removeObject(21);
+            mapLocation[4][0][3].hasPistol = true;
+            mapLocation[4][0][3].receiveObject();
+        }else{
             logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
-        //}
+        }
         changeNav('log');
     }
 };
@@ -415,15 +410,14 @@ object[22] = {
     description : "<p>This gun shoots grenades. Preserved in an iron safe for centuries. Gives a +4 bonus to Combat Power when equipped.</p>",
     
     useObject : function(x,y,z){
-        /*if (Y == 0 && X == 0 && Z == 2 && mapLocation[0][0][2].isFriends == true && mapLocation[0][0][2].hasClothes == false){
-            logText.innerHTML += "<p>\"Now THESE clothes are the best. Very fancy, and they fit! Thank you human friend.\"</p>";
-            objectIsInInventory[5] = false;
-            objectIsUsed[5] = true;
-            mapLocation[0][0][2].hasClothes = true;
-            mapLocation[0][0][2].getObject();
-        }else{*/
+        if (Y == 0 && X == 4 && Z == 3 && mapLocation[4][0][3].offerMade == true && mapLocation[4][0][3].hasGrenadelauncher == false){
+            logText.innerHTML += "<p>\"Oh yeah, look at this spankin' new baby! I gotta say, this is a nice gun. I'll take it!\"</p>";
+            removeObject(22);
+            mapLocation[4][0][3].hasGrenadelauncher = true;
+            mapLocation[4][0][3].receiveObject();
+        }else{
             logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
-        //}
+        }
         changeNav('log');
     }
 };
@@ -439,15 +433,14 @@ object[23] = {
     description : "<p>This gun is well taken care of. It shoots things very accurately. Gives a +4 bonus to Combat Power when equipped.</p>",
     
     useObject : function(x,y,z){
-        /*if (Y == 0 && X == 0 && Z == 2 && mapLocation[0][0][2].isFriends == true && mapLocation[0][0][2].hasClothes == false){
-            logText.innerHTML += "<p>\"Now THESE clothes are the best. Very fancy, and they fit! Thank you human friend.\"</p>";
-            objectIsInInventory[5] = false;
-            objectIsUsed[5] = true;
-            mapLocation[0][0][2].hasClothes = true;
-            mapLocation[0][0][2].getObject();
-        }else{*/
+        if (Y == 0 && X == 4 && Z == 3 && mapLocation[4][0][3].offerMade == true && mapLocation[4][0][3].hasSniper == false){
+            logText.innerHTML += "<p>\"Now take a look at this baby! This'll making snipin' people from far away much easier. The minigun was terrible at that. I'll take it!\"</p>";
+            removeObject(23);
+            mapLocation[4][0][3].hasSniper = true;
+            mapLocation[4][0][3].receiveObject();
+        }else{
             logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
-        //}
+        }
         changeNav('log');
     }
 };
@@ -463,15 +456,14 @@ object[24] = {
     description : "<p>This gun is well taken care of. It shoots a lot of bullets very fast. Gives a +4 bonus to Combat Power when equipped.</p>",
     
     useObject : function(x,y,z){
-        /*if (Y == 0 && X == 0 && Z == 2 && mapLocation[0][0][2].isFriends == true && mapLocation[0][0][2].hasClothes == false){
-            logText.innerHTML += "<p>\"Now THESE clothes are the best. Very fancy, and they fit! Thank you human friend.\"</p>";
-            objectIsInInventory[5] = false;
-            objectIsUsed[5] = true;
-            mapLocation[0][0][2].hasClothes = true;
-            mapLocation[0][0][2].getObject();
-        }else{*/
+        if (Y == 0 && X == 4 && Z == 3 && mapLocation[4][0][3].offerMade == true && mapLocation[4][0][3].hasMachinegun == false){
+            logText.innerHTML += "<p>\"This machine gun doesn't shoot as fast as a minigun 'course, but it works, and quite well too. I'll take it!\"</p>";
+            removeObject(24);
+            mapLocation[4][0][3].hasMachinegun = true;
+            mapLocation[4][0][3].receiveObject();
+        }else{
             logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
-        //}
+        }
         changeNav('log');
     }
 }
