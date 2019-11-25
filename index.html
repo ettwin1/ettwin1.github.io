@@ -46,15 +46,18 @@
 					<div id="combatPowerText"><p>Combat Power : 0</p></div>
 				</div>
 				<div id="settings">
-					<p id="settings_color_links">Color: <a id='greenButton' onclick="changeSetting('color','green')">Original</a> <a id='yellowButton' onclick="changeSetting('color','yellow')">New Vegas</a> <a id='whiteButton' onclick="changeSetting('color','white')">White</a> <a id='redButton' onclick="changeSetting('color','red')">Pineapple</a></p>
+					<p id="settings_color_links">Color: <a id='greenButton' onclick="changeSetting('color','green',true)">Original</a> <a id='yellowButton' onclick="changeSetting('color','yellow',true)">New Vegas</a> <a id='whiteButton' onclick="changeSetting('color','white',true)">White</a> <a id='redButton' onclick="changeSetting('color','red',true)">Pineapple</a></p>
+					<button class="button4" onclick='restartGame()'>Restart Game</button>
+					<p id="settings_restart_game">Are you sure?  <a href='#' onclick='restartGameYes()'>Yes</a>  <a href='#' onclick='restartGameNo()'>No</a></p>
 				</div>
 				<div id="notes">
-					<textarea id="notesArea"></textarea>
+					<textarea id="notesArea">Type stuff here</textarea>
 				</div>
 			</div>
 			<div id="main_inv">
-				<ul id="inv_list">
-				</ul>
+				<div style="width:90%; height:240px; overflow-y: auto;">
+					<ul id="inv_list"></ul>
+				</div>
 			</div>
 			<div id="main_log">
 				<!--<iframe id="frame" src="" style="height:auto;width:80%;"></iframe>-->
@@ -96,8 +99,10 @@
 				<audio id="radioAudio"><source id="radioSource" type="audio/mpeg"></audio>
 </body>
 <script src="js/index.js"></script>
-<script src="js/locations.js"></script>
-<script src="js/objects.js"></script>
 <script src="js/game.js"></script>
+<script src="js/objects.js"></script>
+<script src="js/locations.js"></script>
+
+
 
 </html>

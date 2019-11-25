@@ -24,11 +24,18 @@ a{
 #stat_links a{
 	padding: 10px 10px;
 }
+
+
+/*Stat > Settings*/
 #settings_color_links a{
 	padding: 10px 10px;
 }
 #redButton{
 	visibility: hidden;
+}
+#settings_restart_game{
+	visibility : hidden;
+	float: left;
 }
 
 /*Stat > Status*/
@@ -125,10 +132,11 @@ button{
 	margin: 10px;
 }
 .button4{
-	width: 50px;
-	font-size: 12px;
+	width: 40%;
+	font-size: 16px;
 	border: 2px solid;
-	margin: 5px;
+	margin: 10px;
+	float: left;
 }
 #newVegasSkip, #newVegasStop, #fallout4Skip, #fallout4Stop{
 	font-size: 16px;

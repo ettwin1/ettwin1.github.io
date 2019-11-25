@@ -3,23 +3,17 @@ var X = 2;
 var Y = 0;
 var Z = 2;
 
-//Creating inventory array that has the same number of indexes as the object array, and returns true or false to whether the object is in the inventory
-var objectIsInInventory = [];
-for (var i=0; i<object.length; i++){
-	objectIsInInventory[i] = false;
-}
-objectIsInInventory[0] = true;
-objectIsInInventory[1] = true;
-//Creating a similar array as the inventory one, but determines if an objects has been used or not
-var objectIsUsed = [];
-for (var i=0; i<object.length; i++){
-	objectIsUsed[i] = false;
-}
+ //Creating inventory array that has the same number of indexes as the object array, and returns true or false to whether the object is in the inventory
+ var objectIsInInventory = [];
+
+ //Creating a similar array as the inventory one, but determines if an objects has been used or not
+ var objectIsUsed = [];
+
 
 
 //Travelling and Log functions
 var logText = document.getElementById("log_text");
-logText.innerHTML="<p>You wake up in an open grassy field. You see a wacky machine in front of you, which you don't remember anything about, except that you need a 128 GB storage module, 35 pounds of gold, and a radiation-proof suit in order to fix it.</p>";
+logText.innerHTML="<p>You wake up in a grassy field. You see a large wacky <a href='#' onclick='describe(`machine`)'>machine</a> in front of you, which you don't remember anything about, except that you need a 128 GB storage module, 8 ounces of gold, and a radiation-proof suit in order to fix it.</p>";
 
 function travel(){
 	X = x;
@@ -28,19 +22,36 @@ function travel(){
 	if (x==4 && y==0 && z==2){
 		var rando = Math.floor(Math.random()*10);
 		if (rando < 4){
-			logText.innerHTML = mapLocation[X][Y][Z].defaultText3;
-			mapLocation[X][Y][Z].gofer = "small";
+			logText.innerHTML = mapLocationVars[X][Y][Z].defaultText3;
+			mapLocationVars[X][Y][Z].gofer = "small";
 		}else if (rando >= 4 && rando < 7){
-			logText.innerHTML = mapLocation[X][Y][Z].defaultText2;
-			mapLocation[X][Y][Z].gofer = "medium";
+			logText.innerHTML = mapLocationVars[X][Y][Z].defaultText2;
+			mapLocationVars[X][Y][Z].gofer = "medium";
 		}else{
-			logText.innerHTML = mapLocation[X][Y][Z].defaultText1;
-			mapLocation[X][Y][Z].gofer = "large";
+			logText.innerHTML = mapLocationVars[X][Y][Z].defaultText1;
+			mapLocationVars[X][Y][Z].gofer = "large";
 		}
 	}else if (x==3 && y==0 & z==3){
 		mapLocation[X][Y][Z].setUp(removeRandomObject());
+	}else if ((x == 0 && y == 0 && z == 3) || (x == 3 && y == 0 && z == 0) || (x == 2 && y == 0 && z == 0)){
+		mapLocationVars[x][y][z].canTalk = false;
+		logText.innerHTML=mapLocationVars[X][Y][Z].defaultText;
+	}else if (x==2 && y==0 & z==2){
+		if (mapLocationVars[2][0][2].hasGold && mapLocationVars[2][0][2].hasModule && equipment[0]==29 && equipment[3]==30 && equipment[4]==31){
+			if (mapLocationVars[2][0][2].appliedGold && mapLocationVars[2][0][2].appliedModule){
+                logText.innerHTML="<p>You have all of the materials you need to fix this machine. <a href='#' onclick='mapLocation[2][0][2].finish()'>[Finish]</a></p>";
+            }else if (!mapLocationVars[2][0][2].appliedGold && mapLocationVars[2][0][2].appliedModule){
+                logText.innerHTML="<p>You have all of the materials you need to fix this machine. <a href='#' onclick='mapLocation[2][0][2].gold()'>[Apply Gold]</a></p>";
+            }else if (mapLocationVars[2][0][2].appliedGold && !mapLocationVars[2][0][2].appliedModule){
+                logText.innerHTML="<p>You have all of the materials you need to fix this machine. <a href='#' onclick='mapLocation[2][0][2].storageModule()'>[Install Storage Module]</p>";
+            }else{
+                logText.innerHTML="<p>You have all of the materials you need to fix this machine. <a href='#' onclick='mapLocation[2][0][2].storageModule()'>[Install Storage Module]</a> <a href='#' onclick='mapLocation[2][0][2].gold()'>[Apply Gold]</a></p>";
+            }
+		}else{
+			logText.innerHTML=mapLocationVars[X][Y][Z].defaultText;
+		}
 	}else{
-		logText.innerHTML=mapLocation[X][Y][Z].defaultText;
+		logText.innerHTML=mapLocationVars[X][Y][Z].defaultText;
 	}
 	changeNav('log');
 }
@@ -173,21 +184,21 @@ function unequipObject(objectIndex){
 
 
 //Location functions
+var gossipList1 = [ //Armor Shop
+	"<p>\"If you're lookin' for some caps, I heard there's some gofers that like to steal money. Maybe you can steal it back from them. They live northeast of here.\"</p>"
+];
+var gossipList2 = [ //Lonely Restaurant
+	"<p>\"Okay, so there are these pesky gofers that steal caps from people! Maybe you can help by killing them for us. They live northeast of here.\"</p>"
+];
 
 function gossip(location){ //adds random dialogue based on your location
 	
 	if (location == "armor"){
-		var gossipList = [
-			"<p>\"If you're lookin' for some caps, I heard there's some gofers that like to steal money. Maybe you can steal it back from them. They live northeast of here.\"</p>"
-		];
-		var rando = Math.floor(Math.random()*gossipList.length); //returns random index from gossipList
-		logText.innerHTML += gossipList[rando];	
+		var rando = Math.floor(Math.random()*gossipList1.length); //returns random index from gossipList
+		logText.innerHTML += gossipList1[rando];	
 	}else if (location == "restaurant"){
-		var gossipList = [
-			"<p>\"Okay, so there are these pesky gofers that steal caps from people! Maybe you can help by killing them for us. They live northeast of here.\"</p>"
-		];
-		var rando = Math.floor(Math.random()*gossipList.length); //returns random index from gossipList
-		logText.innerHTML += gossipList[rando];	
+		var rando = Math.floor(Math.random()*gossipList2.length); //returns random index from gossipList
+		logText.innerHTML += gossipList2[rando];	
 	}
 }
 
@@ -209,13 +220,33 @@ function removeRandomObject(){ //returns a random object id that can be removed,
 }
 
 function describe(place){
-	if (place == "library"){
+	if (place == "machine"){
+		logText.innerHTML += "<p>The machine is about as big as a tank and in the shape of a bowl. It has wires showing and parts scattered around.</p>";
+	}else if (place == "library"){
 		logText.innerHTML += "<p>The library is covered in vines and smells of rotting books.</p>";
 	}else if (place == "sewage"){
-		logText.innerHTML += "<p>Down the metal sewage grate you see some climbing gear. Unfortunately you can't reach it. Perhaps you could get it if you found a way into the sewers...</p>";
+		if (objectIsInInventory[27] == false){
+			logText.innerHTML += "<p>Down the metal sewage grate you see some climbing gear. Unfortunately you can't reach it. Perhaps you could get it if you found a way into the sewers...</p>";
+		}else{
+			logText.innerHTML += "<p>Down the metal sewage grate you see the part of the sewers where you got the climbing gear. It's just as smellly as it was before.</p>";
+		}
 	}else if (place == "supermutant"){
 		logText.innerHTML += "<p>The Super Mutant looks like a human, except much taller, much stronger, and has yellowish-greenish skin.</p>";
 	}else if (place == "safe"){
 		logText.innerHTML += "<p>The iron safe most likely holds something valueable. The lock on it could probably be opened with a lockpick.</p>";
+	}else if (place == "cliff"){
+		logText.innerHTML += "<p>The sheer cliff is about 10 times as tall as you are. It's quite intimidating looking up from the bottom.</p>";
+	}else if (place == "pickaxe"){
+		logText.innerHTML += "<p>The pickaxe is too high for you to reach. If only you had some way to climb up...</p>";
+	}else if (place == "mine"){
+		logText.innerHTML += "<p>The mine seems old and abandoned, and leads into a sprawling cave by the looks of it.</p>";
+	}else if (place == "leftPath"){
+		logText.innerHTML += "<p>The left path leads downward and has a minecart track going down it.</p>";
+	}else if (place == "rightPath"){
+		logText.innerHTML += "<p>The right path leads straight and somehow has working electric lights lighting the way.</p>";
+	}else if (place == "gold"){
+		logText.innerHTML += "<p>You could mine this gold with a pickaxe, although you haven't seen any pickaxes around the mine.</p>";
+	}else if (place == "refinery"){
+		logText.innerHTML += "<p>The machine has a hopper to put things in, and a conveyer belt to bring things out. There's an inscription that says \"Vault-Tec Ore Refinery\".</p>";
 	}
 }

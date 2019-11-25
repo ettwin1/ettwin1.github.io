@@ -54,7 +54,7 @@ var settings = {
 document.getElementById("yellowButton").style.color = "rgba(var(--color_red),var(--color_green),var(--color_blue),0.6)";
 document.getElementById("whiteButton").style.color = "rgba(var(--color_red),var(--color_green),var(--color_blue),0.6)";
 document.getElementById("redButton").style.color = "rgba(var(--color_red),var(--color_green),var(--color_blue),0.6)";
-function changeSetting(setting, value){
+function changeSetting(setting, value, playSound){
 	//Changing the settings
 	settings[setting] = value;
 	if (setting == 'color'){
@@ -82,7 +82,10 @@ function changeSetting(setting, value){
 	}
 	//Changing button color
 	changeButtonColor(['greenButton','yellowButton','whiteButton','redButton'],value+"Button");
+
+	if (playSound == true){
 	snd_click4.play();
+	}
 }
 function changeButtonColor(buttonIds,selectedButtonId){
 	for (var i=0; i<buttonIds.length; i++){
@@ -92,8 +95,16 @@ function changeButtonColor(buttonIds,selectedButtonId){
 	}
 	document.getElementById(selectedButtonId).style.color = "rgba(var(--color_red),var(--color_green),var(--color_blue),1)";
 }
-
-
+function restartGame(){ //When the restart game button is clicked
+	document.getElementById("settings_restart_game").style.visibility = "visible";
+}
+function restartGameYes(){
+	document.getElementById("settings_restart_game").style.visibility = "hidden";
+	resetGame();
+}
+function restartGameNo(){
+	document.getElementById("settings_restart_game").style.visibility = "hidden";
+}
 
 
 
@@ -124,7 +135,7 @@ function showObjectPopup(objectIndex){ //when called, it creates the popup menu 
 
 // **********Navigation**********
 function changeX(value){
-	if ((x+value) < 5 && (x+value) > -1){
+	if ((x+value) < 5 && (x+value) > -1 && y==0){
 		x += value;
 		xLabel.innerHTML = "X: "+x;
 		snd_click2.play();
@@ -136,7 +147,7 @@ function changeY(value){
 	snd_click2.play();
 }
 function changeZ(value){
-	if ((z+value) < 5 && (z+value) > -1){
+	if ((z+value) < 5 && (z+value) > -1 && y==0){
 		z += value;
 		zLabel.innerHTML = "Z: "+z;
 		snd_click2.play();
