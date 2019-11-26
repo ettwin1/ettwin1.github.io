@@ -19,6 +19,7 @@ var yLabel = document.getElementById("yLabel");
 var zLabel = document.getElementById("zLabel");
 
 var combatPower = 0; //how powerful the player is at combat
+var permanentCombatPower = 0; //how powerful the player is at combat without any weapons or armor
 
 
 // **********STAT**********

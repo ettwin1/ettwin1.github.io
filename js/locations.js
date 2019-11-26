@@ -30,6 +30,8 @@ function saveGame(){
     localStorage.caps = object[0].amount;
     //Save equipment
     localStorage.setItem('equipment',JSON.stringify(equipment));
+    //Save permanent combat power
+    localStorage.setItem('permanentCombatPower', permanentCombatPower)
     //Save settings
     localStorage.setItem('settings',JSON.stringify(settings));
     //Save notes
@@ -72,13 +74,14 @@ function loadGame(){
     //Load Caps
     object[0].amount = Number(localStorage.caps);
     object[0].name = "Bottle Caps: "+object[0].amount;
-    //Load Equipment
+    //Load Equipment and combat power
     equipment = JSON.parse(localStorage.getItem('equipment'));
     if (equipment[0] != -1){document.getElementById("headText").innerHTML = "<p>"+object[equipment[0]].name+" +"+object[equipment[0]].combatBonus+"</p>";}
     if (equipment[1] != -1){document.getElementById("leftText").innerHTML = "<p>"+object[equipment[1]].name+" +"+object[equipment[1]].combatBonus+"</p>";}
     if (equipment[2] != -1){document.getElementById("rightText").innerHTML = "<p>"+object[equipment[2]].name+" +"+object[equipment[2]].combatBonus+"</p>";}
     if (equipment[3] != -1){document.getElementById("bodyText").innerHTML = "<p>"+object[equipment[3]].name+" +"+object[equipment[3]].combatBonus+"</p>";}
     if (equipment[4] != -1){document.getElementById("feetText").innerHTML = "<p>"+object[equipment[4]].name+" +"+object[equipment[4]].combatBonus+"</p>";}
+    permanentCombatPower = Number(localStorage.getItem('permanentCombatPower'));
     recalcuateCombatPower()
     //Load Pineapple option
     if (objectIsUsed[26]){
@@ -151,6 +154,8 @@ function resetGame(){
     document.getElementById("rightText").innerHTML = "<p>*unequipped*</p>";
     document.getElementById("bodyText").innerHTML = "<p>*unequipped*</p>";
     document.getElementById("feetText").innerHTML = "<p>*unequipped*</p>";
+    //Reset permanent combat power
+    permanentCombatPower = 0;
     recalcuateCombatPower()
     //Reset Pineapple Option
     document.getElementById("redButton").style.visibility = 'hidden';
@@ -194,6 +199,7 @@ function resetGame(){
         atAlleyway : false,
         beenCheated : false,
         isFriends : false,
+        foundPotion : false,
 
         defaultText : "<p>You walk into an abandoned town. You see a marketplace, a tower, and an alleyway. <a href='#'onclick='mapLocation[0][0][1].marketplace()'>[Go to Marketplace]</a> <a href='#'onclick='mapLocation[0][0][1].tower()'>[Go to Tower]</a> <a href='#'onclick='mapLocation[0][0][1].alleyway()'>[Go to Alleyway]</a></p>",
         marketplaceText : "<p>The marketplace is abandoned with hardly anything useful left. <a href='#' onclick='mapLocation[0][0][1].marketplaceSearch()'>[Search]</a> <a href='#' onclick='mapLocation[0][0][1].default()'>[Back to City]</a></p>",
@@ -299,8 +305,8 @@ function resetGame(){
     localStorage.setItem('RaggedyShack', JSON.stringify({
         defaultText : "<p>You see an old man living in a raggedy shack. \"Hello there,\" he says, \"Welcome to my humble abode.\" <a href='#' onclick='mapLocation[4][0][4].search()'>[Search]</a> <a href='#' onclick='mapLocation[4][0][4].talk()'>[Talk]</a></p>",
         searchText : "<p>You don't find anything useful, just some mechanic equipment you don't need. \"Hey! You can't search my place like it's some abandoned site!\"</p>",
-        talkText : "<p>\"I was a weapon mechanic for the Brotherhood of Steel. I got kicked out, and they'd kill me if I got too close. So now I live here.\" <a href='#' onclick='mapLocation[4][0][4].mechanic()'>[\"Weapon Mechanic?\"]</a></p>",
-        mechanicText : "<p>\"That's right. I can fix any broken weapons you have for just 20 caps. Just try to keep it quiet though, I don't want to attract the attention of the Brotherhood of Steel.\"</p>",
+        talkText : "<p>\"I was a weapon mechanic for the Brotherhood of Steel. I got kicked out though. They'd kill me if I got too close, so now I live here. Hidden right in the middle of a dangerous area.\" <a href='#' onclick='mapLocation[4][0][4].mechanic()'>[\"Weapon Mechanic?\"]</a></p>",
+        mechanicText : "<p>\"That's right. I can fix any broken weapons you have for just 20 caps. Just try to keep it quiet though, I don't want to attract any unwanted attention here.\"</p>",
     }));
     mapLocationVars[4][0][4] = JSON.parse(localStorage.getItem('RaggedyShack'));
 
@@ -309,6 +315,7 @@ function resetGame(){
         defaultText : "<p>You see an abandoned store that once sold explosives. <a href='#' onclick='mapLocation[1][0][1].search()'>[Search]</a></p>",
         searchText : "<p>Most of the store has already been ransacked except for an unopened <a href='#' onclick='describe(`safe`)'>safe</a>.</p>",
         searchText2 : "<p>Most of the store has already been ransacked. You don't find anything useful.</p>",
+        beenOpened : false,
     }));
     mapLocationVars[1][0][1] = JSON.parse(localStorage.getItem('AbandonedExplosiveStore'));
 
@@ -502,11 +509,16 @@ mapLocation[2][0][2] = {
         logText.innerHTML = "<p>All of a sudden, your memories flood back. You were a human who lived on mars, and you came to Earth to investigate the effects of the nuclear war that happened long ago. You must have crash landed and lost your memories. Unwittingly, you've already gathered the info you needed. And you got quite the story to tell in the process. <a href='#' onclick='mapLocation[2][0][2].finish5()'>[Fly Back to Mars]</a></p>";
     },
     finish5 : function(){
-        logText.innerHTML = "<p>Congratulations! You beat the game! Would you like to restart? <a href='#' onclick='restartGameYes()'>Yes</a></p>";
-        document.getElementsByClassName("button2")[0].hidden = true;
-        document.getElementsByClassName("button2")[2].hidden = true;
-        document.getElementsByClassName("button2")[3].hidden = true;
-        document.getElementsByClassName("button2")[5].hidden = true;
+        if (objectIsInInventory[2]){
+            logText.innerHTML = "<p>As you fly away, you're reminded of a banana you've been carrying for a while. You peel it and eat it, savoring the exquisite taste of a perfectly ripe banana. <a href='#' onclick='mapLocation[2][0][2].finish5()'>[Finish]</a></p>";
+            removeObject(2);
+        }else{
+            logText.innerHTML = "<p>Congratulations! You beat the game! Would you like to restart? <a href='#' onclick='restartGameYes()'>Yes</a></p>";
+            document.getElementsByClassName("button2")[0].hidden = true;
+            document.getElementsByClassName("button2")[2].hidden = true;
+            document.getElementsByClassName("button2")[3].hidden = true;
+            document.getElementsByClassName("button2")[5].hidden = true;
+        }
     }
 }
 
@@ -564,16 +576,27 @@ mapLocation[0][0][1] = {
         logText.innerHTML=mapLocation[X][Y][Z].defaultText;
     },
     evilPlan : function(){
-        logText.innerHTML = "<p>The wizard throws out a piece of paper. \"That's my plan. Read it, and tell me what you think.\" <a href='#' onclick='mapLocation[0][0][1].evilPlan2()'>[\"I want to help\"]</a> <a href='#' onclick='mapLocation[0][0][1].noEvilPlan()'>[\"I don't want to help\"]</a></p>"; 
+        logText.innerHTML = "<p>The wizard throws out a piece of paper. \"That's my plan. Read it, and tell me what you think.\" (Parchment added to Inventory) <a href='#' onclick='mapLocation[0][0][1].evilPlan2()'>[\"I want to help\"]</a> <a href='#' onclick='mapLocation[0][0][1].noEvilPlan()'>[\"I don't want to help\"]</a></p>"; 
         mapLocationVars[0][0][1].towerText = "<p>\"Hello there!\" says the wizard looking out the window, \"Have you read my plan? Do you want to help?\" <a href='#' onclick='mapLocation[0][0][1].evilPlan2()'>[\"Yes\"]</a> <a href='#' onclick='mapLocation[0][0][1].noEvilPlan()'>[\"No\"]</a></p>";  
-        //objectIsInInventoy[?] = true
+        objectIsInInventory[37] = true
+        snd_collect.play();
     },
     noEvilPlan : function(){
         logText.innerHTML += "<p>\"Ah, alright fine. But you're not going to like getting blown up all of a sudden!\"</p>";
         mapLocationVars[0][0][1].towerText = "<p>\"Hello there!\" says the wizard looking out the window, \"Have you come to change your mind? Do you want to help?\" <a href='#' onclick='mapLocation[0][0][1].evilPlan2()'>[\"Yes\"]</a> <a href='#' onclick='mapLocation[0][0][1].noEvilPlan()'>[\"No\"]</a></p>";   
     },
+    towerSearch : function(){
+        if (mapLocationVars[0][0][1].foundPotion){
+            logText.innerHTML += "<p>You don't find anything useful.</p>";
+        }else{
+            logText.innerHTML += "<p>You search the wizard's robes and find a small vial of purple liquid. (Potion added to Inventory)</p>";
+            objectIsInInventory[38] = true;
+            snd_collect.play();
+            mapLocationVars[0][0][1].foundPotion = true;
+        }
+    },
     evilPlan2 : function(){
-        logText.innerHTML += "<p>\"Great! Come back when you have it!\"</p>";
+        logText.innerHTML += "<p>\"Great! I need you to get a radiation suit, and then we can accomplish our plan!\"</p>";
         mapLocationVars[0][0][1].isFriends = true;
         mapLocationVars[0][0][1].towerText = "<p>\"Hello there!\" says the wizard looking out the window, \"Have you gotten a radiation suit yet?\" <a href='#' onclick='mapLocation[0][0][1].yes()'>[\"Yes\"]</a> <a href='#' onclick='mapLocation[0][0][1].no()'>[\"No\"]</a></p>";
     },
@@ -585,26 +608,35 @@ mapLocation[0][0][1] = {
         }
     },
     yes2 : function(){
-        logText.innerHTML = "<p>\"Ah, yes! Let me show you where the cave is.\" He comes down his tower and leads you to the cave. \"Here's the entrance. Now give me the suit.\" <a href='#' onclick='mapLocation[0][0][1].yes3()'>[Give Suit]</a></p>";
+        logText.innerHTML = "<p>\"Ah, yes! Let me show you where the cave is.\" He comes down from his tower and leads you to the cave under the city. \"Here's the entrance. Now give me the suit.\" <a href='#' onclick='mapLocation[0][0][1].yes3()'>[Give Suit]</a></p>";
     },
     yes3 : function(){
         objectIsInInventory[29] = false;
         objectIsInInventory[30] = false;
         objectIsInInventory[31] = false;
-        logText.innerHTML = "<p>As the wizard enters the cave, he says \"Heheheh. I hope you have a death wish. Because I do.\" He gives a big grin and runs into the cave. You look farther in, and to your horror, see a nuclear bomb. <a href='#' onclick='mapLocation[0][0][1].yes4()'>[Stop the Wizard]</a></p>";
+        logText.innerHTML = "<p>The wizard enters deep into the cave. You wait outside the entrace for about fifteen minutes before the wizard comes back. When he does, he smiles and says, \"The plan is almost complete. Let's go.\" <a href='#' onclick='mapLocation[0][0][1].yes4()'>[Leave]</a></p>";
     },
     yes4 : function(){
-        logText.innerHTML = "<p>You try your best to stop him, but he was already there before you could do anything. He detonates the nuclear bomb, and everything goes white. You've reached an end. Would you like to restart the game? <a href='#' onclick='restartGameYes()'>Yes</a></p>";
+        logText.innerHTML = "<p>You travel for days until you reach the top of a mountain. The wizard presses the button on his remote, and you see a bright light in the distance. Then it morphs into a mushroom cloud that ascends above the sunset skyline. It's the most beautiful thing you've ever seen.  <a href='#' onclick='mapLocation[0][0][1].yes5()'>[Finish]</a></p>";
         document.getElementsByClassName("button2")[0].hidden = true;
         document.getElementsByClassName("button2")[2].hidden = true;
         document.getElementsByClassName("button2")[3].hidden = true;
         document.getElementsByClassName("button2")[5].hidden = true;
+        x = 100;
+        y = 0;
+        z = 50;
+        xLabel.innerHTML = "X: "+x;
+        yLabel.innerHTML = "Y: "+y;
+        zLabel.innerHTML = "Z: "+z;
+    },
+    yes5 : function(){
+        logText.innerHTML = "<p>Congratulations! You found the hidden ending! Would you like to restart? <a href='#' onclick='restartGameYes()'>Yes</a></p>";
     },
     no : function(){
-        logText.innerHTML += "<p>\"Be quick! I don't have 80 years!\"</p>";
+        logText.innerHTML += "<p>\"Be quick! I don't have all the time in the world!\"</p>";
     },
     lie : function(){
-        logText.innerHTML += "<p>\"Aha! You lied! I don't know why though. Just say no!\"</p>";
+        logText.innerHTML += "<p>\"Aha! You lied! I don't know why though. Just say you don't have it!\"</p>";
     }
 }
 
@@ -884,6 +916,8 @@ mapLocation[0][0][2] = {
         mapLocationVars[0][0][2].canAttack = false;
         mapLocationVars[0][0][2].isDead = true;
         mapLocationVars[0][0][2].defaultText = "<p>You see a fortress at the top of a hill. The fortress once belonged to the Super Mutant you killed.</p>";
+        //Changing Gossip Dialogue
+        gossipList1[4] = "<p>\"I heard someone finally beat the super mutant. May the wealth eventually spread to us, pardner.\"</p>";
     },
     lose : function(){
         if (mapLocationVars[0][0][2].isFriends == true){
@@ -915,6 +949,9 @@ mapLocation[0][0][2] = {
             objectIsInInventory[18] = true;
             snd_collect.play();
             mapLocationVars[0][0][2].defaultText = "<p>You meet the Super Mutant at the top of the hill, and he says \"Thank you again for getting those items for me. I'm sure the other humans won't be as afraid of me now.\"</p>";
+            //Changing Gossip Dialogue
+            gossipList1[4] = "<p>\"I heard that super mutant is dressing up like a human, and acting like one too. Little strange ain't it?\"</p>";
+            gossipList2.push("<p>\"I heard there's a friendly super mutant around! I've never seen one before, but I can't wait to meet him!\"</p>");
         }else if (mapLocationVars[0][0][2].hasClothes && mapLocationVars[0][0][2].hasFood && !mapLocationVars[0][0][2].hasBook){
             mapLocationVars[0][0][2].defaultText = "<p>You meet the Super Mutant at the top of the hill, and he says \"Hello human friend! I have the best clothes and food, but do you have the best human book? Remember, I'll give you Power Armor as a reward.\" <a href='#' onclick='mapLocation[0][0][2].attack()'>[Attack]</a></p>";
         }else if (mapLocationVars[0][0][2].hasClothes && !mapLocationVars[0][0][2].hasFood && mapLocationVars[0][0][2].hasBook){
@@ -1030,6 +1067,7 @@ mapLocation[3][0][3] = {
         for (var i=0; i<mapLocationVars[3][0][3].objectsOwned.length; i++){
             objectIsInInventory[mapLocationVars[3][0][3].objectsOwned[i]] = true;
         }
+        mapLocationVars[3][0][3].canAttack = false;
         snd_collect.play();
         //Adding dialogue options with nova clan
         mapLocation[4][0][1].gangDead = true;
@@ -1038,7 +1076,9 @@ mapLocation[3][0][3] = {
         }else{
             mapLocation[4][0][1].defaultText = mapLocation[4][0][1].helpedText;
         }
-        mapLocationVars[3][0][3].canAttack = false;
+        //Changing gossip dialogue
+        gossipList1[2] = "<p>\"You're not going to belive me, but I heard that someone took out the whole Bullet Gang, all by themselves! It's unbelievable!\"</p>";
+        gossipList2[4] = "<p>\"Great news! The Bullet Gang is gone! Hooray!\"</p>";
     },
     lose : function(){
         logText.innerHTML = "<p>You tried to attack, but one of the gang members put a gun to your head. \"I would walk away quietly, if I were you.\"</p>";

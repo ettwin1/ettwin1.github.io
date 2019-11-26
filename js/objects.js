@@ -31,6 +31,10 @@ object[1] = {
             mapLocationVars[3][0][4].defaultText = "<p>The caravan that was here is gone now. There's no one in sight.</p>";
         }else if (Y == 0 && X == 2 && Z == 2){
             logText.innerHTML += "<p>You were probably using the wrench to fix the machine. You're quite sure you don't need it anymore, you can fix everything else by hand.</p>";
+        }else if (Y == 0 && X == 1 && Z == 1 && !objectIsUsed[20]){
+            logText.innerHTML += "<p>You try to use the wrench to open the safe, but it doesn't work.</p>";
+        }else if (Y == 0 && X == 4 && Z == 4){
+            logText.innerHTML += "<p>\"Oh, I don't need a wrench,\" he says, \"I already have one, thank you.\"</p>";
         }else{
             logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
         }
@@ -93,6 +97,8 @@ object[2] = {
             }
         }else if (Y == 0 && X == 4 && Z == 3 && mapLocationVars[4][0][3].isFriends == true){
             logText.innerHTML += "<p>His eyes go wide. \"You got a special plant too?! You better protect it, and don't give it to anyone, I tell ya.\"</p>";
+        }else if (Y == 0 && X == 4 && Z == 4){
+            logText.innerHTML += "<p>\"What is that? I'm sorry, but I don't eat things I've never seen before.\"</p>";
         }else{
             logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
         }
@@ -112,9 +118,11 @@ object[2] = {
         if (answer=="yes"){
             logText.innerHTML += "<p>\"Yay! I have a new friend now!\"</p>";
             removeObject(2);
-            gossipList2.push("<p>\"Well, since you're my BFF now, one time I was putting on my makeup, and then I saw that my brown was gone, so I...\" *laughs* \"so I went outside and used the dirt off the ground! Isn't that crazy?! Nobody even noticed!\"</p>");
-            gossipList2.push("<p>\"Okay, so since you're my friend now, I gotta tell you a dream I had. I was, like, working, like normal, right? And then someone ordered ONE HUNDRED sweet rolls. It was crazy, I had to go help cook them, and I was like 'Wait I never cooked these before!' It was really stressful, I'm glad it was just a dream.\"</p>");
-            gossipList2.push("<p>\"Alright, since we're friends, I'm going to tell you a secret. Promise you won't tell anyone, okay? So, um, after someone's done eating, if there's still food left on their plate, I'll secretly eat their food. I know, gross right?! But it's such a waste! I just have to finish it for them.\"</p>");
+            for (var i=0; i<2; i++){
+                gossipList2.push("<p>\"Well, since you're my BFF now, one time I was putting on my makeup, and then I saw that my brown was gone, so I...\" *laughs* \"so I went outside and used the dirt off the ground! Isn't that crazy?! Nobody even noticed!\"</p>");
+                gossipList2.push("<p>\"Okay, so since you're my friend now, I gotta tell you a dream I had. I was, like, working, like normal, right? And then someone ordered ONE HUNDRED sweet rolls. It was crazy, I had to go help cook them, and I was like 'Wait I never cooked these before!' It was really stressful, I'm glad it was just a dream.\"</p>");
+                gossipList2.push("<p>\"Alright, since we're friends, I'm going to tell you a secret. Promise you won't tell anyone, okay? So, um, after someone's done eating, if there's still food left on their plate, I'll secretly eat their food. I know, gross right?! But it's such a waste! I just have to finish it for them.\"</p>");
+            }
             mapLocationVars[2][0][0].isFriends = true;
             mapLocationVars[2][0][0].enterText = "<p>\"Yay! It's my new friend!\" says the waitress, \"What would you like today?\" <a href='#' onclick='mapLocation[2][0][0].lookAtMenu()'>[Look At Menu]</a> <a href='#' onclick='gossip(`restaurant`)'>[Gossip]</a></p>";
             mapLocationVars[2][0][0].buyText = "<p>\"Yay! Thanks BFF! Is there anything else I can do for you?\"  <a href='#' onclick='mapLocation[2][0][0].lookAtMenu()'>[Look At Menu]</a> <a href='#' onclick='gossip(`restaurant`)'>[Gossip]</a></p>";
@@ -352,6 +360,8 @@ object[13] = {
         }else if (Y == 0 && X == 4 && Z == 3 && mapLocationVars[4][0][3].isFriends == true){
             logText.innerHTML += "<p>\"Food? Ah, thanks.\" He takes it and eats immediately.</p>";
             objectIsInInventory[13] = false;
+        }else if (Y == 0 && X == 4 && Z == 4){
+            logText.innerHTML += "<p>\"Oh, thank you. It's hard to get good food around here, so it's really appreciated.\"</p>";
         }else{
             logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
         }
@@ -400,6 +410,8 @@ object[14] = {
         }else if (Y == 0 && X == 4 && Z == 3 && mapLocationVars[4][0][3].isFriends == true){
             logText.innerHTML += "<p>\"Food? Ah, thanks.\" He takes it and eats immediately.</p>";
             objectIsInInventory[14] = false;
+        }else if (Y == 0 && X == 4 && Z == 4){
+            logText.innerHTML += "<p>\"Oh, thank you. It's hard to get good food around here, so it's really appreciated.\"</p>";
         }else{
             logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
         }
@@ -432,6 +444,7 @@ object[15] = {
             if (mapLocationVars[0][0][1].beenCheated == true){
                 logText.innerHTML += "<p>\"I don't need any more food! Now- wait, is that a sweet roll? Okay, I'll have it. Mmmm, that tastes delicious! Hey, do you want to know what my plan is?\" <a href='#' onclick='mapLocation[0][0][1].evilPlan()'>[\"Sure\"]</a></p>";
                 mapLocationVars[0][0][1].towerText = "\"Hello there! Sorry for cheating you earlier!\" says the wizard looking out the window, \"Would you like to know what I'm planning?\" <a href='#' onclick='mapLocation[0][0][1].evilPlan()'>[\"Sure\"]</a>";
+                objectIsInInventory[15] = false;
             }else{
                 logText.innerHTML += "<p>\"That isn't what I asked for!\" says the wizard, \"You must have misheard me. I asked for a banana! One that's yellow, ripe, and looks like a frown!\"</p>";
             } 
@@ -439,7 +452,7 @@ object[15] = {
             logText.innerHTML += "<p>\"Ooh, a Sweet Roll? For me?\" says the man in Power Armor as he takes it from you. He tries to eat it, but it just smushes against his helmet. \"Uh, I'll save it for later\"</p>";
             objectIsInInventory[15] = false;
         }else if (Y == 0 && X == 4 && Z == 1){
-            logText.innerHTML += "<p>\"Oh, thanks for the offer, but we're well fed. But I'm sure some of the locals are in need of food.\"</p>";
+            logText.innerHTML += "<p>\"Oh, thanks for the offer, but we're well fed. But I'm sure someone else would appreciate it more. Maybe that one crazy person who lives in the abandoned town? He could probably use a nice sweet roll.\"</p>";
         }else if (Y == 0 && X == 3 && Z == 0 && mapLocationVars[3][0][0].canTalk == true){
             logText.innerHTML += "<p>\"Oh, is that for me? Don't mind if I do.\" He puts it on a plate and starts eating. \"Wait, I probably should've made sure it wasn't poisoned. All well.\" Then he finishes eating it.</p>";
             objectIsInInventory[15] = false;
@@ -454,6 +467,8 @@ object[15] = {
         }else if (Y == 0 && X == 4 && Z == 3 && mapLocationVars[4][0][3].isFriends == true){
             logText.innerHTML += "<p>\"Food? Ah, thanks.\" He takes it and eats immediately.</p>";
             objectIsInInventory[15] = false;
+        }else if (Y == 0 && X == 4 && Z == 4){
+            logText.innerHTML += "<p>\"Wait, you're giving me a sweet roll? I haven't had one of those in years! Thank you so much!\"</p>";
         }else{
             logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
         }
@@ -557,6 +572,10 @@ object[21] = {
             mapLocation[4][0][3].receiveObject();
         }else if (Y == 0 && X == 0 && Z == 3 && mapLocationVars[0][0][3].canTalk == true && mapLocationVars[0][0][3].startedQuest == true){
             logText.innerHTML += "<p>\"Pffff, you think I'm scared of that?\" says the man in Power Armor, \"That's nothing against my Power Armor. Now put the gun away, I don't want to start any trouble.\"</p>";
+        }else if (Y == 0 && X == 1 && Z == 1 && !objectIsUsed[20]){
+            logText.innerHTML += "<p>You shoot at the safe, but it's quite strong. It doesn't open</p>";
+        }else if (Y == 0 && X == 4 && Z == 4){
+            logText.innerHTML += "<p>\"I did a pretty good job fixing that up, didn't I?\"</p>";
         }else{
             logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
         }
@@ -584,6 +603,8 @@ object[22] = {
             logText.innerHTML += "<p>It's probably NOT a good idea to blow up the only thing that connects to your past.</p>";
         }else if (Y == 0 && X == 0 && Z == 3 && mapLocationVars[0][0][3].canTalk == true && mapLocationVars[0][0][3].startedQuest == true){
             logText.innerHTML += "<p>\"Pffff, you think I'm scared of that?\" says the man in Power Armor, \"That's nothing against my Power Armor. Now put the gun away, I don't want to start any trouble.\"</p>";
+        }else if (Y == 0 && X == 4 && Z == 4){
+            logText.innerHTML += "<p>\"Woah, where did you get one of those? That's such an old model, and it's in mint condition! That's quite a gun you have there.\"</p>";
         }else{
             logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
         }
@@ -609,6 +630,10 @@ object[23] = {
             mapLocation[4][0][3].receiveObject();
         }else if (Y == 0 && X == 0 && Z == 3 && mapLocationVars[0][0][3].canTalk == true && mapLocationVars[0][0][3].startedQuest == true){
             logText.innerHTML += "<p>\"Pffff, you think I'm scared of that?\" says the man in Power Armor, \"That's nothing against my Power Armor. Now put the gun away, I don't want to start any trouble.\"</p>";
+        }else if (Y == 0 && X == 1 && Z == 1 && !objectIsUsed[20]){
+            logText.innerHTML += "<p>You don't want to accidently destroy the contents of the safe by shooting through it with a sniper.</p>";
+        }else if (Y == 0 && X == 4 && Z == 4){
+            logText.innerHTML += "<p>\"This is a pretty good sniper. I can tell it's seen a few repairs, but it'll work pretty well for you.\"</p>";
         }else{
             logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
         }
@@ -634,6 +659,10 @@ object[24] = {
             mapLocation[4][0][3].receiveObject();
         }else if (Y == 0 && X == 0 && Z == 3 && mapLocationVars[0][0][3].canTalk == true && mapLocationVars[0][0][3].startedQuest == true){
             logText.innerHTML += "<p>\"Pffff, you think I'm scared of that?\" says the man in Power Armor, \"That's nothing against my Power Armor. Now put the gun away, I don't want to start any trouble.\"</p>";
+        }else if (Y == 0 && X == 1 && Z == 1 && !objectIsUsed[20]){
+            logText.innerHTML += "<p>You don't want to accidently destroy the contents of the safe with an uncontrollable spray of bullets.</p>";
+        }else if (Y == 0 && X == 4 && Z == 4){
+            logText.innerHTML += "<p>\"This is a nice gun. However, most typical machine guns like this have a higher caliber. Despite the smaller bullets, it should work just fine when you want to kill some gofers.\"</p>";
         }else{
             logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
         }
@@ -666,6 +695,8 @@ object[25] = {
             }else{
                 logText.innerHTML += "<p>\"Woooah, where'd you get a gun like that?\" says the man in Power Armor, \"Those things are crazy powerful, but it's not going to work as a stan-in for Power Armor. The Elder is pretty strict.\"</p>";
             }
+        }else if (Y == 0 && X == 4 && Z == 4){
+            logText.innerHTML += "<p>\"Woah, now that is a good lookin' gun! I haven't seen a minigun in years. Looks like this one is in good repair. The owner must have taken good care of it.\"</p>";
         }else{
             logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
         }
@@ -709,6 +740,8 @@ object[27] = {
             mapLocationVars[1][0][2].defaultText = mapLocationVars[1][0][2].defaultText2
         }else if (Y == 0 && X == 3 && Z == 0 && mapLocationVars[3][0][0].canTalk == true){
             logText.innerHTML += "<p>\"Wow, that's a nice pack you got there. I'm not looking to buy it or anything, but you could probably climb anything with that. Now climbing can be dangerous. I suggest you buy some of my armor to protect yourself in case you fall.\" *Wink*</p>";
+        }else if (Y == 0 && X == 1 && Z == 1 && !objectIsUsed[20]){
+            logText.innerHTML += "<p>You try to use the tools in the climbing gear to open the safe, but it doesn' work. It's too strong.</p>";
         }else{
             logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
         }
@@ -735,6 +768,8 @@ object[28] = {
         }else if (Y == 0 && X == 1 && Z == 2){
             logText.innerHTML += "<p>You use the pickaxe to dig a nice outcove in the side of the cliff.</p>";
             mapLocationVars[1][0][2].defaultText = "<p>You come upon the face of a <a href='#' onclick='describe(`cliff`)'>cliff</a>. In the outcove you made, you see a pair of ground squirrels living inside.</p>";
+        }else if (Y == 0 && X == 1 && Z == 1 && !objectIsUsed[20]){
+            logText.innerHTML += "<p>You try to use the pickaxe to open the safe, but it doesn't work. It's too strong.</p>";
         }else{
             logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
         }
@@ -880,19 +915,34 @@ object[37] = {
 
     popupText : "<p style='margin:4px'><a href='#' onclick='object[37].useObject(X,Y,Z)'>Use</a></p>"+
                 "<p style='margin:4px'><a href='#' onclick='displayDescription(37)'>Examine</a></p>",
-    description : "<p>It's an old piece of parchment with an evil plan written on it:</p><ol><li><p>Get someone with a radiation suit</p></li><li><p></p></li></ol>",
+    description : "<p>It's an old piece of parchment with an evil plan written on it:</p><ol><li><p>Find a radiation suit</p></li><li><p>Descend beneath the town</p></li><li><p>Find the atomic bomb</p></li><li><p>Install a remote-control detonator on it</p></li><li><p>Watch the show</p></li></ol>",
     
     useObject : function(x,y,z){
-        if (Y == 0 && X == 2 && Z == 2){
-            logText.innerHTML += "<p>You place the storage module by the machine, ready to use when you have all the parts.</p>";
-            removeObject(36);
-            mapLocationVars[2][0][2].hasModule = true;
-            mapLocation[2][0][2].getObject();
-        }else if (Y == 0 && X == 0 && Z == 3 && mapLocationVars[0][0][3].canTalk == true && mapLocationVars[0][0][3].startedQuest == true){
-            logText.innerHTML += "<p>\"Oh yeah, we have plenty of those,\" says the man in Power Armor, \"You can keep it if you want.\"</p>";
+        if (Y == 0 && X == 4 && Z == 1){
+            logText.innerHTML += "<p>\"That crazy guy in the tower is planning to blow us all up?\" she says, \"Don't you worry, we'll look into that. Thanks for letting us know.\"</p>";
+            removeObject(37);
+            mapLocationVars[0][0][1].towerText = "<p>You find the remains of the wizard next to the tower. The walls are spray-painted with the Nova Clan's symbol, and underneath it says \"FOR THE GOOD OF SOCIETY\" <a href='#' onclick='mapLocation[0][0][1].towerSearch()'>[Search]</a></p>";
         }else{
             logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
         }
         changeNav('log');
     }
 };
+
+object[38] = {
+    name : "Potion",
+    equipmentSlot : "",
+    necessary : true,
+
+    popupText :  "<p style='margin:4px'><a href='#' onclick='object[38].eatObject()'>Drink</a></p>"+
+                "<p style='margin:4px'><a href='#' onclick='displayDescription(38)'>Examine</a></p>",
+    description : "<p>It's a small vial filled with purple liquid. You have no idea what it does.</p>",
+    
+    eatObject : function(){
+        logText.innerHTML += "<p>You drink it, and you immediately can tell it's a radioactive substance. It leaves an aftertaste of banana. You feel your muscles growing stronger, and your limbs feel lighter. You permanently gain 5 combat power.</p>";
+        permanentCombatPower = 5;
+        recalcuateCombatPower();
+        removeObject(38);
+        changeNav('log');
+    }
+}

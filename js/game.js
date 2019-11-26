@@ -89,7 +89,7 @@ function displayDescription(objectIndex){
 }
 
 function recalcuateCombatPower(){ //Goes through everything equipped and adds combat power
-	combatPower = 0;
+	combatPower = permanentCombatPower;
 	for (var i=0; i<5; i++){
 		if (equipment[i] != -1){
 			combatPower += object[equipment[i]].combatBonus;
@@ -185,10 +185,20 @@ function unequipObject(objectIndex){
 
 //Location functions
 var gossipList1 = [ //Armor Shop
-	"<p>\"If you're lookin' for some caps, I heard there's some gofers that like to steal money. Maybe you can steal it back from them. They live northeast of here.\"</p>"
+	"<p>\"If you're lookin' for some caps, I heard there's some gofers that like to steal money. Maybe you can steal it back from them. They live northeast of here.\"</p>",
+	"<p>\"If you're lookin' for some caps, I heard there's some gofers that like to steal money. Maybe you can steal it back from them. They live northeast of here.\"</p>",
+	"<p>\"If you're travelling north of here, you better watch out for the Bullet Gang. You don't want to accidently run into them.\"</p>",
+	"<p>\"I heard there was some weird object that fell from the sky somewhere nearby. Everyone's too afraid to go looking for it though.\"</p>",
+	"<p>\"I hear there's a Super Mutant that lives somewhere in the west in a fortress with a lot of valuables. There's been quite a few folks trying to kill it, but no one's been able to yet.\"</p>",
+	"<p>\"You got to be careful travelling around northeast of here, there's a lot of dangerous people that roam around there.\"</p>"
 ];
 var gossipList2 = [ //Lonely Restaurant
-	"<p>\"Okay, so there are these pesky gofers that steal caps from people! Maybe you can help by killing them for us. They live northeast of here.\"</p>"
+	"<p>\"Okay, so there are these pesky gofers that steal caps from people! Maybe you can help by killing them for us. They live northeast of here.\"</p>",
+	"<p>\"Okay, so there are these pesky gofers that steal caps from people! Maybe you can help by killing them for us. They live northeast of here.\"</p>",
+	"<p>\"I ALWAYS hear people wanting sweet rolls. You know what? You should buy sweet rolls just to give them to people! They would be so happy!\"</p>",
+	"<p>\"I always hear people talking about the abandoned places just west of here. Are you from there? You look pretty rugged.\"</p>",
+	"<p>\"You HAVE to watch out for the bullet gang. They're so evil! They like to hang out northeast of here, so don't go too far that way!\"</p>",
+	"<p>\"Have you ever heard of the Nova Clan? They're such good people! I have a friend who's a member, and they're trying to make our community safer!\"</p>",
 ];
 
 function gossip(location){ //adds random dialogue based on your location
