@@ -52,7 +52,7 @@ img{
 	position: absolute;
 }
 #headText p, #leftText p, #rightText p, #bodyText p, #feetText p{
-	font-size: 14px;
+	font-size: 12px;
 }
 #headText{
 	top: -5%;
@@ -67,7 +67,7 @@ img{
 	left: 170px;
 }
 #bodyText{
-	top: 27%;
+	top: 28%;
 	left: 85px;
 }
 #feetText{

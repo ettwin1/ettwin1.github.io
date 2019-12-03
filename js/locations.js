@@ -63,6 +63,7 @@ function saveGame(){
     localStorage.setItem('GoldMine', JSON.stringify(mapLocationVars[1][0][3]));
     localStorage.setItem('NovaGang', JSON.stringify(mapLocationVars[4][0][1]));
     localStorage.setItem('BrotherhoodOfSteel', JSON.stringify(mapLocationVars[0][0][3]));
+    localStorage.setItem('Creature', JSON.stringify(mapLocationVars[3][0][2]));
 }
 
 
@@ -126,6 +127,7 @@ function loadGame(){
     mapLocationVars[1][0][3] = JSON.parse(localStorage.getItem('GoldMine'));
     mapLocationVars[4][0][1] = JSON.parse(localStorage.getItem('NovaGang'));
     mapLocationVars[0][0][3] = JSON.parse(localStorage.getItem('BrotherhoodOfSteel'));
+    mapLocationVars[3][0][2] = JSON.parse(localStorage.getItem('Creature'));
 }
 
 
@@ -138,7 +140,6 @@ function resetGame(){
     for (var i=0; i<object.length; i++){
         objectIsInInventory[i] = false;
     }
-    objectIsInInventory[0] = true;
     objectIsInInventory[1] = true;
     //Creating a similar array as the inventory one, but determines if an objects has been used or not
     for (var i=0; i<object.length; i++){
@@ -229,8 +230,8 @@ function resetGame(){
 
     //Broken Caravan
     localStorage.setItem('BrokenCaravan', JSON.stringify({
-        defaultText : "<p>You see a <a href='#' onclick='mapLocation[3][0][4].merchant()'>merchant</a> hastily trying to fix a wheel on his broken caravan.</p>",
-        merchantText : "<p>\"Hello there! Can you help me fix this wheel? I think the Bullet Gang is trailing me. All I need is a wrench, and maybe I can get away.\"</p>",
+        defaultText : "<p>You see a <a href='#' onclick='mapLocation[3][0][4].merchant()'>merchant</a> hastily trying to fix a wheel on her broken caravan.</p>",
+        merchantText : "<p>\"Hey there! Can you help me fix this wheel? I think the Bullet Gang is trailing me. All I need is a wrench, and maybe I can get away.\"</p>",
     }));
     mapLocationVars[3][0][4] = JSON.parse(localStorage.getItem('BrokenCaravan'));
 
@@ -267,7 +268,7 @@ function resetGame(){
         alreadyHaveFoodText : "<p>\"Hey! You can't order the same food again without eating it first! That'd be a waste!\"</p>",
         brahminSteakText : "<p>\"Brahmin steak is my favorite! Second only to sweet rolls, of course. They cost 3 caps.\" <a href='#' onclick='mapLocation[2][0][0].buy(13,3)'>[Buy]</a></p>",
         potatoText : "<p>\"We grow those potatoes on the farm over there. We try to eat them sparingly. They're 1 cap a piece.\" <a href='#' onclick='mapLocation[2][0][0].buy(14,1)'>[Buy]</a></p>",
-        sweetRollText : "<p>\"Sweet rolls are the BEST! They taste delicious and aren't even irradiated. They cost 5 caps.\" <a href='#' onclick='mapLocation[2][0][0].buy(15,1)'>[Buy]</a></p>",
+        sweetRollText : "<p>\"Sweet rolls are the BEST! They taste delicious and aren't even irradiated. They cost 5 caps.\" <a href='#' onclick='mapLocation[2][0][0].buy(15,5)'>[Buy]</a></p>",
         buyText : "<p>\"Yay! Thanks for eating at the Lonely Restaurant! Is there anything else I can do for you?\"  <a href='#' onclick='mapLocation[2][0][0].lookAtMenu()'>[Look At Menu]</a> <a href='#' onclick='gossip(`restaurant`)'>[Gossip]</a></p>",
         canTalk : false,
         isFriends : false,
@@ -399,7 +400,7 @@ function resetGame(){
 
     //Nova Gang
     localStorage.setItem('NovaGang', JSON.stringify({
-        defaultText : "<p>You stumble upon a base, and some people greet you outside. \"Hello,\" says a woman in a captain's hat, \"We're the Nova Clan, established to stop organiations like the Bullet Gang from terrorizing people. Can we help you?\" <a href='#' onclick='mapLocation[4][0][1].ask()'>[\"Do you need any help?\"]</a></p>",
+        defaultText : "<p>You stumble upon a base, and some people greet you outside. \"Hello,\" says a woman in a captain's hat, \"We're the Nova Clan. Can we help you?\" <a href='#' onclick='mapLocation[4][0][1].ask()'>[\"Do you need any help?\"]</a> <a href='#' onclick='mapLocation[4][0][1].whoAreYou()>[\"What's the Nova Clan\"]</a></p>",
         OGdefaultText : "<p>You stumble upon a base, and some people greet you outside. \"Hello,\" says a woman in a captain's hat, \"We're the Nova Clan, established to stop organiations like the Bullet Gang from terrorizing people. Can we help you?\" <a href='#' onclick='mapLocation[4][0][1].ask()'>[\"Do you need any help?\"]</a></p>",
         helpedText : "<p>You stumble upon a base, and some people greet you outside. \"Hello,\" says a woman in a captain's hat, \"We're the Nova Clan, established to stop organiations like the Bullet Gang from terrorizing people. Can we help you?\" <a href='#' onclick='mapLocation[4][0][1].ask()'>[\"Do you need any help?\"]</a> <a href='#' onclick='mapLocation[4][0][1].helped()'>[\"I killed the Bullet Gang\"]</a></p>",
         askText : "<p>\"Thanks for asking! Yes, we need more firepower. In fact, we need a minigun. If you can find one, that would help a lot. We don't have much caps, so we'll trade it for a radiation suit. Can you do that for us?\"<a href='#' onclick='mapLocation[4][0][1].yes()'>[\"I can do that\"]</a> <a href='#' onclick='mapLocation[4][0][1].no()'>[\"Sorry, can't help you there\"]</a></p>",
@@ -443,6 +444,37 @@ function resetGame(){
 
     }));
     mapLocationVars[0][0][3] = JSON.parse(localStorage.getItem('BrotherhoodOfSteel'));
+
+    //Creature
+    localStorage.setItem('Creature', JSON.stringify({
+        defaultText : "<p>In the plains, you see a large reptile-like creature guarding an old campsite. <a href='#' onclick='mapLocation[3][0][2].attack()'>[Attack]</a></p>",
+        defaultText2 : "<p>In the plains, you see an old campsite with a few dead bodies laying in it, including that of a reptile-like creature <a href='#' onclick='mapLocation[3][0][2].search()'>[Search]</a></p>",
+        winText : "<p>You slay the mutated beast. In the camp, you see the remains of the group that camped here. <a href='#' onclick='mapLocation[3][0][2].search()'>[Search]</a></p>",
+        canAttack : true,
+        hasSearched : false,
+    }));
+    mapLocationVars[3][0][2] = JSON.parse(localStorage.getItem('Creature'));
+
+    //Others
+    localStorage.setItem('Other1', JSON.stringify({
+        defaultText : "<p>There's nothing interesting here except for the beautiful rocky scenery.</p>",
+    }));
+    mapLocationVars[1][0][4] = JSON.parse(localStorage.getItem('Other1'));
+    mapLocationVars[2][0][4] = JSON.parse(localStorage.getItem('Other1'));
+    localStorage.setItem('Other2', JSON.stringify({
+        defaultText : "<p>There's nothing interesting here except for the dry wasteland.</p>",
+    }));
+    mapLocationVars[2][0][3] = JSON.parse(localStorage.getItem('Other2'));
+    localStorage.setItem('Other3', JSON.stringify({
+        defaultText : "<p>There's nothing interesting here except for old abandoned roads and highways.</p>",
+        hasFound : false, //hasFound will only be used for mapLocation[2][0][1]
+    }));
+    mapLocationVars[2][0][1] = JSON.parse(localStorage.getItem('Other3'));
+    mapLocationVars[3][0][1] = JSON.parse(localStorage.getItem('Other3'));
+    localStorage.setItem('Other4', JSON.stringify({
+        defaultText : "<p>There's nothing interesting here except for a large mountain blocking your way.</p>",
+    }));
+    mapLocationVars[4][0][0] = JSON.parse(localStorage.getItem('Other4'));
 
     changeNav('log');
 }
@@ -678,18 +710,15 @@ mapLocation[4][0][2] = {
     win : function(size){ //if you beat the gofer, do this
         if (size == "large"){
             logText.innerHTML = mapLocationVars[4][0][2].winLargeGoferText;
-            object[0].amount += 20;
-            object[0].name = "Bottle Caps: "+object[0].amount;
+            addCaps(20);
             snd_caps.play();
         }else if (size == "medium"){
             logText.innerHTML = mapLocationVars[4][0][2].winMediumGoferText;
-            object[0].amount += 10;
-            object[0].name = "Bottle Caps: "+object[0].amount;
+            addCaps(10);
             snd_caps.play();
         }else if (size == "small"){
             logText.innerHTML = mapLocationVars[4][0][2].winSmallGoferText;
-            object[0].amount += 5;
-            object[0].name = "Bottle Caps: "+object[0].amount;
+            addCaps(5);
             snd_caps.play();
         }
         mapLocationVars[4][0][2].gofer = "";
@@ -697,19 +726,13 @@ mapLocation[4][0][2] = {
     lose : function(size){ //if you don't beat the gofer, do this
         if (size == "large"){
             logText.innerHTML = mapLocationVars[4][0][2].loseLargeGoferText;
-            object[0].amount -= 20;
-            if (object[0].amount < 0){object[0].amount = 0;}
-            object[0].name = "Bottle Caps: "+object[0].amount;
+            addCaps(-20);
         } else if (size == "medium"){
             logText.innerHTML = mapLocationVars[4][0][2].loseMediumGoferText;
-            object[0].amount -= 10;
-            if (object[0].amount < 0){object[0].amount = 0;}
-            object[0].name = "Bottle Caps: "+object[0].amount;
+            addCaps(-10);
         }else if (size == "small"){
             logText.innerHTML = mapLocationVars[4][0][2].loseSmallGoferText;
-            object[0].amount -= 5;
-            if (object[0].amount < 0){object[0].amount = 0;}
-            object[0].name = "Bottle Caps: "+object[0].amount;
+            addCaps(-5);
         }
         mapLocationVars[4][0][2].gofer = "";
     },
@@ -796,8 +819,7 @@ mapLocation[3][0][0] = {
                 logText.innerHTML = "<p>You bought "+object[objectIndex].name+". (Fancy Clothes added to inventory)</p>";
                 objectIsInInventory[objectIndex] = true;
             }
-            object[0].amount -= price;
-            object[0].name = "Bottle Caps: "+object[0].amount;
+            addCaps(-price);
             logText.innerHTML += mapLocationVars[3][0][0].buyText;
             snd_collect.play();
         }else{
@@ -847,8 +869,7 @@ mapLocation[2][0][0] = {
         if (object[0].amount >= price){
             logText.innerHTML = "<p>You bought the "+object[objectIndex].name+". ("+object[objectIndex].name+" added to inventory)</p>";
             objectIsInInventory[objectIndex] = true;
-            object[0].amount -= price;
-            object[0].name = "Bottle Caps: "+object[0].amount;
+            addCaps(-price);
             logText.innerHTML += mapLocationVars[2][0][0].buyText;
             snd_collect.play();
         }else{
@@ -924,8 +945,7 @@ mapLocation[0][0][2] = {
             var objIndex = removeRandomObject();
             if (objIndex == -1){
                 logText.innerHTML = "<p>\"What's this human? I thought we were friends. I'll forgive you if you give me this.\" He takes all of your bottle caps.</p>";
-                object[0].amount = 0;
-                object[0].name = "Bottle Caps: "+object[0].amount;
+                setCaps(0);
             }else{
                 logText.innerHTML = "<p>\"What's this human? I thought we were friends. I'll forgive you if you give me this.\" He takes the "+object[objIndex].name+". ("+object[objIndex].name+" removed from Inventory)</p>";
                 removeObject(objIndex);
@@ -1005,8 +1025,18 @@ mapLocation[4][0][4] = {
             removeObject(19);
             objectIsInInventory[21] = true;
             snd_collect.play();
-            object[0].amount -= 20;
-            object[0].name = "Bottle Caps: "+object[0].amount;
+            addCaps(-20);
+        }
+    },
+    fix2 : function(){
+        if (object[0].amount < 20){
+            logText.innerHTML += "<p>You don't have enough caps to fix that item.</p>";
+        }else{
+            logText.innerHTML += "<p>\"Thank you for the business. Now make sure to keep this quiet, I don't want to attract any unwanted attention here.\" (Lazer Rifle added to inventory)</p>";
+            removeObject(39);
+            objectIsInInventory[40] = true;
+            snd_collect.play();
+            addCaps(-20);
         }
     }
 };
@@ -1035,8 +1065,7 @@ mapLocation[3][0][3] = {
             }else{
                 logText.innerHTML = "<p>As you travel, a group of armed people stop you and say, \"We're the Bullet Gang. We don't care who you are, we're taking your caps.\" All of your Bottle Caps were taken. <a href='#' onclick='mapLocation[3][0][3].attack()'>[\"Give me my stuff back!\" (Attack)]</a></p>";
                 mapLocationVars[3][0][3].moneyOwned += object[0].amount;
-                object[0].amount = 0;
-                object[0].name = "Bottle Caps: "+object[0].amount; 
+                setCaps(0);
             }
         }else{
             logText.innerHTML = "<p>You find what's left of the Bullet Gang, a pile of dead bodies.</p>";
@@ -1061,8 +1090,8 @@ mapLocation[3][0][3] = {
         }
         logText.innerHTML += " added to inventory)</p>";
         //Adding Caps
-        object[0].amount += mapLocationVars[3][0][3].moneyOwned;
-        object[0].name = "Bottle Caps: "+object[0].amount;
+        addCaps(mapLocationVars[3][0][3].moneyOwned);
+       
         //Adding Objects to inventory
         for (var i=0; i<mapLocationVars[3][0][3].objectsOwned.length; i++){
             objectIsInInventory[mapLocationVars[3][0][3].objectsOwned[i]] = true;
@@ -1320,6 +1349,9 @@ mapLocation[1][0][3] = {
 
 //Nova Gang
 mapLocation[4][0][1] = {
+    whoAreYou : function(){
+        logText.innerHTML += "<p>\"We're an organization established to stop public menaces like the Bullet Gang from terrorizing people.\"</p>";
+    },
     ask : function(){
         logText.innerHTML += mapLocationVars[4][0][1].askText;
     },
@@ -1410,6 +1442,51 @@ mapLocation[0][0][3] = {
         logText.innerHTML += mapLocationVars[0][0][3].lieText;
     }
 
+}
+
+
+//Creature
+mapLocation[3][0][2] = {
+    
+
+    attack : function(){
+        if (mapLocationVars[3][0][2].canAttack){
+            if (combatPower > 7){
+                this.win();
+            }else if (combatPower == 7){
+                var rando = Math.floor(Math.random()*2);
+                (rando == 1) ? this.win() : this.lose()
+            }else if (combatPower < 7){
+                this.lose();
+            }
+        }
+    },
+    win : function(){
+        logText.innerHTML = mapLocationVars[3][0][2].winText;
+        mapLocationVars[3][0][2].defaultText = mapLocationVars[3][0][2].defaultText2;
+        mapLocationVars[3][0][2].canAttack = false;
+    },
+    lose : function(){
+        var objIndex = removeRandomObject();
+        if (objIndex == -1){
+            logText.innerHTML += "<p>You try to attack, but creature's skin is too tough to penetrate. You run away before it kills you.</p>";
+        }else{
+            logText.innerHTML += "<p>You try to attack, but the creature's claws scratch the "+object[objIndex].name+" and destroys it. ("+object[objIndex].name+" removed from Inventory)</p>";
+            removeObject(objIndex);
+        }
+    },
+    search : function(){
+        if (mapLocationVars[3][0][2].hasSearched){
+            logText.innerHTML += "<p>You don't find anything useful.</p>";
+        }else{
+            logText.innerHTML += "<p>You search the dead bodies and find 100 caps, along with a broken lazer rifle and a nice bullet-proof vest. (Broken Lazer Rifle and Bullet-proof Vest added to Inventory)</p>";
+            mapLocationVars[3][0][2].hasSearched = true;
+            objectIsInInventory[39] = true;
+            objectIsInInventory[41] = true;
+            addCaps(100);
+            snd_collect.play();
+        }
+    },
 }
 
 

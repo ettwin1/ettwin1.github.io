@@ -33,6 +33,15 @@ function travel(){
 		}
 	}else if (x==3 && y==0 & z==3){
 		mapLocation[X][Y][Z].setUp(removeRandomObject());
+	}else if (x==2 && y==0 & z==1){
+		if (!mapLocationVars[2][0][1].hasFound){
+			logText.innerHTML = "<p>As you walk along an old abandoned road, you find some glasses on the ground. (Glasses added to Inventory)</p>";
+			mapLocationVars[2][0][1].hasFound = true;
+			objectIsInInventory[42] = true;
+			snd_collect.play();
+		}else{
+			logText.innerHTML=mapLocationVars[X][Y][Z].defaultText;
+		}
 	}else if ((x == 0 && y == 0 && z == 3) || (x == 3 && y == 0 && z == 0) || (x == 2 && y == 0 && z == 0)){
 		mapLocationVars[x][y][z].canTalk = false;
 		logText.innerHTML=mapLocationVars[X][Y][Z].defaultText;
@@ -80,6 +89,27 @@ function removeObject(objectIndex){ //safely removes an object from inventory
 	recalcuateCombatPower();
 }
 
+function addCaps(amount){
+	object[0].amount += amount;
+	if (object[0].amount < 0){object[0].amount = 0;}
+	object[0].name = "Bottle Caps: "+object[0].amount;
+	if (object[0].amount == 0){
+		objectIsInInventory[0] = false;
+	}else{
+		objectIsInInventory[0] = true;
+	}
+}
+
+function setCaps(amount){
+	object[0].amount = amount;
+	if (object[0].amount < 0){object[0].amount = 0;}
+	object[0].name = "Bottle Caps: "+object[0].amount;
+	if (object[0].amount == 0){
+		objectIsInInventory[0] = false;
+	}else{
+		objectIsInInventory[0] = true;
+	}
+}
 
 //Object Functions
 

@@ -9,22 +9,22 @@ object[0] = {
     necessary : true,
 
     popupText : "<p style='margin:4px'><a href='#' onclick='displayDescription(0)'>Examine</a></p>",
-    description : "<p>Bottle caps are used as currency.</p>",
+    description : "<p>It seems that bottle caps are used as currency.</p>",
 }
 
 object[1] = {
     name : "Wrench",
     equipmentSlot : "hand",                                                                                             
-    combatBonus : 1,
+    combatBonus : 2,
     necessary : true,
 
     popupText : "<p style='margin:4px'><a href='#' onclick='object[1].useObject(X,Y,Z)'>Use</a></p>"+
     "<p style='margin:4px'><a href='#' onclick='displayDescription(1)'>Examine</a></p>",
-    description : "<p>It's a small rusted wrench. You think you were using it for that wacky machine, but you don't need it anymore. Gives a +1 bonus to Combat Power when equipped.</p>",
+    description : "<p>It's a small rusted wrench. You think you were using it for that wacky machine, but you don't need it anymore. Gives a +2 bonus to Combat Power when equipped.</p>",
 
     useObject : function(x,y,z){
         if (Y == 0 && X == 3 && Z == 4){
-            logText.innerHTML += "<p>\"Oh, thank you! In thanks, I give you this. It's a Vault-Tec Assisted Targeting System, or V.A.T.S. for short. Anyway, got to go. Goodbye!\" (V.A.T.S. added to your inventory)</p>";
+            logText.innerHTML += "<p>\"Oh, thank you! In thanks, I give you this. It's a Vault-Tec Assisted Targeting System, or V.A.T.S. for short. Anyway, got to go. Bye!\" (V.A.T.S. added to your inventory)</p>";
             removeObject(1);
             objectIsInInventory[3] = true;
             snd_collect.play();
@@ -70,31 +70,8 @@ object[2] = {
             logText.innerHTML += "<p>\"That's a weird lookin' fruit you got there. How about I buy it off your hands for 5 caps?\" <a href='#' onclick='object[2].sell(`yes`)'>[\"Deal\"]</a> <a href='#' onclick='object[2].sell(`no`)'>[\"No Thanks\"]</a></p>";
         }else if (Y == 0 && X == 2 && Z == 0 && mapLocationVars[2][0][0].canTalk == true){
             logText.innerHTML += "<p>\"Ooo a banana? I promise I'll be your friend if you let me eat it!\" <a href='#' onclick='object[2].give(`yes`)'>[\"Deal\"]</a> <a href='#' onclick='object[2].give(`no`)'>[\"No Thanks\"]</a></p>";
-        }else if (Y == 0 && X == 4 && Z == 2){
-            if (mapLocationVars[4][0][2].gofer == "small"){
-                if (combatPower >= 2){
-                    logText.innerHTML += "<p>The gofer tries to steal the banana from you, but you were strong enough keep it.</p>";
-                }else{
-                    logText.innerHTML += "<p>The gofer steals the banana from you and runs off.</p>";
-                    objectIsInInventory[2] = false;
-                }
-            }else if (mapLocationVars[4][0][2].gofer == "medium"){
-                if (combatPower >= 4){
-                    logText.innerHTML += "<p>The gofer tries to steal the banana from you, but you were strong enough keep it.</p>";
-                }else{
-                    logText.innerHTML += "<p>The gofer steals the banana from you and runs off.</p>";
-                    objectIsInInventory[2] = false;
-                }
-            }else if (mapLocationVars[4][0][2].gofer == "large"){
-                if (combatPower >= 8){
-                    logText.innerHTML += "<p>The gofer tries to steal the banana from you, but you were strong enough keep it.</p>";
-                }else{
-                    logText.innerHTML += "<p>The gofer steals the banana from you and runs off.</p>";
-                    objectIsInInventory[2] = false;
-                }
-            }else{
-                logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
-            }
+        }else if (Y == 0 && X == 4 && Z == 2 && mapLocationVars[4][0][2].gofer != ""){
+            logText.innerHTML += "<p>The gofer tries to steal the banana from you, but you were quick enough to keep it away.</p>";
         }else if (Y == 0 && X == 4 && Z == 3 && mapLocationVars[4][0][3].isFriends == true){
             logText.innerHTML += "<p>His eyes go wide. \"You got a special plant too?! You better protect it, and don't give it to anyone, I tell ya.\"</p>";
         }else if (Y == 0 && X == 4 && Z == 4){
@@ -173,6 +150,12 @@ object[3] = {
         }else if (X == 0 && Y == 1 & Z == 1){ //Sewers
             if (mapLocationVars[0][1][1].canAttack == true){
                 this.calculateOdds(5);
+            }else{
+                logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
+            }
+        }else if (X == 3 && Y == 0 & Z == 2){ //Creature
+            if (mapLocationVars[3][0][2].canAttack == true){
+                this.calculateOdds(7);
             }else{
                 logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
             }
@@ -945,4 +928,55 @@ object[38] = {
         removeObject(38);
         changeNav('log');
     }
+}
+
+object[39] = {
+    name : "Broken Lazer Rifle",
+    equipmentSlot : "",
+    necessary : false,
+
+    popupText : "<p style='margin:4px'><a href='#' onclick='object[39].useObject(X,Y,Z)'>Use</a></p>"+
+                "<p style='margin:4px'><a href='#' onclick='displayDescription(39)'>Examine</a></p>",
+    description : "<p>It's a very cool gun, but it doesn't work. You have no idea how to fix it.</p>",
+    
+    useObject : function(x,y,z){
+        if (Y == 0 && X == 4 && Z == 4){
+            logText.innerHTML += "<p>\"You want me to fix this rifle for you? I can do that no problem. That'll be 20 caps.\" <a href='#' onclick='mapLocation[4][0][4].fix2()'>[\"Deal.\"]</a></p>";
+        }else if (Y == 0 && X == 3 && Z == 0 && mapLocationVars[3][0][0].canTalk == true){
+            logText.innerHTML += "<p>\"Sorry pardner, but I'm an armor specialist. I've no idea how to fix a gun.\"</p>";
+        }else{
+            logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
+        }
+        changeNav('log');
+    }
+}
+
+object[40] = {
+    name : "Lazer Rifle",
+    equipmentSlot : "hand",
+    combatBonus : 5,
+    necessary : false,
+
+    popupText : "<p style='margin:4px'><a href='#' onclick='displayDescription(40)'>Examine</a></p>",
+    description : "<p>A recently fixed lazer rifle. It shoots red hot lazers. Gives a +5 bonus to Combat Power when equipped.</p>",
+};
+
+object[41] = {
+    name : "Bullet-proof Vest",
+    equipmentSlot : "body",                                                                                             
+    combatBonus : 4,
+    necessary : false,
+
+    popupText : "<p style='margin:4px'><a href='#' onclick='displayDescription(41)'>Examine</a></p>",
+    description :  "<p>It's a vest that's very resistant against pierces. Gives a +4 bonus to Combat Power when equipped.</p>",
+};
+
+object[42] = {
+    name : "Glasses",
+    equipmentSlot : "head",                                                                                             
+    combatBonus : 1,
+    necessary : false,
+
+    popupText : "<p style='margin:4px'><a href='#' onclick='displayDescription(42)'>Examine</a></p>",
+    description : "<p>They actually improve your vision, despite the wonkiness. Gives a +1 bonus to Combat Power when equipped.</p>",
 }
