@@ -121,7 +121,7 @@ object[3] = {
     useObject : function(x,y,z){
         if (X == 4 && Y == 0 && Z == 2){ //Thieving Gofers
             if (mapLocationVars[4][0][2].gofer == "small"){
-                this.calculateOdds(2);
+                this.calculateOdds(1);
             }else if (mapLocationVars[4][0][2].gofer == "medium"){
                 this.calculateOdds(4);
             }else if (mapLocationVars[4][0][2].gofer == "large"){
@@ -137,7 +137,7 @@ object[3] = {
             }
         }else if (X == 3 && Y == 0 & Z == 3){ //Bullet Gang
             if (mapLocationVars[3][0][3].canAttack == true){
-                this.calculateOdds(10);
+                this.calculateOdds(8);
             }else{
                 logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
             }
@@ -155,7 +155,7 @@ object[3] = {
             }
         }else if (X == 3 && Y == 0 & Z == 2){ //Creature
             if (mapLocationVars[3][0][2].canAttack == true){
-                this.calculateOdds(7);
+                this.calculateOdds(5);
             }else{
                 logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
             }
@@ -300,10 +300,22 @@ object[12] = {
     name : "Broken Sword",
     equipmentSlot : "hand",                                                                                             
     combatBonus : 2,
-    necessary : false,
+    necessary : true,
 
-    popupText : "<p style='margin:4px'><a href='#' onclick='displayDescription(12)'>Examine</a></p>",
+    popupText : "<p style='margin:4px'><a href='#' onclick='object[12].useObject(X,Y,Z)'>Use</a></p>"+
+                "<p style='margin:4px'><a href='#' onclick='displayDescription(12)'>Examine</a></p>",
     description : "<p>A cool Medieval sword if you ignore the fact that half the blade is broken off. Gives a +2 bonus to Combat Power when equipped.</p>",
+
+    useObject : function(x,y,z){
+        if (Y == 0 && X == 4 && Z == 4){
+            logText.innerHTML += "<p>\"Sorry, I can't fix that sword for you. I mainly deal with guns, and I don't have a furnace.\"</p>";
+        }else if (Y == 0 && X == 3 && Z == 0 && mapLocationVars[3][0][0].canTalk == true){
+            logText.innerHTML += "<p>\"I can fix that sword for you, pardner. It'll cost you 10 caps.\" <a href='#' onclick='mapLocation[3][0][0].fixSword()'>[\"Deal\"]</a></p>";
+        }else{
+            logText.innerHTML += "<p>Nothing happens when you use the "+this.name+" here.</p>";
+        }
+        changeNav('log');
+    }
 }
 
 object[13] = {
@@ -715,7 +727,7 @@ object[27] = {
     description : "<p>A backpack with lots of stuff, including a grappling hook, safety harness, and some pitons. You could probably climb up anything with this.</p>",
     
     useObject : function(x,y,z){
-        if (Y == 0 && X == 1 && Z == 3){
+        if (Y == 0 && X == 1 && Z == 2){
             logText.innerHTML += "<p>You use the climbing gear to climb up the edge of the cliff and retrieve the pickaxe. (Pickaxe added to Inventory)</p>";
             removeObject(27);
             objectIsInInventory[28] = true;
@@ -743,7 +755,7 @@ object[28] = {
     description : "<p>It's a rusty pickaxe, but still looks strong. You could mine some ore with this, or use it to give your enemies tetnis.</p>",
     
     useObject : function(x,y,z){
-        if (Y == 0 && X == 3 && Z == 2 && mapLocationVars[1][0][3].inGoldMine == true){
+        if (Y == 0 && X == 1 && Z == 3 && mapLocationVars[1][0][3].inGoldMine == true){
             logText.innerHTML += "<p>You swing your pickaxe all day, and you get all the gold ore you can find. [Gold Ore added to Inventory]</p>";
             objectIsInInventory[34] = true;
             snd_collect.play();
@@ -820,7 +832,7 @@ object[34] = {
     description : "<p>A bunch of shiny stuff stuck to rocks. Gold is not very useful like that.</p>",
     
     useObject : function(x,y,z){
-        if (Y == 0 && X == 3 && Z == 2 && mapLocationVars[1][0][3].inRefinery == true){
+        if (Y == 0 && X == 1 && Z == 3 && mapLocationVars[1][0][3].inRefinery == true){
             logText.innerHTML += "<p>You put the gold ore in the machine's hopper.</p>";
             removeObject(34);
             mapLocationVars[1][0][3].goldInRefinery = 1;
@@ -933,7 +945,7 @@ object[38] = {
 object[39] = {
     name : "Broken Lazer Rifle",
     equipmentSlot : "",
-    necessary : false,
+    necessary : true,
 
     popupText : "<p style='margin:4px'><a href='#' onclick='object[39].useObject(X,Y,Z)'>Use</a></p>"+
                 "<p style='margin:4px'><a href='#' onclick='displayDescription(39)'>Examine</a></p>",
@@ -955,7 +967,7 @@ object[40] = {
     name : "Lazer Rifle",
     equipmentSlot : "hand",
     combatBonus : 5,
-    necessary : false,
+    necessary : true,
 
     popupText : "<p style='margin:4px'><a href='#' onclick='displayDescription(40)'>Examine</a></p>",
     description : "<p>A recently fixed lazer rifle. It shoots red hot lazers. Gives a +5 bonus to Combat Power when equipped.</p>",
@@ -979,4 +991,24 @@ object[42] = {
 
     popupText : "<p style='margin:4px'><a href='#' onclick='displayDescription(42)'>Examine</a></p>",
     description : "<p>They actually improve your vision, despite the wonkiness. Gives a +1 bonus to Combat Power when equipped.</p>",
+},
+
+object[43] = {
+    name : "Sword",
+    equipmentSlot : "hand",                                                                                             
+    combatBonus : 3,
+    necessary : true,
+
+    popupText : "<p style='margin:4px'><a href='#' onclick='displayDescription(43)'>Examine</a></p>",
+    description : "<p>A cool Medieval sword that was recently fixed. Gives a +3 bonus to Combat Power when equipped.</p>",
+},
+
+object[44] = {
+    name : "Running Shoes",
+    equipmentSlot : "feet",                                                                                             
+    combatBonus : 1,
+    necessary : false,
+
+    popupText : "<p style='margin:4px'><a href='#' onclick='displayDescription(44)'>Examine</a></p>",
+    description : "<p>A nice pair of shoes that makes you feel quick and spry. Gives a +1 bonus to Combat Power when equipped</p>",
 }

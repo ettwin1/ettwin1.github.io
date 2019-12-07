@@ -42,6 +42,15 @@ function travel(){
 		}else{
 			logText.innerHTML=mapLocationVars[X][Y][Z].defaultText;
 		}
+	}else if (x==2 && y==0 & z==4){
+		if (!mapLocationVars[2][0][4].hasFound){
+			logText.innerHTML = "<p>As you walk along a rocky trail, you find some running shoes on the ground. (Running Shoes added to Inventory)</p>";
+			mapLocationVars[2][0][4].hasFound = true;
+			objectIsInInventory[44] = true;
+			snd_collect.play();
+		}else{
+			logText.innerHTML=mapLocationVars[X][Y][Z].defaultText;
+		}
 	}else if ((x == 0 && y == 0 && z == 3) || (x == 3 && y == 0 && z == 0) || (x == 2 && y == 0 && z == 0)){
 		mapLocationVars[x][y][z].canTalk = false;
 		logText.innerHTML=mapLocationVars[X][Y][Z].defaultText;

@@ -64,6 +64,10 @@ function saveGame(){
     localStorage.setItem('NovaGang', JSON.stringify(mapLocationVars[4][0][1]));
     localStorage.setItem('BrotherhoodOfSteel', JSON.stringify(mapLocationVars[0][0][3]));
     localStorage.setItem('Creature', JSON.stringify(mapLocationVars[3][0][2]));
+    localStorage.setItem('Other1', JSON.stringify(mapLocationVars[2][0][4]));
+    localStorage.setItem('Other2', JSON.stringify(mapLocationVars[2][0][3]));
+    localStorage.setItem('Other3', JSON.stringify(mapLocationVars[2][0][1]));
+    localStorage.setItem('Other4', JSON.stringify(mapLocationVars[4][0][0]));
 }
 
 
@@ -128,6 +132,12 @@ function loadGame(){
     mapLocationVars[4][0][1] = JSON.parse(localStorage.getItem('NovaGang'));
     mapLocationVars[0][0][3] = JSON.parse(localStorage.getItem('BrotherhoodOfSteel'));
     mapLocationVars[3][0][2] = JSON.parse(localStorage.getItem('Creature'));
+    mapLocationVars[1][0][4] = JSON.parse(localStorage.getItem('Other1'));
+    mapLocationVars[2][0][4] = JSON.parse(localStorage.getItem('Other1'));
+    mapLocationVars[2][0][3] = JSON.parse(localStorage.getItem('Other2'));
+    mapLocationVars[2][0][1] = JSON.parse(localStorage.getItem('Other3'));
+    mapLocationVars[3][0][1] = JSON.parse(localStorage.getItem('Other3'));
+    mapLocationVars[4][0][0] = JSON.parse(localStorage.getItem('Other4'));
 }
 
 
@@ -206,7 +216,7 @@ function resetGame(){
         marketplaceText : "<p>The marketplace is abandoned with hardly anything useful left. <a href='#' onclick='mapLocation[0][0][1].marketplaceSearch()'>[Search]</a> <a href='#' onclick='mapLocation[0][0][1].default()'>[Back to City]</a></p>",
         towerText : "<p>The tower appears to be a wizard tower. Someone dressed in a wizard robe looks out the window and says, \"Oi there! I need a banana for one of my potions! Please get me one and I'll reward thee greatly!\" "+
                     "<a href='#' onclick='mapLocation[0][0][1].default()'>[Back to City]</a></p>",
-        alleywayText : "<p>In the alleyway you find a <a href='#' onclick='mapLocation[0][0][1].sewers()'>ladder</a> that leads into the sewers. "+
+        alleywayText : "<p>In the alleyway you find a ladder that leads into the sewers. <a href='#' onclick='mapLocation[0][0][1].sewers()'>[Go Down Ladder]</a> "+
                     "<a href='#' onclick='mapLocation[0][0][1].default()'>[Back to City]</a></p>",
     }));
     mapLocationVars[0][0][1] = JSON.parse(localStorage.getItem('AbandonedCity'));
@@ -331,7 +341,7 @@ function resetGame(){
     //Defender of Pineapple
     localStorage.setItem('DefenderOfPineapple', JSON.stringify({
         defaultText : "<p>You see someone aiming a minigun at you from far away at their camp. You get to cover as he's firing it. <a href='#' onclick='mapLocation[4][0][3].attack()'>[Attack]</a> <a href='#' onclick='mapLocation[4][0][3].walk()'>[Walk Forward Peacefully]</a></p>",
-        defaultText2 : "<p>You walk up to the camp without being shot by a minigun. \"What do ya want?\" says the crazy man there. <a href='#' onclick='mapLocation[4][0][3].talk()'>[\"You said something about a plant?\"]</a> <a href='#' onclick='mapLocation[4][0][3].offer()'>[\"Can I have your minigun?\"]</a></p>",
+        defaultText2 : "<p>You walk up to the camp without being shot by a minigun. \"What do ya want?\" says the crazy man there. <a href='#' onclick='mapLocation[4][0][3].talk()'>[\"You said something about a plant?\"]</a> <a href='#' onclick='mapLocation[4][0][3].offer()'>[\"Can I have your minigun?\"]</a> <a href='#' onclick='mapLocation[4][0][3].attack()'>[\"I want you to die!\" (Attack)]</a></p>",
         winText : "<p>Even with a minigun, he is no match for your superior levels of Combat Power. You take his minigun and a pineapple it looks like he was protecting. (Minigun and Rotting Pineapple added to Inventory)</p>",
         walkText : "<p>You try to walk toward him non-threateningly, but he still shoots his minigun at you. You return to cover. You think it might help if you weren't holding any weapons.</p>",
         walkText2 : "<p>You walk out not-threateningly with your hands up. The minigun stops firing, and you reach his camp. \"Are you here for my plant?\" he immediately says. <a href='#' onclick='mapLocation[4][0][3].talk()'>[\"No, why would I?\"]</a> <a href='#' onclick='mapLocation[4][0][3].offer()'>[\"I'd rather have your minigun\"]</a></p>",
@@ -420,7 +430,7 @@ function resetGame(){
     localStorage.setItem('BrotherhoodOfSteel', JSON.stringify({
         defaultText : "<p>You come upon an iron door on the side of a hill. <a href='#' onclick='mapLocation[0][0][3].enter()'>[Open Door]</a></p>",
         enterText : "<p>Surprisingly, it's not locked. On the other side is a small room with another door and a man in Power Armor, staring down at you. \"Who are you?\" <a href='#' onclick='mapLocation[0][0][3].who()'>[\"Who are you?\"]</a> <a href='#' onclick='mapLocation[0][0][3].ask()'>[\"Can I have your Power Armor?\"]</a></p>",
-        enterText2 : "<p>You open the door. \"Oh, it's you again,\" the man in Power Armor says on the other side. \"Have you found some Power Armor yet?\" <a href='#' onclick='mapLocation[0][0][3].no()'>[\"No\"]</a> <a href='#' onclick='mapLocation[0][0][3].yes()'>[\"Yes\"]</a><p>",
+        enterText2 : "<p>You open the door. \"Oh, it's you again,\" the man in Power Armor says on the other side. \"Have you found some Power Armor for us yet?\" <a href='#' onclick='mapLocation[0][0][3].no()'>[\"No\"]</a> <a href='#' onclick='mapLocation[0][0][3].yes()'>[\"Yes\"]</a><p>",
         whoText : "<p>\"We're the Brotherhood of Steel, a military order who preserves the technology of the past. Now why are you here?\" <a href='#' onclick='mapLocation[0][0][3].join()'>[\"I want to join\"]</a> <a href='#' onclick='mapLocation[0][0][3].who2()'>[\"Do you have a 128GB storage module?\"]</a></p>",
         whoText2 : "<p>\"Probably, but you have to be a member of the Brotherhood of Steel if you want to use it.\"</p>",
         joinText : "<p>\"Heh, good luck with that. Actually, follow me. It'll be fun to see the Elder's reaction.\" <a href='#' onclick='mapLocation[0][0][3].join2()'>[\"Okay\"]</a><p>",
@@ -431,7 +441,7 @@ function resetGame(){
         askText : "<p>\"What? Of course not. It's property of the Brotherhood of Steel, and we need more of them. Now why are you here?\" <a href='#' onclick='mapLocation[0][0][3].join()'>[\"I want to join\"]</a> <a href='#' onclick='mapLocation[0][0][3].who2()'>[\"Do you have a 128GB storage module?\"]</a></p>",
         askText2 : "<p>\"Ha! That's a good one.\"</p>",
         yesText : "<p>Are you sure you want to continue? You will lose your Power Armor. <a href='#' onclick='mapLocation[0][0][3].yes2()'>[Yes]</a> <a href='#' onclick='mapLocation[0][0][3].enter()'>[No]</a></p>",
-        yesText2 : "<p>\"Okay then, let's take you to the Elder.\" He leads you down into the metallic underground maze again, and you reach the Elder's office. \"Good job,\" she says, \"I now consider you a lowest ranking member of the Brotherhood of Steel.\" <a href='#' onclick='mapLocation[0][0][3].finish()'>[\"Can I use a 128 GB Storage Unit?\"]</a></p>",
+        yesText2 : "<p>\"Okay then, let's take you to the Elder.\" He leads you down into the metallic underground maze again, and you reach the Elder's office. \"Good job,\" she says, \"I now consider you a lowest ranking member of the Brotherhood of Steel.\" She takes your power armor (Power Helmet, Power Body, and Power Boots removed from Inventory) <a href='#' onclick='mapLocation[0][0][3].finish()'>[\"Can I use a 128 GB Storage Unit?\"]</a></p>",
         finishText : "<p>\"Oh yes of course, we have hundreds of those.\" (Storage Module added to Inventory)</p>",
         yesnoText : "<p>\"Are you sure? Because I don't see it.\" <a href='#' onclick='mapLocation[0][0][3].lie()'>[\"I swear I had it here somewhere...\"]</a></p>",
         lieText : "<p>\"No, I think you're just a terrible liar.\"</p>",
@@ -458,6 +468,7 @@ function resetGame(){
     //Others
     localStorage.setItem('Other1', JSON.stringify({
         defaultText : "<p>There's nothing interesting here except for the beautiful rocky scenery.</p>",
+        hasFound : false, //hasFound will only be used for mapLocation[2][0][4]
     }));
     mapLocationVars[1][0][4] = JSON.parse(localStorage.getItem('Other1'));
     mapLocationVars[2][0][4] = JSON.parse(localStorage.getItem('Other1'));
@@ -529,7 +540,7 @@ mapLocation[2][0][2] = {
         }
     },
     finish : function(){
-        logText.innerHTML = "<p>You put all the remaining parts of the ship together, and you finally finish the machine. You hop inside it. <a href='#' onclick='mapLocation[2][0][2].finish2()'>[Turn It On]</a></p>";
+        logText.innerHTML = "<p>You put all the remaining parts together, and you finally finish the machine. You hop on the chair inside it. <a href='#' onclick='mapLocation[2][0][2].finish2()'>[Turn It On]</a></p>";
     },
     finish2 : function(){
         logText.innerHTML = "<p>As soon as you turn it on, a wave of radiation blasted from the machine. You were unharmed however, thanks to your radiation suit. <a href='#' onclick='mapLocation[2][0][2].finish3()'>[Engage]</a></p>";
@@ -605,7 +616,7 @@ mapLocation[0][0][1] = {
         y = 1;
         Y = 1;
         yLabel.innerHTML = 'Y: '+y;
-        logText.innerHTML=mapLocation[X][Y][Z].defaultText;
+        logText.innerHTML=mapLocationVars[X][Y][Z].defaultText;
     },
     evilPlan : function(){
         logText.innerHTML = "<p>The wizard throws out a piece of paper. \"That's my plan. Read it, and tell me what you think.\" (Parchment added to Inventory) <a href='#' onclick='mapLocation[0][0][1].evilPlan2()'>[\"I want to help\"]</a> <a href='#' onclick='mapLocation[0][0][1].noEvilPlan()'>[\"I don't want to help\"]</a></p>"; 
@@ -697,12 +708,12 @@ mapLocation[4][0][2] = {
                 this.lose("medium");
             }
         }else if (size == "small"){
-            if (combatPower > 2){
+            if (combatPower > 1){
                 this.win("small");
-            }else if (combatPower == 2){
+            }else if (combatPower == 1){
                 var rando = Math.floor(Math.random()*2);
                 (rando == 1) ? this.win("small") : this.lose("small")
-            }else if (combatPower < 2){
+            }else if (combatPower < 1){
                 this.lose("small");
             }
         }
@@ -824,6 +835,17 @@ mapLocation[3][0][0] = {
             snd_collect.play();
         }else{
             logText.innerHTML += "<p>You don't have enough bottle caps to buy that item.</p>";
+        }
+    },
+    fixSword : function(){
+        if (object[0].amount < 10){
+            logText.innerHTML += "<p>You don't have enough caps to fix that item.</p>";
+        }else{
+            logText.innerHTML += "<p>\"Alright, let me just start up the furnace.\" After a few hours of work, he gives you the fixed sword. \"Here you go, took more time than I thought, but it'll serve you well.\" (Sword added to inventory)</p>";
+            removeObject(12);
+            objectIsInInventory[43] = true;
+            snd_collect.play();
+            addCaps(-10);
         }
     }
 }
@@ -1073,12 +1095,12 @@ mapLocation[3][0][3] = {
     },
     attack : function(){
         if (mapLocationVars[3][0][3].canAttack){
-            if (combatPower > 10){
+            if (combatPower > 8){
                 this.win();
-            }else if (combatPower == 10){
+            }else if (combatPower == 8){
                 var rando = Math.floor(Math.random()*2);
                 (rando == 1) ? this.win() : this.lose()
-            }else if (combatPower < 10){
+            }else if (combatPower < 8){
                 this.lose();
             }
         }
@@ -1175,7 +1197,7 @@ mapLocation[4][0][3] = {
         var objectIds = []; //This array contains all the object indexes the crazy man needs; the ones he already has in the front and the ones the player needs to find in the back
         objectIds.push(21);
         if (mapLocationVars[4][0][3].hasGrenadelauncher){
-            objects.unshift(22);
+            objectIds.unshift(22);
         }else{
             objectIds.push(22);
         }
@@ -1242,17 +1264,17 @@ mapLocation[0][1][1] = {
         y = 0;
         Y = 0;
         yLabel.innerHTML = "Y: "+y;
-        mapLocation[0][0][1].atDefault = false;
-        mapLocation[0][0][1].atTower = false;
-        mapLocation[0][0][1].atMarket = false;
-        mapLocation[0][0][1].atAlleyway = true;
-        logText.innerHTML=mapLocation[0][0][1].alleywayText;
+        mapLocationVars[0][0][1].atDefault = false;
+        mapLocationVars[0][0][1].atTower = false;
+        mapLocationVars[0][0][1].atMarket = false;
+        mapLocationVars[0][0][1].atAlleyway = true;
+        logText.innerHTML=mapLocationVars[0][0][1].alleywayText;
     },
     explore : function(){
         z = 0;
         Z = 0;
         zLabel.innerHTML = "Z: "+z;
-        logText.innerHTML=mapLocation[0][1][0].defaultText;
+        logText.innerHTML=mapLocationVars[0][1][0].defaultText;
     }
 }
 
@@ -1426,6 +1448,9 @@ mapLocation[0][0][3] = {
     yes2 : function(){
         logText.innerHTML = mapLocationVars[0][0][3].yesText2;
         mapLocationVars[0][0][3].member = true;
+        removeObject(16);
+        removeObject(17);
+        removeObject(18);
         mapLocationVars[0][0][3].enterText = "<p>\"Oh hey,\" says the man in the Power Armor. \"I totally did NOT expect you to become a member of the Brotherhood of Steel. Congratulations.\" <a href='#' onclick='mapLocation[0][0][3].finish()'>[\"Can I use a 128 GB Storage Unit?\"]</a></p>";
     },
     finish : function(){
@@ -1451,12 +1476,12 @@ mapLocation[3][0][2] = {
 
     attack : function(){
         if (mapLocationVars[3][0][2].canAttack){
-            if (combatPower > 7){
+            if (combatPower > 5){
                 this.win();
-            }else if (combatPower == 7){
+            }else if (combatPower == 5){
                 var rando = Math.floor(Math.random()*2);
                 (rando == 1) ? this.win() : this.lose()
-            }else if (combatPower < 7){
+            }else if (combatPower < 5){
                 this.lose();
             }
         }
